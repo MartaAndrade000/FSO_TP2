@@ -55,7 +55,8 @@ public class BufferCircularSemaforos<E> extends BufferCircularBaseImpl<E> {
             this.sMutex.release();
         }
         // Atualizar o número de elemntos no buffer
-        //this.gui.displayNumberOfItems(this.numElements.incrementAndGet());
+        //this.gui.displayNumberOfItems(this.numElements.incrementAndGet());;
+        // alteracao
 
         // Indicar que existe mais um elemento para consumo
         this.sConsumidores.release();
