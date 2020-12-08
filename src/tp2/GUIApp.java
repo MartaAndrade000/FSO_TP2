@@ -1,4 +1,4 @@
-package TP2;
+package tp2;
 
 import java.awt.BorderLayout;
 
@@ -13,8 +13,8 @@ import javax.swing.JSpinner;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 
-import TP1.Mensagem;
-import TP1.MyChat;
+import tp1.Mensagem;
+import tp1.MyChat;
 
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
