@@ -31,7 +31,7 @@ public class BufferCircularFolhas<E> extends BufferCircularBaseImpl<E> {
         }
         catch(Exception ex){
             ex.printStackTrace();
-//            this.sEspaço.release();
+//            this.sEspaço.release();ola
         }
         finally {
             this.sMutex.release();
