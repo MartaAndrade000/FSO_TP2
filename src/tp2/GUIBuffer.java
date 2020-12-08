@@ -1,4 +1,4 @@
-package TP2;
+package tp2;
 
 import java.awt.EventQueue;
 import java.lang.reflect.InvocationTargetException;

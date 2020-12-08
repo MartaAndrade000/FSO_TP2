@@ -1,4 +1,4 @@
-package TP2;
+package tp2;
 
 public class OpenEV3 extends Mensagem {
 	String nomeRobot;
