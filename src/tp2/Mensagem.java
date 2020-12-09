@@ -2,18 +2,20 @@ package tp2;
 
 public abstract class Mensagem {
 	
-	protected int tipo;
+	protected TIPO_MENSAGEM tipo;
 	protected String texto;
 	
 	//Tipos de Mensagem
-	public static final int OPEN 	  = 0;
-	public static final int CLOSE     = 1;
-	public static final int RETA 	  = 2;
-	public static final int CURVA_ESQ = 3;
-	public static final int CURVA_DIR = 4;
-	public static final int PARAR  	  = 5;
+	enum TIPO_MENSAGEM {
+		OPEN,
+		CLOSE,
+		RETA,
+		CURVA_ESQ,
+		CURVA_DIR,
+		PARAR
+		}
 
-	public Mensagem(int tipo, String texto) {
+	public Mensagem(TIPO_MENSAGEM tipo, String texto) {
 		this.tipo  = tipo;
 		this.texto = texto;
 	}
@@ -22,7 +24,7 @@ public abstract class Mensagem {
 		return texto;
 	}
 
-	public int getTipo() {
+	public TIPO_MENSAGEM getTipo() {
 		return tipo;
 	}
 	

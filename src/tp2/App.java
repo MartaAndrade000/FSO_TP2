@@ -63,15 +63,17 @@ public class App {
 		 quadrado.start();
 		 circulo.start();
 		 espacarFormas.start();
+		 servidor.start();
+	 }
+
+	 public void stop() {
+		servidor.interrupt();
 	 }
 
 	public boolean ligarRobot(String nomeRobot) {
 		// TODO não funciona nem com null nem com o "", mas fiz debug e o nomeRobor == "", o que é estranho
 		// Ir a GUIApp linha 83
-		if(cliente.OpenEV3(nomeRobot)) 
-			return true;
-		else
-			return false;
+		return cliente.OpenEV3(nomeRobot);
 	}
 
 	public void desligarRobot() {
