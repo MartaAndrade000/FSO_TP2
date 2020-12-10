@@ -86,7 +86,6 @@ public class App {
 				 	System.out.println("A esperar");
 //				 	Thread.sleep(0);
 				 	haTrabalho.acquire();
-				 	// TODO fazer semaforo para não usar CPU
 				 	break;
 
 				 case ESPACAR:
