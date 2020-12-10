@@ -57,7 +57,7 @@ public class ServidorRobot implements Runnable {
                     robot.CurvarEsq(((CurvarEsquerda) mensagem).getRaio(), ((CurvarEsquerda) mensagem).getAngulo());
                     break;
                 case CURVA_DIR:
-                    robot.curvarDir(((CurvarDireita) mensagem).getRaio(), ((CurvarDireita) mensagem).getAngulo());
+                    robot.CurvarDir(((CurvarDireita) mensagem).getRaio(), ((CurvarDireita) mensagem).getAngulo());
                     break;
                 case PARAR:
                     robot.Parar(((Parar) mensagem).getAssincrono());
