@@ -76,8 +76,7 @@ public class GUIApp extends JFrame {
 				if(rdbtnOnoff.isSelected()) {
 					try {
 						String nomeRobot = nomeRobotTextField.getText();
-						// TODO não funciona nem com null nem com o "", mas fiz debug e o nomeRobor == "", o que é estranho
-						if(nomeRobot != "" && nomeRobot != null) {
+						if(!nomeRobot.equals("")) {
 							if (app.ligarRobot(nomeRobot)) {
 								logInfo("O robot foi ligado");
 							}
@@ -86,6 +85,11 @@ public class GUIApp extends JFrame {
 								// Não pinta se não conseguir abrir
 								rdbtnOnoff.setSelected(false);
 							}
+						} else{
+							logInfo("Nome inválido, o robot não foi ligado");
+							// Não pinta se não conseguir abrir
+							rdbtnOnoff.setSelected(false);
+
 						}
 						
 					}
@@ -128,17 +132,22 @@ public class GUIApp extends JFrame {
 		JButton btnDesenharQuadrado = new JButton("Desenhar!");
 		btnDesenharQuadrado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+
 				try {
 					// TODO verificar isto
 					// Ensure manually typed values with the editor are propagated to the model
 				    spinnerLado.commitEdit();
-				} 
-				catch ( java.text.ParseException e ) { 
+				}
+				catch ( java.text.ParseException e ) {
 					System.out.println("Erro Spinner");
 				}
-				int lado = (Integer) spinnerLado.getValue();
-				
-				handleDesenhar(App.DESENHA_QUADRADO, lado, direcaoQuadrado);
+				if(rdbtnOnoff.isSelected()) {
+					int lado = (Integer) spinnerLado.getValue();
+
+					handleDesenhar(App.DESENHA_QUADRADO, lado, direcaoQuadrado);
+				} else{
+					logInfo("Impossível desenhar, Robot desligado");
+				}
 			}
 		});
 		btnDesenharQuadrado.setBounds(40, 99, 117, 29);
@@ -203,8 +212,13 @@ public class GUIApp extends JFrame {
 				catch ( java.text.ParseException e ) { 
 					System.out.println("Erro Spinner");
 				}
-				int raio = (Integer) spinnerRaio.getValue();
-				handleDesenhar(App.DESENHA_CIRCULO, raio, direcaoCirculo);
+				if(rdbtnOnoff.isSelected()) {
+					int raio = (Integer) spinnerRaio.getValue();
+
+					handleDesenhar(App.DESENHA_CIRCULO, raio, direcaoCirculo);
+				} else {
+					logInfo("Impossível desenhar, Robot desligado");
+				}
 			}
 		});
 		btnDesenharCirculo.setBounds(40, 98, 117, 29);

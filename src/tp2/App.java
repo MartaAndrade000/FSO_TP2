@@ -71,8 +71,6 @@ public class App {
 	 }
 
 	public boolean ligarRobot(String nomeRobot) {
-		// TODO não funciona nem com null nem com o "", mas fiz debug e o nomeRobor == "", o que é estranho
-		// Ir a GUIApp linha 83
 		return cliente.OpenEV3(nomeRobot);
 	}
 
@@ -82,16 +80,18 @@ public class App {
 
 	public void desenhaQuadrado(int lado, int direcao) {
 		// Espaça formas após primeira forma
-		if(lastDim > 0) 
+		if(lastDim > 0) {
 			espacarFormas.desenha(lastDim);
-		quadrado.desenha(lado, direcao);
-		lastDim = lado;
+			quadrado.desenha(lado, direcao);
+			lastDim = lado;
+		}
 	}
 
 	public void desenhaCirculo(int raio, int direcao) {
-		if(lastDim > 0) 
-			espacarFormas.desenha(lastDim+raio);
-		circulo.desenha(raio, direcao);
-		lastDim = raio;
+		if(lastDim > 0) {
+			espacarFormas.desenha(lastDim + raio);
+			circulo.desenha(raio, direcao);
+			lastDim = raio;
+		}
 	}
 }

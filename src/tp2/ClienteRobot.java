@@ -33,9 +33,7 @@ public class ClienteRobot {
 
 	// TODO como verificar que o robot foi aberto?
 	public boolean OpenEV3(String nomeRobot) {
-		// TODO não funciona nem com null nem com o "", mas fiz debug e o nomeRobor == "", o que é estranho
-		// Ir a GUIApp linha 83
-		if(nomeRobot != "") {
+		if(!nomeRobot.equals("")) {
 			// Impede que dê se a pessoa não der nome ao robot
 			setMensagem(new OpenEV3(nomeRobot));
 			return true;
