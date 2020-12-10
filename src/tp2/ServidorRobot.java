@@ -1,31 +1,16 @@
 package tp2;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
-public class ServidorRobot implements Runnable {
+public class ServidorRobot extends Thread {
 
     GUIServidor gui;
 
     BufferCircular buffer;
     RobotDesenhador robot;
 
-    AtomicBoolean running = new AtomicBoolean(false);
-    Thread worker;
-
     public ServidorRobot(BufferCircular buffer, RobotDesenhador robot) {
         this.gui = new GUIServidor();
         this.buffer = buffer;
         this.robot = robot;
-    }
-
-    public void start() {
-        worker = new Thread(this);
-        worker.start();
-    }
-
-    public void interrupt() {
-        running.set(false);
-        worker.interrupt();
     }
 
     /**
@@ -34,13 +19,9 @@ public class ServidorRobot implements Runnable {
      */
     public void run() {
 
-		running.set(true);
-		while (running.get()) {
+		while (true) {
 
             Mensagem mensagem = buffer.getMensagem();
-
-            if (mensagem == null) continue;
-//            System.out.println("Read message: " + mensagem.getTipo());
 
             switch (mensagem.getTipo()) {
 
@@ -67,8 +48,5 @@ public class ServidorRobot implements Runnable {
             }
             gui.printCommand(mensagem);
         }
-
-        System.out.println("Stopped Robot Server");
-
     }
 }

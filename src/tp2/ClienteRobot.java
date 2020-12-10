@@ -33,6 +33,7 @@ public class ClienteRobot {
 
 	// TODO como verificar que o robot foi aberto?
 	public boolean OpenEV3(String nomeRobot) {
+
 		if(!nomeRobot.equals("")) {
 			// Impede que dê se a pessoa não der nome ao robot
 			setMensagem(new OpenEV3(nomeRobot));

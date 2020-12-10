@@ -66,10 +66,6 @@ public class App {
 		 servidor.start();
 	 }
 
-	 public void stop() {
-		servidor.interrupt();
-	 }
-
 	public boolean ligarRobot(String nomeRobot) {
 		return cliente.OpenEV3(nomeRobot);
 	}
@@ -80,26 +76,17 @@ public class App {
 
 	public void desenhaQuadrado(int lado, int direcao) {
 		// Espaça formas após primeira forma
-		if(lastDim > 0) {
+		if(lastDim > 0)
 			espacarFormas.desenha(lastDim);
-			quadrado.desenha(lado, direcao);
-			lastDim = lado;
-		}
+		quadrado.desenha(lado, direcao);
+		lastDim = lado;
 	}
 
 	public void desenhaCirculo(int raio, int direcao) {
-<<<<<<< HEAD
-		if(lastDim > 0) {
-			espacarFormas.desenha(lastDim + raio);
-			circulo.desenha(raio, direcao);
-			lastDim = raio;
-		}
-=======
 		// Espaça formas após primeira forma
 		if(lastDim > 0)
 			espacarFormas.desenha(lastDim+raio);
 		circulo.desenha(raio, direcao);
 		lastDim = raio;
->>>>>>> sofia
 	}
 }
