@@ -4,8 +4,6 @@ import javax.swing.*;
 
 public class GUIServidor {
 
-//<<<<<<< Updated upstream
-//=======
     private JFrame frmServidorDoRobot;
     private JTextArea comandostextArea;
     private JScrollPane comandosScrollPane;
@@ -66,5 +64,4 @@ public class GUIServidor {
         JScrollBar verticalScrollPane = comandosScrollPane.getVerticalScrollBar();
         verticalScrollPane.setValue(verticalScrollPane.getMaximum());
     }
-//>>>>>>> Stashed changes
 }
