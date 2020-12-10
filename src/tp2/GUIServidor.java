@@ -1,4 +1,12 @@
 package tp2;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 import javax.swing.*;
 
@@ -53,7 +61,7 @@ public class GUIServidor {
         comandosScrollPane = new JScrollPane();
         comandosScrollPane.setBounds(305, 53, 17, 213);
         frmServidorDoRobot.getContentPane().add(comandosScrollPane);
-
+        
         frmServidorDoRobot.setVisible(true);
     }
 
