@@ -65,7 +65,7 @@ public class ServidorRobot implements Runnable {
                 default:
                     System.out.println("Unknown message type");
             }
-            gui.mostraComando(mensagem);
+            gui.printCommand(mensagem);
         }
 
         System.out.println("Stopped Robot Server");
