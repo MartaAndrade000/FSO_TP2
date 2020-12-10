@@ -1,15 +1,10 @@
 package tp2;
 
-import java.awt.EventQueue;
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
-import javax.swing.JTextArea;
 
 public class GUIBuffer extends JFrame {
 
@@ -29,17 +24,21 @@ public class GUIBuffer extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new BorderLayout());
 		
 		JLabel lblBuffer = new JLabel("BufferCircular");
 		lblBuffer.setBounds(19, 22, 123, 16);
-		contentPane.add(lblBuffer);
-		
+		contentPane.add(lblBuffer, BorderLayout.NORTH);
+
+		JScrollPane xpto = new JScrollPane();
+		contentPane.add(xpto, BorderLayout.CENTER);
+
 		bufferTextArea = new JTextArea();
 		bufferTextArea.setEditable(false);
-		bufferTextArea.setBounds(19, 48, 476, 278);
-		contentPane.add(bufferTextArea);
-		
+//		bufferTextArea.setBounds(19, 48, 476, 278);
+//		contentPane.add(bufferTextArea);
+
+		xpto.setViewportView(bufferTextArea);
 		setVisible(true);
 	}
 	

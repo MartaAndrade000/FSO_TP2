@@ -89,7 +89,8 @@ public class App {
 	}
 
 	public void desenhaCirculo(int raio, int direcao) {
-		if(lastDim > 0) 
+		// Espaça formas após primeira forma
+		if(lastDim > 0)
 			espacarFormas.desenha(lastDim+raio);
 		circulo.desenha(raio, direcao);
 		lastDim = raio;
