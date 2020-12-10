@@ -28,6 +28,8 @@ import javax.swing.ButtonGroup;
 
 public class GUIApp extends JFrame {
 
+	private int lado;
+	private int raio;
 	private App app;
 	private int direcaoQuadrado = App.DIRECAO_ESQ;
 	private int direcaoCirculo  = App.DIRECAO_ESQ;
@@ -142,7 +144,7 @@ public class GUIApp extends JFrame {
 					System.out.println("Erro Spinner");
 				}
 				if(rdbtnOnoff.isSelected()) {
-					int lado = (Integer) spinnerLado.getValue();
+					lado = (Integer) spinnerLado.getValue();
 
 					handleDesenhar(App.DESENHA_QUADRADO, lado, direcaoQuadrado);
 				} else{
@@ -213,8 +215,7 @@ public class GUIApp extends JFrame {
 					System.out.println("Erro Spinner");
 				}
 				if(rdbtnOnoff.isSelected()) {
-					int raio = (Integer) spinnerRaio.getValue();
-
+					raio = (Integer) spinnerRaio.getValue();
 					handleDesenhar(App.DESENHA_CIRCULO, raio, direcaoCirculo);
 				} else {
 					logInfo("Impossível desenhar, Robot desligado");
@@ -267,13 +268,14 @@ public class GUIApp extends JFrame {
 		setVisible(true);
 	}
 	
-	protected void handleDesenhar(int tipoDeDesennho, int dim, int direcao) {
-		if(tipoDeDesennho == App.DESENHA_QUADRADO) {
-			app.desenhaQuadrado(dim, direcao);
-		}
-		else if(tipoDeDesennho == App.DESENHA_CIRCULO) {
-			app.desenhaCirculo(dim, direcao);
-		}
+	protected void handleDesenhar(int tipoDeDesenho, int dim, int direcao) {
+		app.desenharForma(tipoDeDesenho);
+//		if(tipoDeDesenho == App.DESENHA_QUADRADO) {
+//			app.desenhaQuadrado(dim, direcao);
+//		}
+//		else if(tipoDeDesenho == App.DESENHA_CIRCULO) {
+//			app.desenhaCirculo(dim, direcao);
+//		}
 		
 	}
 
@@ -285,5 +287,15 @@ public class GUIApp extends JFrame {
 	public void logInfo(String txt) {
 		if (app.DEBUG)
 			consolaTextField.setText(txt);
+	}
+
+	public int[] getQuadrado() {
+
+		return (new int[] {lado, direcaoQuadrado});
+
+	}
+
+	public int[] getCirculo() {
+		return (new int[] {raio, direcaoCirculo});
 	}
 }

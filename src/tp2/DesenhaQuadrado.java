@@ -15,7 +15,8 @@ public class DesenhaQuadrado extends Comportamento {
 	public void desenha(int dimLado, int direcao) {
 		this.dimLado = dimLado;
 		this.direcao = direcao;
-		estado = DESENHAR;
+		haTrabalho.release();
+		estado = ESCREVER_FORMA;
 	}
 
 	protected void desenharForma() {

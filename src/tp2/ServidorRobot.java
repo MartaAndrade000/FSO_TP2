@@ -14,8 +14,7 @@ public class ServidorRobot extends Thread {
     }
 
     /**
-     * TODO gui prints
-     * TODO sleep while car is executing task (here?)
+     *
      */
     public void run() {
 
@@ -35,10 +34,10 @@ public class ServidorRobot extends Thread {
                     robot.Reta(((Reta) mensagem).getDist());
                     break;
                 case CURVA_ESQ:
-                    robot.CurvarEsq(((CurvarEsquerda) mensagem).getRaio(), ((CurvarEsquerda) mensagem).getAngulo());
+                    robot.CurvarEsquerda(((CurvarEsquerda) mensagem).getRaio(), ((CurvarEsquerda) mensagem).getAngulo());
                     break;
                 case CURVA_DIR:
-                    robot.CurvarDir(((CurvarDireita) mensagem).getRaio(), ((CurvarDireita) mensagem).getAngulo());
+                    robot.CurvarDireita(((CurvarDireita) mensagem).getRaio(), ((CurvarDireita) mensagem).getAngulo());
                     break;
                 case PARAR:
                     robot.Parar(((Parar) mensagem).getAssincrono());

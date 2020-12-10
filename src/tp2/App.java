@@ -3,7 +3,14 @@ package tp2;
 import java.util.concurrent.Semaphore;
 
 public class App {
-	
+
+	protected int estado;
+
+	//ESTADOS
+	private static final int ESPERAR = 0;
+	private static final int DESENHAR  = 1;
+	private static final int ESPACAR  = 2;
+
 	// TODO o prof falou de uma maq de estados nos comportamentos e na propria App
 	// Nos comportamentos não vejo como é necessário, eu usei a variavel "podeDesenhar"
 	
@@ -21,7 +28,9 @@ public class App {
   	//Tipos de Desenho
   	public static final int DESENHA_QUADRADO = 0;
   	public static final int DESENHA_CIRCULO  = 1;
-  	
+
+  	private int forma;
+
 	GUIApp gui;
 
 	ClienteRobot cliente;
@@ -35,7 +44,9 @@ public class App {
 	EspacarFormasGeometricas espacarFormas;
 	
 	int lastDim;
-	
+
+	private Semaphore haTrabalho;
+
 	public App() {
 		this.gui = new GUIApp(this);
 		
@@ -44,7 +55,9 @@ public class App {
 		this.robot = new RobotDesenhador();
 		this.cliente = new ClienteRobot(buffer);
 		this.servidor = new ServidorRobot(buffer, robot);
-		
+
+		haTrabalho = new Semaphore(0);
+
 		Semaphore sReady = new Semaphore(1);
 		
 		this.quadrado = new DesenhaQuadrado(buffer, sReady);
@@ -52,21 +65,75 @@ public class App {
 		this.espacarFormas = new EspacarFormasGeometricas(buffer, sReady);	
 		
 		this.lastDim = 0;
-		}
+
+		quadrado.start();
+		circulo.start();
+		espacarFormas.start();
+		servidor.start();
+
+		estado = ESPERAR;
+	}
 	
-	 public static void main(String[] args) {
+	 public static void main(String[] args) throws InterruptedException {
 		 App app = new App();
 		 app.run();
 	 }
-	 
-	 private void run() {
-		 quadrado.start();
-		 circulo.start();
-		 espacarFormas.start();
-		 servidor.start();
+
+	 private void run() throws InterruptedException {
+		 while (true) {
+			 switch (estado) {
+				 case ESPERAR:
+				 	System.out.println("A esperar");
+//				 	Thread.sleep(0);
+				 	haTrabalho.acquire();
+				 	// TODO fazer semaforo para não usar CPU
+				 	break;
+
+				 case ESPACAR:
+
+				 	System.out.println("A espaçar");
+				 	espacarFormas.desenha(10);
+
+				 	if(estado == ESPACAR) {
+						estado = DESENHAR;
+						break;
+					}
+
+				 case DESENHAR:
+				 	System.out.println("A desenhar");
+
+				 	if(forma == DESENHA_QUADRADO) {
+//						System.out.println("Forma = Desenha quadrado");
+						desenhaQuadrado(gui.getQuadrado());
+					}
+
+				 	else if(forma == DESENHA_CIRCULO) {
+//						System.out.println("Forma = Desenha circulo");
+						desenhaCirculo(gui.getCirculo());
+				 	}
+
+				 	if(estado == DESENHAR) {
+						estado = ESPERAR;
+						break;
+					}
+
+			 }
+		 }
 	 }
 
 	public boolean ligarRobot(String nomeRobot) {
+//		if(cliente.OpenEV3(nomeRobot)) {
+//			System.out.println("nome: " + robot.getRobot());
+//			if(robot.getRobot() != null) {
+//				System.out.println("here");
+//				return true;
+//			}
+//			else {
+//				return false;
+//			}
+//		}
+//		else
+//			return false;
 		return cliente.OpenEV3(nomeRobot);
 	}
 
@@ -74,19 +141,20 @@ public class App {
 		cliente.CloseEV3();
 	}
 
-	public void desenhaQuadrado(int lado, int direcao) {
-		// Espaça formas após primeira forma
-		if(lastDim > 0)
-			espacarFormas.desenha(lastDim);
-		quadrado.desenha(lado, direcao);
-		lastDim = lado;
+	public void desenharForma(int forma) {
+//		System.out.println("Forma = " + forma);
+		haTrabalho.release();
+		this.forma = forma;
+		estado = ESPACAR;
 	}
 
-	public void desenhaCirculo(int raio, int direcao) {
+	public void desenhaQuadrado(int[] dimQuadrado) {
 		// Espaça formas após primeira forma
-		if(lastDim > 0)
-			espacarFormas.desenha(lastDim+raio);
-		circulo.desenha(raio, direcao);
-		lastDim = raio;
+		quadrado.desenha(dimQuadrado[0], dimQuadrado[1]);
+	}
+
+	public void desenhaCirculo(int[] dimCirculo) {
+		// Espaça formas após primeira forma
+		circulo.desenha(dimCirculo[0], dimCirculo[1]);
 	}
 }

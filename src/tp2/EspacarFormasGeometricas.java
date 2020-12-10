@@ -14,7 +14,8 @@ public class EspacarFormasGeometricas extends Comportamento {
 	
 	public void desenha(int dist) {
 		this.dist = dist + distEspacamento;
-		estado = DESENHAR;
+		haTrabalho.release();
+		estado = ESCREVER_FORMA;
 	}
 
 	protected void desenharForma() {

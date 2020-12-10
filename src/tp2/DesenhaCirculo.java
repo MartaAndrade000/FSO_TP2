@@ -14,7 +14,8 @@ public class DesenhaCirculo extends Comportamento {
 	public void desenha(int raio, int direcao) {
 		this.raio = raio;
 		this.direcao = direcao;
-		estado = DESENHAR;
+		haTrabalho.release();
+		estado = ESCREVER_FORMA;
 	}
 
 	protected void desenharForma() {

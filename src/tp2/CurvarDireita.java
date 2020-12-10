@@ -3,9 +3,9 @@ package tp2;
 public class CurvarDireita extends Mensagem {
 
 	int raio;
-	int angulo;
+	float angulo;
 	
-	public CurvarDireita(int raio, int angulo) {
+	public CurvarDireita(int raio, float angulo) {
 		super(TIPO_MENSAGEM.CURVA_DIR, String.format("Curva à Direita (raio %d, ângulo %d) \n", raio, angulo));
 		this.raio = raio;
 		this.angulo = angulo;
@@ -14,7 +14,8 @@ public class CurvarDireita extends Mensagem {
 	public int getRaio() {
 		return this.raio;
 	}
-	public int getAngulo() {
+
+	public float getAngulo() {
 		return this.angulo;
 	}
 }

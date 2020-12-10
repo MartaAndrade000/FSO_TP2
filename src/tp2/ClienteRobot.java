@@ -7,7 +7,7 @@ public class ClienteRobot {
 	BufferCircular buffer;
 	
 	public ClienteRobot(BufferCircular buffer) {
-		this.gui = new GUICliente();
+//		this.gui = new GUICliente();
 		this.buffer = buffer;
 	}
 	
@@ -16,34 +16,39 @@ public class ClienteRobot {
 	}
 
 	public void Reta(int dimLado) {
-		setMensagem(new Reta(dimLado));
+		Mensagem m = new Reta(dimLado);
+//		gui.printCommand(m);
+		setMensagem(m);
 	}
 
-	public void CurvarEsquerda(int raio, int angulo) {
-		setMensagem(new CurvarEsquerda(raio, angulo));
+	public void CurvarEsquerda(int raio, float angulo) {
+		Mensagem m = new CurvarEsquerda(raio, angulo);
+//		gui.printCommand(m);
+		setMensagem(m);
 	}
 	
-	public void CurvarDireita(int raio, int angulo) {
-		setMensagem(new CurvarDireita(raio, angulo));		
+	public void CurvarDireita(int raio, float angulo) {
+		Mensagem m = new CurvarDireita(raio, angulo);
+//		gui.printCommand(m);
+		setMensagem(m);
 	}
 
 	public void parar(boolean assincrono) {
-		setMensagem(new Parar(assincrono));
+		Mensagem m = new Parar(assincrono);
+//		gui.printCommand(m);
+		setMensagem(m);
 	}
 
-	// TODO como verificar que o robot foi aberto?
 	public boolean OpenEV3(String nomeRobot) {
-
-		if(!nomeRobot.equals("")) {
-			// Impede que dê se a pessoa não der nome ao robot
-			setMensagem(new OpenEV3(nomeRobot));
-			return true;
-		}
-		else
-			return false;
+		Mensagem m = new OpenEV3(nomeRobot);
+//		gui.printCommand(m);
+		setMensagem(m);
+		return true;
 	}
 
 	public void CloseEV3() {
-		setMensagem(new CloseEV3());
+		Mensagem m = new CloseEV3();
+//		gui.printCommand(m);
+		setMensagem(m);
 	}
 }
