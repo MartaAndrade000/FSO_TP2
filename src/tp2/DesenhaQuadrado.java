@@ -3,7 +3,7 @@ package tp2;
 import java.util.concurrent.Semaphore;
 
 public class DesenhaQuadrado extends Thread {
-	
+	// TODO fazer super behaviour
 	// TODO Fazer sleep entre cada comando
 	// TODO eu falei com o prof sobre a questão do tempo de uma rotação de raio 0
 	// e é o mesmo tempo que percorrer 5.5cm

@@ -61,7 +61,7 @@ public class GUIServidor {
         comandosScrollPane = new JScrollPane();
         comandosScrollPane.setBounds(305, 53, 17, 213);
         frmServidorDoRobot.getContentPane().add(comandosScrollPane);
-        
+
         frmServidorDoRobot.setVisible(true);
     }
 
