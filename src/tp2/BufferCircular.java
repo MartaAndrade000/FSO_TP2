@@ -52,6 +52,9 @@ public class BufferCircular {
     		m = buffer[getIndex];
     		getIndex = ++getIndex % dimBuffer; // Dar a volta ao array
     	}
+		catch(InterruptedException ex){
+			System.out.println("Thread '" + Thread.currentThread().getName() + "' was interrupted");
+		}
     	catch(Exception ex){
     	    ex.printStackTrace();
     	}

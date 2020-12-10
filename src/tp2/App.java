@@ -63,6 +63,11 @@ public class App {
 		 quadrado.start();
 		 circulo.start();
 		 espacarFormas.start();
+		 servidor.start();
+	 }
+
+	 public void stop() {
+		servidor.interrupt();
 	 }
 
 	public boolean ligarRobot(String nomeRobot) {
