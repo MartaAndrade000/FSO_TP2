@@ -40,6 +40,7 @@ public class ServidorRobot implements Runnable {
             Mensagem mensagem = buffer.getMensagem();
 
             if (mensagem == null) continue;
+//            System.out.println("Read message: " + mensagem.getTipo());
 
             switch (mensagem.getTipo()) {
 
@@ -64,6 +65,7 @@ public class ServidorRobot implements Runnable {
                 default:
                     System.out.println("Unknown message type");
             }
+            gui.mostraComando(mensagem);
         }
 
         System.out.println("Stopped Robot Server");
