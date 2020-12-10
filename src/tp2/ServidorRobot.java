@@ -45,22 +45,22 @@ public class ServidorRobot implements Runnable {
             switch (mensagem.getTipo()) {
 
                 case OPEN:
-                    robot.openEV3(((OpenEV3) mensagem).getRobotName());
+                    robot.OpenEV3(((OpenEV3) mensagem).getRobotName());
                     break;
                 case CLOSE:
-                    robot.closeEV3();
+                    robot.CloseEV3();
                     break;
                 case RETA:
-                    robot.reta(((Reta) mensagem).getDist());
+                    robot.Reta(((Reta) mensagem).getDist());
                     break;
                 case CURVA_ESQ:
-                    robot.curvarEsq(((CurvarEsquerda) mensagem).getRaio(), ((CurvarEsquerda) mensagem).getAngulo());
+                    robot.CurvarEsq(((CurvarEsquerda) mensagem).getRaio(), ((CurvarEsquerda) mensagem).getAngulo());
                     break;
                 case CURVA_DIR:
                     robot.curvarDir(((CurvarDireita) mensagem).getRaio(), ((CurvarDireita) mensagem).getAngulo());
                     break;
                 case PARAR:
-                    robot.parar(((Parar) mensagem).getAssincrono());
+                    robot.Parar(((Parar) mensagem).getAssincrono());
                     break;
                 default:
                     System.out.println("Unknown message type");

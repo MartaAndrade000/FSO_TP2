@@ -22,7 +22,7 @@ public class RobotDesenhador {
 	 * @param name Robots name
 	 * @return Returns whether connection was successfully established
 	 */
-	public boolean openEV3(String name) {
+	public boolean OpenEV3(String name) {
 		return true;
 	}
 
@@ -30,15 +30,13 @@ public class RobotDesenhador {
 	/**
 	 * Encerra o canal de comunicação
 	 */
-	public void closeEV3() {}
+	public void CloseEV3() {}
 
-	public void reta(int dist) {}
+	public void Reta(int dist) {}
 
-	public void curvarEsq(int raio, int angulo){}
+	public void CurvarEsq(int raio, int angulo){}
 
-	void curvarDir(float raio, int angulo){}
+	void CurvarDir(float raio, int angulo){}
 
-	void parar(boolean assincrono){}
-
-	void setVelocidade(int percentagem){}
+	void Parar(boolean assincrono){}
 }
