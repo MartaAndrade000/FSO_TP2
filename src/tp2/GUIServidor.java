@@ -1,71 +1,45 @@
 package tp2;
 
+import tp2.Mensagem;
+
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 
-public class GUIServidor {
-
-    private JFrame frmServidorDoRobot;
-    private JTextArea comandostextArea;
-    private JScrollPane comandosScrollPane;
+public class GUIServidor extends JFrame {
 
     /**
-     * Launch the application.
+     *
      */
-    /*public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    GUIServidor window = new GUIServidor();
-                    window.frmServidorDoRobot.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }*/
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private JTextArea servidorTextArea;
 
     /**
-     * Create the application.
+     * Create the frame.
      */
     public GUIServidor() {
-        initialize();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 515, 368);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(new BorderLayout());
 
+        JLabel lblBuffer = new JLabel("Comandos lidos do Buffer");
+        lblBuffer.setBounds(19, 22, 123, 16);
+        contentPane.add(lblBuffer, BorderLayout.NORTH);
+
+        JScrollPane servidorScrollPane = new JScrollPane();
+        contentPane.add(servidorScrollPane, BorderLayout.CENTER);
+
+        servidorTextArea = new JTextArea();
+        servidorTextArea.setEditable(false);
+
+        servidorScrollPane.setViewportView(servidorTextArea);
+        setVisible(true);
     }
-
-    /**
-     * Initialize the contents of the frame.
-     */
-    private void initialize() {
-        frmServidorDoRobot = new JFrame();
-        frmServidorDoRobot.setTitle("Servidor do Robot");
-        frmServidorDoRobot.setBounds(100, 100, 348, 330);
-        frmServidorDoRobot.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frmServidorDoRobot.getContentPane().setLayout(null);
-
-        JLabel lblComandos = new JLabel("Comandos Lidos Do Buffer:");
-        lblComandos.setBounds(10, 23, 140, 14);
-        frmServidorDoRobot.getContentPane().add(lblComandos);
-
-        comandostextArea = new JTextArea();
-        comandostextArea.setBounds(10, 53, 312, 213);
-        frmServidorDoRobot.getContentPane().add(comandostextArea);
-
-        comandosScrollPane = new JScrollPane();
-        comandosScrollPane.setBounds(305, 53, 17, 213);
-        frmServidorDoRobot.getContentPane().add(comandosScrollPane);
-
-        frmServidorDoRobot.setVisible(true);
-    }
-
-/*    public void mostraComando(Mensagem m) {
-        comandostextArea.append(m + "\n");
-
-        // Puxar scroll para baixo
-        JScrollBar verticalScrollPane = comandosScrollPane.getVerticalScrollBar();
-        verticalScrollPane.setValue(verticalScrollPane.getMaximum());
-    }*/
 
     public void printCommand(Mensagem m) {
         // Porque dá erro quando já é a tarefa gráfica a fazer append
@@ -76,7 +50,7 @@ public class GUIServidor {
                     public void run() {
                         // TODO devia fazer scroll e não faz, quero perceber porquê
                         String texto = String.format( "[%s] %s", Thread.currentThread().getName(), m.getTexto() ) ;
-                        comandostextArea.append(texto);
+                        servidorTextArea.append(texto);
                     }
                 });
             }
@@ -86,7 +60,8 @@ public class GUIServidor {
         }
         else {
             String texto = String.format( "[%s] %s", Thread.currentThread().getName(), m.getTexto() ) ;
-            comandostextArea.append(texto);
+            servidorTextArea.append(texto);
         }
     }
 }
+

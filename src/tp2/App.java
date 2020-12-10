@@ -88,10 +88,18 @@ public class App {
 	}
 
 	public void desenhaCirculo(int raio, int direcao) {
+<<<<<<< HEAD
 		if(lastDim > 0) {
 			espacarFormas.desenha(lastDim + raio);
 			circulo.desenha(raio, direcao);
 			lastDim = raio;
 		}
+=======
+		// Espaça formas após primeira forma
+		if(lastDim > 0)
+			espacarFormas.desenha(lastDim+raio);
+		circulo.desenha(raio, direcao);
+		lastDim = raio;
+>>>>>>> sofia
 	}
 }
