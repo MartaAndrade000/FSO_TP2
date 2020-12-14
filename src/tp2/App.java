@@ -6,7 +6,7 @@ public class App {
 
 	protected int estado;
 	// TODO fazer enum
-	
+
 	//ESTADOS
 	private static final int ESPERAR = 0;
 	private static final int DESENHAR  = 1;
@@ -58,11 +58,11 @@ public class App {
 
 		haTrabalho = new Semaphore(0);
 
-		Semaphore sReady = new Semaphore(1);
+		Semaphore sMutex = new Semaphore(1);
 		
-		this.quadrado = new DesenhaQuadrado(buffer, sReady);
-		this.circulo = new DesenhaCirculo(buffer, sReady);
-		this.espacarFormas = new EspacarFormasGeometricas(buffer, sReady);	
+		this.quadrado = new DesenhaQuadrado(buffer, sMutex);
+		this.circulo = new DesenhaCirculo(buffer, sMutex);
+		this.espacarFormas = new EspacarFormasGeometricas(buffer, sMutex);
 		
 		this.lastDim = 0;
 
@@ -95,8 +95,8 @@ public class App {
 
 				 	if(estado == ESPACAR) {
 						estado = DESENHAR;
-						break;
 					}
+				 	break;
 
 				 case DESENHAR:
 				 	System.out.println("A desenhar");
