@@ -10,9 +10,8 @@ public class App {
 	private static final int ESPERAR = 0;
 	private static final int DESENHAR  = 1;
 	private static final int ESPACAR  = 2;
+	private static final int TERMINAR  = 3;
 
-	// TODO o prof falou de uma maq de estados nos comportamentos e na propria App
-	// Nos comportamentos não vejo como é necessário, eu usei a variavel "podeDesenhar"
 	
 	// TODO começar a desenhar apenas quando o robot estiver ligado
 	
@@ -116,6 +115,8 @@ public class App {
 						break;
 					}
 
+				 case TERMINAR:
+				 	break;
 			 }
 		 }
 	 }
