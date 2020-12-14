@@ -4,7 +4,8 @@ import java.util.concurrent.Semaphore;
 
 public class EspacarFormasGeometricas extends Comportamento {
 
-	// TODO maybe fazer uma forma de alterar isto pela GUIApp?
+	// TODO refazer espaçar formas
+
 	private final int distEspacamento = 10; // distância de espaçamento
 	private int dist;
 	

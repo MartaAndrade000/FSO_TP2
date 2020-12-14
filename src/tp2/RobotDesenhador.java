@@ -24,15 +24,16 @@ public class RobotDesenhador {
 	 * @param name Robots name
 	 * @return Returns whether connection was successfully established
 	 */
-	public void OpenEV3(String name) {
+	public boolean OpenEV3(String name) {
 		// if(Robot.OpenEV3(String name)) {
 			// Robot = new Robot();
 		// }
-		Mensagem m = new OpenEV3(name);
-		gui.printCommand(m);
+//		Mensagem m = new OpenEV3(name);
+//		gui.printCommand(m);
 //		robot = "Robot";
 //		System.out.println(robot);
 //		System.out.println("entrou no robot");
+		return true;
 	}
 
 	public String getRobot() {

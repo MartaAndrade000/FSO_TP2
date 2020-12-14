@@ -5,13 +5,13 @@ import java.util.concurrent.Semaphore;
 public class App {
 
 	protected int estado;
-
+	// TODO fazer enum
+	
 	//ESTADOS
 	private static final int ESPERAR = 0;
 	private static final int DESENHAR  = 1;
 	private static final int ESPACAR  = 2;
 	private static final int TERMINAR  = 3;
-
 	
 	// TODO começar a desenhar apenas quando o robot estiver ligado
 	
@@ -35,7 +35,8 @@ public class App {
 	ClienteRobot cliente;
 	ServidorRobot servidor;
 	RobotDesenhador robot;
-	
+	//RobotLegoEV3 robot;
+
 	BufferCircular buffer;
 	
 	DesenhaQuadrado quadrado;
@@ -121,20 +122,22 @@ public class App {
 		 }
 	 }
 
+	 // Abre diretamente
 	public boolean ligarRobot(String nomeRobot) {
-//		if(cliente.OpenEV3(nomeRobot)) {
-//			System.out.println("nome: " + robot.getRobot());
-//			if(robot.getRobot() != null) {
-//				System.out.println("here");
-//				return true;
-//			}
-//			else {
-//				return false;
-//			}
-//		}
-//		else
-//			return false;
-		return cliente.OpenEV3(nomeRobot);
+		return robot.OpenEV3(nomeRobot);
+	//		if(cliente.OpenEV3(nomeRobot)) {
+	//			System.out.println("nome: " + robot.getRobot());
+	//			if(robot.getRobot() != null) {
+	//				System.out.println("here");
+	//				return true;
+	//			}
+	//			else {
+	//				return false;
+	//			}
+	//		}
+	//		else
+	//			return false;
+		// return cliente.OpenEV3(nomeRobot);
 	}
 
 	public void desligarRobot() {
