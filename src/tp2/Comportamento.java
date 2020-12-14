@@ -15,13 +15,13 @@ public abstract class Comportamento extends Thread {
     protected static final int ESCREVER_FORMA = 1;
     
     protected ClienteRobot cliente;
-    protected Semaphore sReady;
+    protected Semaphore sMutex;
     protected Semaphore haTrabalho;
 //  protected boolean podeDesenhar;
 
-    public Comportamento(BufferCircular buffer, Semaphore sReady) {
+    public Comportamento(BufferCircular buffer, Semaphore sMutex) {
         this.cliente = new ClienteRobot(buffer);
-        this.sReady = sReady;
+        this.sMutex = sMutex;
         haTrabalho = new Semaphore(0);
 //        this.podeDesenhar = false;
         estado = ESPERAR;
@@ -42,14 +42,14 @@ public abstract class Comportamento extends Thread {
 
                     case ESCREVER_FORMA:
                         try {
-                            sReady.acquire();
+                            sMutex.acquire();
                             desenharForma();
                             System.out.println("(Comportamento) A desenhar a forma");
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                         finally {
-                            sReady.release();
+                            sMutex.release();
                         }
 
                         if(estado == ESCREVER_FORMA) {
@@ -61,6 +61,8 @@ public abstract class Comportamento extends Thread {
     }
 
     protected abstract void desenharForma();
+
+    protected abstract void desenha();
 }
 
 

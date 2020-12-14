@@ -269,14 +269,7 @@ public class GUIApp extends JFrame {
 	}
 	
 	protected void handleDesenhar(int tipoDeDesenho, int dim, int direcao) {
-		app.desenharForma(tipoDeDesenho);
-//		if(tipoDeDesenho == App.DESENHA_QUADRADO) {
-//			app.desenhaQuadrado(dim, direcao);
-//		}
-//		else if(tipoDeDesenho == App.DESENHA_CIRCULO) {
-//			app.desenhaCirculo(dim, direcao);
-//		}
-		
+		app.desenharForma(tipoDeDesenho, dim, direcao);
 	}
 
 	/**
@@ -289,13 +282,13 @@ public class GUIApp extends JFrame {
 			consolaTextField.setText(txt);
 	}
 
-	public int[] getQuadrado() {
-
-		return (new int[] {lado, direcaoQuadrado});
-
-	}
-
-	public int[] getCirculo() {
-		return (new int[] {raio, direcaoCirculo});
-	}
+//	public int[] getQuadrado() {
+//
+//		return (new int[] {lado, direcaoQuadrado});
+//
+//	}
+//
+//	public int[] getCirculo() {
+//		return (new int[] {raio, direcaoCirculo});
+//	}
 }

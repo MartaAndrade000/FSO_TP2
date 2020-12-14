@@ -17,9 +17,7 @@ public class ServidorRobot extends Thread {
      *
      */
     public void run() {
-
 		while (true) {
-
             Mensagem mensagem = buffer.getMensagem();
 
             switch (mensagem.getTipo()) {

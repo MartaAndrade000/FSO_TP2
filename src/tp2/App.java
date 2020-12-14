@@ -4,31 +4,31 @@ import java.util.concurrent.Semaphore;
 
 public class App {
 
-	protected int estado;
-	// TODO fazer enum
-
 	//ESTADOS
-	private static final int ESPERAR = 0;
-	private static final int DESENHAR  = 1;
-	private static final int ESPACAR  = 2;
-	private static final int TERMINAR  = 3;
-	
-	// TODO começar a desenhar apenas quando o robot estiver ligado
-	
-	// TODO desativar botoes de desenhar quando o robot ainda está a executar comandos
-	
-	// Ativa ou desativa o DEBUG
-    static final boolean DEBUG = true;
-    
-    //Tipos de Direção
-  	public static final int DIRECAO_ESQ = 0;
-  	public static final int DIRECAO_DIR  = 1;
-  	
-  	//Tipos de Desenho
-  	public static final int DESENHA_QUADRADO = 0;
-  	public static final int DESENHA_CIRCULO  = 1;
+	private enum TIPO_ESTADO {
+		ESPERAR, ESPACAR_E_DESENHAR, TERMINAR
+	}
 
-  	private int forma;
+	protected TIPO_ESTADO estado;
+
+	// TODO começar a desenhar apenas quando o robot estiver ligado
+
+	// TODO desativar botoes de desenhar quando o robot ainda está a executar comandos
+
+	// Ativa ou desativa o DEBUG
+	static final boolean DEBUG = true;
+
+	//Tipos de Direção
+	public static final int DIRECAO_ESQ = 0;
+	public static final int DIRECAO_DIR = 1;
+
+	//Tipos de Desenho
+	public static final int DESENHA_QUADRADO = 0;
+	public static final int DESENHA_CIRCULO = 1;
+
+	private int lastDim;
+	private int nextDim;
+	private Comportamento nextShape;
 
 	GUIApp gui;
 
@@ -38,20 +38,18 @@ public class App {
 	//RobotLegoEV3 robot;
 
 	BufferCircular buffer;
-	
+
 	DesenhaQuadrado quadrado;
 	DesenhaCirculo circulo;
 	EspacarFormasGeometricas espacarFormas;
-	
-	int lastDim;
 
 	private Semaphore haTrabalho;
 
 	public App() {
 		this.gui = new GUIApp(this);
-		
+
 		this.buffer = new BufferCircular();
-		
+
 		this.robot = new RobotDesenhador();
 		this.cliente = new ClienteRobot(buffer);
 		this.servidor = new ServidorRobot(buffer, robot);
@@ -59,84 +57,66 @@ public class App {
 		haTrabalho = new Semaphore(0);
 
 		Semaphore sMutex = new Semaphore(1);
-		
-		this.quadrado = new DesenhaQuadrado(buffer, sMutex);
-		this.circulo = new DesenhaCirculo(buffer, sMutex);
-		this.espacarFormas = new EspacarFormasGeometricas(buffer, sMutex);
-		
-		this.lastDim = 0;
+		Semaphore sStartDrawing = new Semaphore(0);
+
+		this.quadrado = new DesenhaQuadrado(buffer, sMutex, sStartDrawing);
+		this.circulo = new DesenhaCirculo(buffer, sMutex, sStartDrawing);
+		this.espacarFormas = new EspacarFormasGeometricas(buffer, sMutex, sStartDrawing);
 
 		quadrado.start();
 		circulo.start();
 		espacarFormas.start();
 		servidor.start();
 
-		estado = ESPERAR;
+		estado = TIPO_ESTADO.ESPERAR;
+
+		lastDim = 0;
 	}
-	
-	 public static void main(String[] args) throws InterruptedException {
-		 App app = new App();
-		 app.run();
-	 }
 
-	 private void run() throws InterruptedException {
-		 while (true) {
-			 switch (estado) {
-				 case ESPERAR:
-				 	System.out.println("A esperar");
+	public static void main(String[] args) throws InterruptedException {
+		App app = new App();
+		app.run();
+	}
+
+	private void run() throws InterruptedException {
+		while (true) {
+			switch (estado) {
+				case ESPERAR:
 //				 	Thread.sleep(0);
-				 	haTrabalho.acquire();
-				 	break;
+					haTrabalho.acquire();
+					break;
 
-				 case ESPACAR:
+				case ESPACAR_E_DESENHAR:
+					espacarFormas.desenha(lastDim, nextDim, nextShape);
 
-				 	System.out.println("A espaçar");
-				 	espacarFormas.desenha(10);
+					lastDim = nextDim;
 
-				 	if(estado == ESPACAR) {
-						estado = DESENHAR;
+					if (estado == TIPO_ESTADO.ESPACAR_E_DESENHAR) {
+						estado = TIPO_ESTADO.ESPERAR;
 					}
-				 	break;
+					break;
 
-				 case DESENHAR:
-				 	System.out.println("A desenhar");
+				case TERMINAR:
+					break;
+			}
+		}
+	}
 
-				 	if(forma == DESENHA_QUADRADO) {
-//						System.out.println("Forma = Desenha quadrado");
-						desenhaQuadrado(gui.getQuadrado());
-					}
-
-				 	else if(forma == DESENHA_CIRCULO) {
-//						System.out.println("Forma = Desenha circulo");
-						desenhaCirculo(gui.getCirculo());
-				 	}
-
-				 	if(estado == DESENHAR) {
-						estado = ESPERAR;
-						break;
-					}
-
-				 case TERMINAR:
-				 	break;
-			 }
-		 }
-	 }
-
-	 // Abre diretamente
+	// Abre diretamente
 	public boolean ligarRobot(String nomeRobot) {
 		return robot.OpenEV3(nomeRobot);
-	//		if(cliente.OpenEV3(nomeRobot)) {
-	//			System.out.println("nome: " + robot.getRobot());
-	//			if(robot.getRobot() != null) {
-	//				System.out.println("here");
-	//				return true;
-	//			}
-	//			else {
-	//				return false;
-	//			}
-	//		}
-	//		else
-	//			return false;
+		//		if(cliente.OpenEV3(nomeRobot)) {
+		//			System.out.println("nome: " + robot.getRobot());
+		//			if(robot.getRobot() != null) {
+		//				System.out.println("here");
+		//				return true;
+		//			}
+		//			else {
+		//				return false;
+		//			}
+		//		}
+		//		else
+		//			return false;
 		// return cliente.OpenEV3(nomeRobot);
 	}
 
@@ -144,20 +124,20 @@ public class App {
 		cliente.CloseEV3();
 	}
 
-	public void desenharForma(int forma) {
-//		System.out.println("Forma = " + forma);
+	public void desenharForma(int forma, int dim, int direcao) {
 		haTrabalho.release();
-		this.forma = forma;
-		estado = ESPACAR;
-	}
+		nextDim = dim;
 
-	public void desenhaQuadrado(int[] dimQuadrado) {
-		// Espaça formas após primeira forma
-		quadrado.desenha(dimQuadrado[0], dimQuadrado[1]);
-	}
+		if (forma == DESENHA_QUADRADO) {
+			quadrado.setDimLado(dim);
+			quadrado.setDirecao(direcao);
+			nextShape = quadrado;
+		} else if (forma == DESENHA_CIRCULO) {
+			circulo.setRaio(dim);
+			circulo.setDirecao(direcao);
+			nextShape = circulo;
+		}
 
-	public void desenhaCirculo(int[] dimCirculo) {
-		// Espaça formas após primeira forma
-		circulo.desenha(dimCirculo[0], dimCirculo[1]);
+		estado = TIPO_ESTADO.ESPACAR_E_DESENHAR;
 	}
 }
