@@ -14,13 +14,6 @@ public class DesenhaQuadrado extends Comportamento {
 		super(buffer, sReady);
 		this.sStartDrawing = sStartDrawing;
 	}
-	
-	public void desenha(int dimLado, int direcao) {
-		this.dimLado = dimLado;
-		this.direcao = direcao;
-		haTrabalho.release();
-		estado = ESCREVER_FORMA;
-	}
 
 	public void desenha() {
 		this.dimLado = dimLado;
@@ -34,32 +27,21 @@ public class DesenhaQuadrado extends Comportamento {
 			sStartDrawing.acquire();
 
 			if(direcao == App.DIRECAO_ESQ) {
-				cliente.Reta(dimLado);
-				cliente.CurvarEsquerda(0,90);
-
-				cliente.Reta(dimLado);
-				cliente.CurvarEsquerda(0,90);
-
-				cliente.Reta(dimLado);
-				cliente.CurvarEsquerda(0,90);
-
-				cliente.Reta(dimLado);
-				cliente.CurvarEsquerda(0,90);
+				for(int i = 0; i<4; i++) {
+					cliente.Reta(dimLado);
+					cliente.CurvarEsquerda(0, 90);
+					cliente.parar(false);
+				}
 			}
 			else {
-				cliente.Reta(dimLado);
-				cliente.CurvarDireita(0,90);
-
-				cliente.Reta(dimLado);
-				cliente.CurvarDireita(0,90);
-
-				cliente.Reta(dimLado);
-				cliente.CurvarDireita(0,90);
-
-				cliente.Reta(dimLado);
-				cliente.CurvarDireita(0,90);
+				for(int i = 0; i<4; i++) {
+					cliente.Reta(dimLado);
+					cliente.CurvarDireita(0,90);
+					cliente.parar(false);
+				}
 			}
 			cliente.parar(false);
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

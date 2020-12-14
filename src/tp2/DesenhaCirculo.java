@@ -13,13 +13,6 @@ public class DesenhaCirculo extends Comportamento {
 		this.sStartDrawing = sStartDrawing;
 	}
 
-	public void desenha(int raio, int direcao) {
-		this.raio = raio;
-		this.direcao = direcao;
-		haTrabalho.release();
-		estado = ESCREVER_FORMA;
-	}
-
 	public void desenha() {
 		this.raio = raio;
 		this.direcao = direcao;
