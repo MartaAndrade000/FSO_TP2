@@ -2,8 +2,6 @@ package tp2;
 
 import java.util.concurrent.Semaphore;
 
-import static tp2.ServidorRobot.contas;
-
 public class EspacarFormasGeometricas extends Comportamento {
 
 	private final int distEspacamento = 10; // distância de espaçamento

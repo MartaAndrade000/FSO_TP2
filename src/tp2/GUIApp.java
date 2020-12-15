@@ -18,12 +18,7 @@ import tp1.MyChat;
 
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import javax.swing.ButtonGroup;
 
 public class GUIApp extends JFrame {
@@ -52,7 +47,16 @@ public class GUIApp extends JFrame {
 	 */
 	public GUIApp(App app) {
 		this.app = app;
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				app.stop();
+			}
+		});
+
+		//Quando fechar a janela, o processo vai sair da lista de processos do sistema operativo.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		setTitle("Desenhador de Formas");
 		setBounds(70, 70, 462, 300);
 		contentPane = new JPanel();

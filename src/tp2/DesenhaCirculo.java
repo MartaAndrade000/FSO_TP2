@@ -20,7 +20,7 @@ public class DesenhaCirculo extends Comportamento {
 
 	@Override
 	protected int getTempoExecucao() {
-		return ServidorRobot.contasCurva(raio, 360);
+		return getContasCurva(raio, 360);
 	}
 
 	protected void desenharForma() {
@@ -28,10 +28,13 @@ public class DesenhaCirculo extends Comportamento {
 			sStartDrawing.acquire();
 			if (direcao == App.DIRECAO_ESQ) {
 				cliente.CurvarEsquerda(raio, 360);
+				Thread.sleep(getContasCurva(raio, 90));
 			} else {
 				cliente.CurvarDireita(raio, 360);
+				Thread.sleep(getContasCurva(raio, 90));
 			}
 			cliente.parar(false);
+			acabouDesenho = true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

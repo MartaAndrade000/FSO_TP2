@@ -27,6 +27,8 @@ public class App {
 	private int nextDim;
 	private Comportamento nextShape;
 
+	private boolean jaDesenhou = false;
+
 	GUIApp gui;
 
 //	ClienteRobot cliente;
@@ -48,7 +50,6 @@ public class App {
 		this.buffer = new BufferCircular();
 
 		this.robot = new RobotDesenhador();
-//		this.cliente = new ClienteRobot(buffer);
 		this.servidor = new ServidorRobot(buffer, robot);
 
 		haTrabalho = new Semaphore(0);
@@ -56,7 +57,7 @@ public class App {
 		Semaphore sMutex = new Semaphore(1);
 		Semaphore sStartDrawing = new Semaphore(0);
 
-		this.quadrado = new DesenhaQuadrado(buffer, sMutex, sStartDrawing);
+		this.quadrado = new DesenhaQuadrado(this, buffer, sMutex, sStartDrawing);
 		this.circulo = new DesenhaCirculo(buffer, sMutex, sStartDrawing);
 		this.espacarFormas = new EspacarFormasGeometricas(buffer, sMutex, sStartDrawing);
 
@@ -76,33 +77,41 @@ public class App {
 	}
 
 	 public void stop() {
-		servidor.stop();
+		estado = TIPO_ESTADO.TERMINAR;
 	 }
 
 	private void run() throws InterruptedException {
 		while (true) {
 			switch (estado) {
 				case ESPERAR:
-					/* TODO uma sugestao (adicionar checks para ter a certeza que há forma a ser desenhada) */
-					esperarPeloDesenhoDaForma();
-
+					jaDesenhou = false;
 					haTrabalho.acquire();
 					break;
 
 				case ESPACAR_E_DESENHAR:
-					espacarFormas.desenha(lastDim, nextDim, nextShape);
+//					System.out.println("Mudou de estado");
+					if(!jaDesenhou) {
+//						System.out.println("A espaçar e desenhar");
+						espacarFormas.desenha(lastDim, nextDim, nextShape);
+						lastDim = nextDim;
+						//esperarPeloDesenhoDaForma();
+						jaDesenhou = true;
+					}
 
-					lastDim = nextDim;
-
-					/* TODO outra sugestao */
-					esperarPeloDesenhoDaForma();
-
-					if (estado == TIPO_ESTADO.ESPACAR_E_DESENHAR) {
+					if (estado == TIPO_ESTADO.ESPACAR_E_DESENHAR && nextShape.isAcabouDesenho()) {
+//						System.out.println("Entrou");
+						gui.setEstadoBtnFormas(true);
 						estado = TIPO_ESTADO.ESPERAR;
+						nextShape.setAcabouDesenho(false);
 					}
 					break;
 
 				case TERMINAR:
+					System.out.println("A Terminar");
+					espacarFormas.terminarComportamento();
+					quadrado.terminarComportamento();
+					circulo.terminarComportamento();
+					servidor.terminaServidor();
 					break;
 			}
 		}
@@ -119,6 +128,8 @@ public class App {
 	 */
 	private void esperarPeloDesenhoDaForma() {
 		// TODO BLOQUEAR botoes das formas
+		if(nextShape == null) return;
+
 		gui.setEstadoBtnFormas(false); // MIAU :3
 		try {
 			Thread.sleep(nextShape.getTempoExecucao());
@@ -129,29 +140,18 @@ public class App {
 		gui.setEstadoBtnFormas(true); // MIAU :3
 	}
 
-	// Abre diretamente
+	// Liga diretamente
 	public boolean ligarRobot(String nomeRobot) {
 		return robot.OpenEV3(nomeRobot);
-		//		if(cliente.OpenEV3(nomeRobot)) {
-		//			System.out.println("nome: " + robot.getRobot());
-		//			if(robot.getRobot() != null) {
-		//				System.out.println("here");
-		//				return true;
-		//			}
-		//			else {
-		//				return false;
-		//			}
-		//		}
-		//		else
-		//			return false;
-		// return cliente.OpenEV3(nomeRobot);
 	}
 
+	// Desliga diretamente
 	public void desligarRobot() {
 		robot.CloseEV3();
 	}
 
 	public void desenharForma(int forma, int dim, int direcao) {
+		gui.setEstadoBtnFormas(false);
 		haTrabalho.release();
 		nextDim = dim;
 
@@ -169,6 +169,5 @@ public class App {
 		}
 
 		estado = TIPO_ESTADO.ESPACAR_E_DESENHAR;
-
 	}
 }

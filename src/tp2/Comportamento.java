@@ -3,10 +3,7 @@ package tp2;
 import java.util.concurrent.Semaphore;
 
 public abstract class Comportamento extends Thread {
-    // TODO fazer super behaviour
-    // TODO Fazer sleep entre cada comando
-    // TODO eu falei com o prof sobre a questão do tempo de uma rotação de raio 0
-    // e é o mesmo tempo que percorrer 5.5cm
+    public static final int CONSTANTE_DO_CARRO_90 = 5; // Time(millis) that takes robot to turn 90 degrees
 
     protected int estado;
 
@@ -17,13 +14,13 @@ public abstract class Comportamento extends Thread {
     protected ClienteRobot cliente;
     protected Semaphore sMutex;
     protected Semaphore haTrabalho;
-//  protected boolean podeDesenhar;
+    protected boolean acabouDesenho = false;
+
 
     public Comportamento(BufferCircular buffer, Semaphore sMutex, String tipoCliente) {
         this.cliente = new ClienteRobot(buffer, tipoCliente);
         this.sMutex = sMutex;
         haTrabalho = new Semaphore(0);
-//        this.podeDesenhar = false;
         estado = ESPERAR;
     }
 
@@ -33,6 +30,7 @@ public abstract class Comportamento extends Thread {
                 switch(estado) {
                     case ESPERAR:
                         try {
+
                             haTrabalho.acquire();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -68,6 +66,29 @@ public abstract class Comportamento extends Thread {
      * @return Tempo em millis de duracao da tarefa.
      */
     protected abstract int getTempoExecucao();
+
+    public boolean isAcabouDesenho() {
+        return acabouDesenho;
+    }
+
+    public void setAcabouDesenho(boolean acabouDesenho) {
+        this.acabouDesenho = acabouDesenho;
+    }
+
+    public static int getContasCurva(float raio, float angulo) {
+        if (raio == 0) {
+            return (int) Math.ceil(angulo * CONSTANTE_DO_CARRO_90);
+        }
+        float d = (angulo / 360f) * 2 * (float) Math.PI * raio; // math
+        return contas(d);
+    }
+
+    public static int contas(float dist) {
+        return (int) Math.ceil(dist / 30 * 1000); // Wait up to 1 second over the calculated estimate
+    }
+    public void terminarComportamento() {
+        cliente.parar(true);
+    }
 }
 
 
