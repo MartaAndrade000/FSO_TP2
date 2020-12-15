@@ -4,6 +4,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ServidorRobot implements Runnable {
 
+
+    enum State {
+        READ,
+        STOP
+    }
+
     GUIServidor gui;
 
     BufferCircular buffer;
@@ -23,7 +29,11 @@ public class ServidorRobot implements Runnable {
         worker.start();
     }
 
-    public void interrupt() {
+    /**
+     * Stops ServidorRobot by interrupting any
+     * thread currently awaiting lock.
+     */
+    public void stop() {
         running.set(false);
         worker.interrupt();
     }
@@ -34,41 +44,55 @@ public class ServidorRobot implements Runnable {
      */
     public void run() {
 
-		running.set(true);
-		while (running.get()) {
+        running.set(true);
+        while (running.get()) {
+            //State RUNNING
+            stateRead();
 
-            Mensagem mensagem = buffer.getMensagem();
-
-            if (mensagem == null) continue;
-//            System.out.println("Read message: " + mensagem.getTipo());
-
-            switch (mensagem.getTipo()) {
-
-                case OPEN:
-                    robot.OpenEV3(((OpenEV3) mensagem).getRobotName());
-                    break;
-                case CLOSE:
-                    robot.CloseEV3();
-                    break;
-                case RETA:
-                    robot.Reta(((Reta) mensagem).getDist());
-                    break;
-                case CURVA_ESQ:
-                    robot.CurvarEsq(((CurvarEsquerda) mensagem).getRaio(), ((CurvarEsquerda) mensagem).getAngulo());
-                    break;
-                case CURVA_DIR:
-                    robot.CurvarDir(((CurvarDireita) mensagem).getRaio(), ((CurvarDireita) mensagem).getAngulo());
-                    break;
-                case PARAR:
-                    robot.Parar(((Parar) mensagem).getAssincrono());
-                    break;
-                default:
-                    System.out.println("Unknown message type");
-            }
-            gui.printCommand(mensagem);
         }
 
+        // State STOPPED
+
+        // Cleanup gui
+        gui.dispose();
         System.out.println("Stopped Robot Server");
 
+    }
+
+    private void stateTest() {
+
+    }
+
+
+    private void stateRead() {
+        Mensagem mensagem = buffer.getMensagem();
+
+        if (mensagem == null) return;
+//            System.out.println("Read message: " + mensagem.getTipo());
+
+        switch (mensagem.getTipo()) {
+
+            case OPEN:
+                robot.OpenEV3(((OpenEV3) mensagem).getRobotName());
+                break;
+            case CLOSE:
+                robot.CloseEV3();
+                break;
+            case RETA:
+                robot.Reta(((Reta) mensagem).getDist());
+                break;
+            case CURVA_ESQ:
+                robot.CurvarEsq(((CurvarEsquerda) mensagem).getRaio(), ((CurvarEsquerda) mensagem).getAngulo());
+                break;
+            case CURVA_DIR:
+                robot.CurvarDir(((CurvarDireita) mensagem).getRaio(), ((CurvarDireita) mensagem).getAngulo());
+                break;
+            case PARAR:
+                robot.Parar(((Parar) mensagem).getAssincrono());
+                break;
+            default:
+                System.out.println("Unknown message type");
+        }
+        gui.printCommand(mensagem);
     }
 }
