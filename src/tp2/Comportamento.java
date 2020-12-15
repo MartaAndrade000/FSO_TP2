@@ -10,7 +10,8 @@ public abstract class Comportamento extends Thread {
     //ESTADOS
     protected static final int ESPERAR = 0;
     protected static final int ESCREVER_FORMA = 1;
-    
+    protected static final int TERMINAR = 2;
+
     protected ClienteRobot cliente;
     protected Semaphore sMutex;
     protected Semaphore haTrabalho;
@@ -28,6 +29,8 @@ public abstract class Comportamento extends Thread {
         while(true) {
 
                 switch(estado) {
+                    case TERMINAR:
+                        return;
                     case ESPERAR:
                         try {
 
@@ -56,7 +59,7 @@ public abstract class Comportamento extends Thread {
         }
     }
 
-    protected abstract void desenharForma();
+    protected abstract void desenharForma() throws InterruptedException;
 
     protected abstract void desenha();
 
@@ -86,8 +89,13 @@ public abstract class Comportamento extends Thread {
     public static int contas(float dist) {
         return (int) Math.ceil(dist / 30 * 1000); // Wait up to 1 second over the calculated estimate
     }
+
     public void terminarComportamento() {
+        System.out.println("Terminou Comportamento");
+        estado = TERMINAR;
+        haTrabalho.release();
         cliente.parar(true);
+        cliente.gui.dispose();
     }
 }
 

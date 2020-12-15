@@ -63,5 +63,10 @@ public class BufferCircular {
     	}
 		return m;
 	}
+
+	public void terminarBuffer() {
+		System.out.println("Terminou Buffer");
+		gui.dispose();
+	}
 }
 

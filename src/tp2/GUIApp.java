@@ -55,7 +55,7 @@ public class GUIApp extends JFrame {
 		});
 
 		//Quando fechar a janela, o processo vai sair da lista de processos do sistema operativo.
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setTitle("Desenhador de Formas");
 		setBounds(70, 70, 462, 300);

@@ -1,5 +1,7 @@
 package tp2;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.util.concurrent.Semaphore;
 
 public class App {
@@ -29,9 +31,9 @@ public class App {
 
 	private boolean jaDesenhou = false;
 
+
 	GUIApp gui;
 
-//	ClienteRobot cliente;
 	ServidorRobot servidor;
 	RobotDesenhador robot;
 	//RobotLegoEV3 robot;
@@ -74,9 +76,11 @@ public class App {
 	public static void main(String[] args) throws InterruptedException {
 		App app = new App();
 		app.run();
+		System.out.println("ENDED");
 	}
 
 	 public void stop() {
+		haTrabalho.release();
 		estado = TIPO_ESTADO.TERMINAR;
 	 }
 
@@ -86,12 +90,11 @@ public class App {
 				case ESPERAR:
 					jaDesenhou = false;
 					haTrabalho.acquire();
+
 					break;
 
 				case ESPACAR_E_DESENHAR:
-//					System.out.println("Mudou de estado");
 					if(!jaDesenhou) {
-//						System.out.println("A espaçar e desenhar");
 						espacarFormas.desenha(lastDim, nextDim, nextShape);
 						lastDim = nextDim;
 						//esperarPeloDesenhoDaForma();
@@ -99,7 +102,6 @@ public class App {
 					}
 
 					if (estado == TIPO_ESTADO.ESPACAR_E_DESENHAR && nextShape.isAcabouDesenho()) {
-//						System.out.println("Entrou");
 						gui.setEstadoBtnFormas(true);
 						estado = TIPO_ESTADO.ESPERAR;
 						nextShape.setAcabouDesenho(false);
@@ -107,12 +109,18 @@ public class App {
 					break;
 
 				case TERMINAR:
-					System.out.println("A Terminar");
+					System.out.println("A Terminar App");
+					desligarRobot();
 					espacarFormas.terminarComportamento();
 					quadrado.terminarComportamento();
 					circulo.terminarComportamento();
 					servidor.terminaServidor();
-					break;
+					buffer.terminarBuffer();
+
+					if(robot instanceof RobotDesenhador)
+						robot.terminarRobot();
+					this.gui.dispose();
+					return;
 			}
 		}
 	}
@@ -127,17 +135,19 @@ public class App {
 	 * Conselho: nao por nenhuma GUI a chamar isto ( obvio mas... :D )
 	 */
 	private void esperarPeloDesenhoDaForma() {
-		// TODO BLOQUEAR botoes das formas
+
+		if (nextShape == null) return;
+
 		if(nextShape == null) return;
 
-		gui.setEstadoBtnFormas(false); // MIAU :3
+		gui.setEstadoBtnFormas(false);
 		try {
 			Thread.sleep(nextShape.getTempoExecucao());
 		} catch (InterruptedException e) {
 			System.out.println("Nao foi possivel bloquear os botoes pelo tempo esperado");
 		}
-		// TODO DESBLOQUEAR os botoes das formas
-		gui.setEstadoBtnFormas(true); // MIAU :3
+
+		gui.setEstadoBtnFormas(true);
 	}
 
 	// Liga diretamente

@@ -31,8 +31,9 @@ public class EspacarFormasGeometricas extends Comportamento {
 		}
 	}
 
-	protected void desenharForma() {
+	protected void desenharForma() throws InterruptedException {
 		cliente.Reta(dist);
+		Thread.sleep(contas(dist));
 		cliente.parar(false);
 		sStartDrawing.release();
 		nextShape.desenha();

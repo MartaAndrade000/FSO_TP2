@@ -10,13 +10,12 @@ public class ServidorRobot extends Thread {
     }
     private TIPO_ESTADO estado;
 
+
     GUIServidor gui;
 
     BufferCircular buffer;
     RobotDesenhador robot;
 
-//    AtomicBoolean running = new AtomicBoolean(false);
-//    Thread worker;
 
     public ServidorRobot(BufferCircular buffer, RobotDesenhador robot) {
         this.gui = new GUIServidor();
@@ -37,13 +36,12 @@ public class ServidorRobot extends Thread {
                 case TERMINAR:
                     // Cleanup gui
                     gui.dispose();
-                    System.out.println("Stopped Robot Server");
+                    return;
             }
 
         }
 
     }
-
 
     private void stateRead() {
         Mensagem mensagem = buffer.getMensagem();
@@ -84,6 +82,7 @@ public class ServidorRobot extends Thread {
 
 
     public void terminaServidor() {
+        System.out.println("Terminou Servidor");
         estado = TIPO_ESTADO.TERMINAR;
     }
 }

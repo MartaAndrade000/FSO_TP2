@@ -66,4 +66,9 @@ public class RobotDesenhador {
 		Mensagem m = new Parar(assincrono);
 		gui.printCommand(m);
 	}
+
+	public void terminarRobot() {
+		System.out.println("Terminou Robot");
+		gui.dispose();
+	}
 }
