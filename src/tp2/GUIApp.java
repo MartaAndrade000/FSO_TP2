@@ -44,6 +44,9 @@ public class GUIApp extends JFrame {
 	private final ButtonGroup buttonGroupQuadrado = new ButtonGroup();
 	private final ButtonGroup buttonGroupCirculo = new ButtonGroup();
 
+	JButton btnDesenharQuadrado;
+	JButton btnDesenharCirculo;
+
 	/**
 	 * Create the frame.
 	 */
@@ -131,7 +134,7 @@ public class GUIApp extends JFrame {
 		lblLadoCm.setBounds(142, 31, 19, 16);
 		panelQuadrado.add(lblLadoCm);
 		
-		JButton btnDesenharQuadrado = new JButton("Desenhar!");
+		btnDesenharQuadrado = new JButton("Desenhar!");
 		btnDesenharQuadrado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 
@@ -143,6 +146,7 @@ public class GUIApp extends JFrame {
 				catch ( java.text.ParseException e ) {
 					System.out.println("Erro Spinner");
 				}
+
 				if(rdbtnOnoff.isSelected()) {
 					lado = (Integer) spinnerLado.getValue();
 
@@ -203,7 +207,7 @@ public class GUIApp extends JFrame {
 		lblRaio.setBounds(28, 32, 40, 16);
 		panelCirculo.add(lblRaio);
 		
-		JButton btnDesenharCirculo = new JButton("Desenhar!");
+		btnDesenharCirculo = new JButton("Desenhar!");
 		btnDesenharCirculo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				try {
@@ -270,6 +274,11 @@ public class GUIApp extends JFrame {
 	
 	protected void handleDesenhar(int tipoDeDesenho, int dim, int direcao) {
 		app.desenharForma(tipoDeDesenho, dim, direcao);
+	}
+
+	public void setEstadoBtnFormas(boolean state) {
+		btnDesenharQuadrado.setEnabled(state);
+		btnDesenharCirculo.setEnabled(state);
 	}
 
 	/**

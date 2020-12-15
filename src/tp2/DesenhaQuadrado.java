@@ -3,6 +3,9 @@ package tp2;
 
 import java.util.concurrent.Semaphore;
 
+import static tp2.ServidorRobot.contas;
+import static tp2.ServidorRobot.contasCurva;
+
 public class DesenhaQuadrado extends Comportamento {
 
 	private int dimLado;
@@ -20,6 +23,11 @@ public class DesenhaQuadrado extends Comportamento {
 		this.direcao = direcao;
 		haTrabalho.release();
 		estado = ESCREVER_FORMA;
+	}
+
+	@Override
+	protected int getTempoExecucao() {
+		return (4 * contas(dimLado)) + (4 * contasCurva(0, 90));
 	}
 
 	protected void desenharForma() {

@@ -61,6 +61,13 @@ public abstract class Comportamento extends Thread {
     protected abstract void desenharForma();
 
     protected abstract void desenha();
+
+    /**
+     * Implementa o método de calculo para o tempo de
+     * execucao do comportamento.
+     * @return Tempo em millis de duracao da tarefa.
+     */
+    protected abstract int getTempoExecucao();
 }
 
 

@@ -14,11 +14,15 @@ public class DesenhaCirculo extends Comportamento {
 	}
 
 	public void desenha() {
-		this.raio = raio;
-		this.direcao = direcao;
 		haTrabalho.release();
 		estado = ESCREVER_FORMA;
 	}
+
+	@Override
+	protected int getTempoExecucao() {
+		return ServidorRobot.contasCurva(raio, 360);
+	}
+
 	protected void desenharForma() {
 		try {
 			sStartDrawing.acquire();

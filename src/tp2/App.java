@@ -83,6 +83,9 @@ public class App {
 		while (true) {
 			switch (estado) {
 				case ESPERAR:
+					/* TODO uma sugestao (adicionar checks para ter a certeza que há forma a ser desenhada) */
+					esperarPeloDesenhoDaForma();
+
 					haTrabalho.acquire();
 					break;
 
@@ -90,6 +93,9 @@ public class App {
 					espacarFormas.desenha(lastDim, nextDim, nextShape);
 
 					lastDim = nextDim;
+
+					/* TODO outra sugestao */
+					esperarPeloDesenhoDaForma();
 
 					if (estado == TIPO_ESTADO.ESPACAR_E_DESENHAR) {
 						estado = TIPO_ESTADO.ESPERAR;
@@ -100,6 +106,27 @@ public class App {
 					break;
 			}
 		}
+	}
+
+	/**
+	 * Logica para bloquear os botoes das formas enquanto se espera pelo
+	 * tempo teorico que demora a desenha-las.
+	 *
+	 * NOTA!!!!
+	 * Isto vai bloquear a thread em que é chamado, por isso ter consciencia onde e quando no
+	 * processo meter isto, as mensgens já têm de estar enviadas.
+	 * Conselho: nao por nenhuma GUI a chamar isto ( obvio mas... :D )
+	 */
+	private void esperarPeloDesenhoDaForma() {
+		// TODO BLOQUEAR botoes das formas
+		gui.setEstadoBtnFormas(false); // MIAU :3
+		try {
+			Thread.sleep(nextShape.getTempoExecucao());
+		} catch (InterruptedException e) {
+			System.out.println("Nao foi possivel bloquear os botoes pelo tempo esperado");
+		}
+		// TODO DESBLOQUEAR os botoes das formas
+		gui.setEstadoBtnFormas(true); // MIAU :3
 	}
 
 	// Abre diretamente
@@ -136,8 +163,12 @@ public class App {
 			circulo.setRaio(dim);
 			circulo.setDirecao(direcao);
 			nextShape = circulo;
+		} else {
+			System.out.println("Forma desconhecida");
+			return;
 		}
 
 		estado = TIPO_ESTADO.ESPACAR_E_DESENHAR;
+
 	}
 }
