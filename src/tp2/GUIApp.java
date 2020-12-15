@@ -28,6 +28,8 @@ import javax.swing.ButtonGroup;
 
 public class GUIApp extends JFrame {
 
+	private int lado;
+	private int raio;
 	private App app;
 	private int direcaoQuadrado = App.DIRECAO_ESQ;
 	private int direcaoCirculo  = App.DIRECAO_ESQ;
@@ -47,9 +49,9 @@ public class GUIApp extends JFrame {
 	 */
 	public GUIApp(App app) {
 		this.app = app;
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 462, 326);
+		setTitle("Desenhador de Formas");
+		setBounds(70, 70, 462, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -113,7 +115,7 @@ public class GUIApp extends JFrame {
 		 */
 		JPanel panelQuadrado = new JPanel();
 		panelQuadrado.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Desenhar um Quadrado", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelQuadrado.setBounds(26, 79, 197, 147);
+		panelQuadrado.setBounds(26, 64, 197, 147);
 		contentPane.add(panelQuadrado);
 		panelQuadrado.setLayout(null);
 		
@@ -121,7 +123,7 @@ public class GUIApp extends JFrame {
 		lblLado.setBounds(36, 31, 40, 16);
 		panelQuadrado.add(lblLado);
 		
-		JSpinner spinnerLado = new JSpinner(new SpinnerNumberModel(1, 1, null, 1));
+		JSpinner spinnerLado = new JSpinner(new SpinnerNumberModel(5, 5, null, 1));
 		spinnerLado.setBounds(77, 26, 61, 26);
 		panelQuadrado.add(spinnerLado);
 		
@@ -142,7 +144,7 @@ public class GUIApp extends JFrame {
 					System.out.println("Erro Spinner");
 				}
 				if(rdbtnOnoff.isSelected()) {
-					int lado = (Integer) spinnerLado.getValue();
+					lado = (Integer) spinnerLado.getValue();
 
 					handleDesenhar(App.DESENHA_QUADRADO, lado, direcaoQuadrado);
 				} else{
@@ -185,7 +187,7 @@ public class GUIApp extends JFrame {
 		 */
 		JPanel panelCirculo = new JPanel();
 		panelCirculo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Desenhar um C\u00EDrculo", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelCirculo.setBounds(235, 79, 197, 147);
+		panelCirculo.setBounds(235, 64, 197, 147);
 		contentPane.add(panelCirculo);
 		panelCirculo.setLayout(null);
 		
@@ -193,7 +195,7 @@ public class GUIApp extends JFrame {
 		lblRaioCm.setBounds(134, 32, 19, 16);
 		panelCirculo.add(lblRaioCm);
 		
-		JSpinner spinnerRaio = new JSpinner(new SpinnerNumberModel(1, 1, null, 1));
+		JSpinner spinnerRaio = new JSpinner(new SpinnerNumberModel(5, 5, null, 1));
 		spinnerRaio.setBounds(69, 27, 61, 26);
 		panelCirculo.add(spinnerRaio);
 		
@@ -213,8 +215,7 @@ public class GUIApp extends JFrame {
 					System.out.println("Erro Spinner");
 				}
 				if(rdbtnOnoff.isSelected()) {
-					int raio = (Integer) spinnerRaio.getValue();
-
+					raio = (Integer) spinnerRaio.getValue();
 					handleDesenhar(App.DESENHA_CIRCULO, raio, direcaoCirculo);
 				} else {
 					logInfo("Impossível desenhar, Robot desligado");
@@ -256,25 +257,19 @@ public class GUIApp extends JFrame {
 		 */	
 		consolaTextField = new JTextField();
 		consolaTextField.setEditable(false);
-		consolaTextField.setBounds(6, 272, 449, 26);
+		consolaTextField.setBounds(6, 246, 449, 26);
 		contentPane.add(consolaTextField);
 		consolaTextField.setColumns(10);
 		
 		JLabel lblConsola = new JLabel("Consola");
-		lblConsola.setBounds(16, 254, 61, 16);
+		lblConsola.setBounds(16, 228, 61, 16);
 		contentPane.add(lblConsola);
 		
 		setVisible(true);
 	}
 	
-	protected void handleDesenhar(int tipoDeDesennho, int dim, int direcao) {
-		if(tipoDeDesennho == App.DESENHA_QUADRADO) {
-			app.desenhaQuadrado(dim, direcao);
-		}
-		else if(tipoDeDesennho == App.DESENHA_CIRCULO) {
-			app.desenhaCirculo(dim, direcao);
-		}
-		
+	protected void handleDesenhar(int tipoDeDesenho, int dim, int direcao) {
+		app.desenharForma(tipoDeDesenho, dim, direcao);
 	}
 
 	/**
@@ -286,4 +281,14 @@ public class GUIApp extends JFrame {
 		if (app.DEBUG)
 			consolaTextField.setText(txt);
 	}
+
+//	public int[] getQuadrado() {
+//
+//		return (new int[] {lado, direcaoQuadrado});
+//
+//	}
+//
+//	public int[] getCirculo() {
+//		return (new int[] {raio, direcaoCirculo});
+//	}
 }

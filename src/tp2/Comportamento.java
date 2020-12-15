@@ -12,15 +12,17 @@ public abstract class Comportamento extends Thread {
 
     //ESTADOS
     protected static final int ESPERAR = 0;
-    protected static final int DESENHAR  = 1;
+    protected static final int ESCREVER_FORMA = 1;
     
     protected ClienteRobot cliente;
-    protected Semaphore sReady;
-//    protected boolean podeDesenhar;
+    protected Semaphore sMutex;
+    protected Semaphore haTrabalho;
+//  protected boolean podeDesenhar;
 
-    public Comportamento(BufferCircular buffer, Semaphore sReady) {
-        this.cliente = new ClienteRobot(buffer);
-        this.sReady = sReady;
+    public Comportamento(BufferCircular buffer, Semaphore sMutex, String tipoCliente) {
+        this.cliente = new ClienteRobot(buffer, tipoCliente);
+        this.sMutex = sMutex;
+        haTrabalho = new Semaphore(0);
 //        this.podeDesenhar = false;
         estado = ESPERAR;
     }
@@ -28,30 +30,37 @@ public abstract class Comportamento extends Thread {
     public void run() {
         while(true) {
 
-            try {
-                sReady.acquire();
-
                 switch(estado) {
                     case ESPERAR:
+                        try {
+                            haTrabalho.acquire();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         break;
 
-                    case DESENHAR:
-                        desenharForma();
-                        estado = ESPERAR;
-                        break;
+                    case ESCREVER_FORMA:
+                        try {
+                            sMutex.acquire();
+                            desenharForma();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        finally {
+                            sMutex.release();
+                        }
 
+                        if(estado == ESCREVER_FORMA) {
+                            estado = ESPERAR;
+                            break;
+                        }
                 }
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            finally {
-                sReady.release();
-            }
         }
     }
 
     protected abstract void desenharForma();
+
+    protected abstract void desenha();
 }
 
 

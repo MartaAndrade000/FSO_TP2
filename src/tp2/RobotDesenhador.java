@@ -2,10 +2,12 @@ package tp2;
 
 public class RobotDesenhador {
 	
-	GUIRobot gui;
+	private GUIRobot gui;
+	private String robot;
 	
 	public RobotDesenhador() {
 		this.gui = new GUIRobot();
+		this.robot = null;
 	}
 
 	/**
@@ -23,20 +25,45 @@ public class RobotDesenhador {
 	 * @return Returns whether connection was successfully established
 	 */
 	public boolean OpenEV3(String name) {
+		// if(Robot.OpenEV3(String name)) {
+			// Robot = new Robot();
+		// }
+//		Mensagem m = new OpenEV3(name);
+//		gui.printCommand(m);
+//		robot = "Robot";
+//		System.out.println(robot);
+//		System.out.println("entrou no robot");
 		return true;
 	}
 
+	public String getRobot() {
+		return robot;
+	}
 
 	/**
 	 * Encerra o canal de comunicação
 	 */
-	public void CloseEV3() {}
+	public void CloseEV3() {
 
-	public void Reta(int dist) {}
+	}
 
-	public void CurvarEsq(int raio, int angulo){}
+	public void Reta(int dist) {
+		Mensagem m = new Reta(dist);
+		gui.printCommand(m);
+	}
 
-	void CurvarDir(float raio, int angulo){}
+	public void CurvarEsquerda(int raio, float angulo){
+		Mensagem m = new CurvarEsquerda(raio, angulo);
+		gui.printCommand(m);
+	}
 
-	void Parar(boolean assincrono){}
+	void CurvarDireita(int raio, float angulo){
+		Mensagem m = new CurvarDireita(raio, angulo);
+		gui.printCommand(m);
+	}
+
+	void Parar(boolean assincrono){
+		Mensagem m = new Parar(assincrono);
+		gui.printCommand(m);
+	}
 }

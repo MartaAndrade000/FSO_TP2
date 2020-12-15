@@ -7,44 +7,51 @@ public class DesenhaQuadrado extends Comportamento {
 
 	private int dimLado;
 	private int direcao;
-	
-	public DesenhaQuadrado(BufferCircular buffer, Semaphore sReady) {
-		super(buffer, sReady);
+
+	private Semaphore sStartDrawing;
+
+	public DesenhaQuadrado(BufferCircular buffer, Semaphore sReady, Semaphore sStartDrawing) {
+		super(buffer, sReady, "Desenha Quadrado");
+		this.sStartDrawing = sStartDrawing;
 	}
-	
-	public void desenha(int dimLado, int direcao) {
+
+	public void desenha() {
 		this.dimLado = dimLado;
 		this.direcao = direcao;
-		estado = DESENHAR;
+		haTrabalho.release();
+		estado = ESCREVER_FORMA;
 	}
 
 	protected void desenharForma() {
-		if(direcao == App.DIRECAO_ESQ) {
-			cliente.Reta(dimLado);
-			cliente.CurvarEsquerda(0,90);
+		try {
+			sStartDrawing.acquire();
 
-			cliente.Reta(dimLado);
-			cliente.CurvarEsquerda(0,90);
+			if(direcao == App.DIRECAO_ESQ) {
+				for(int i = 0; i<4; i++) {
+					cliente.Reta(dimLado);
+					cliente.CurvarEsquerda(0, 90);
+					cliente.parar(false);
+				}
+			}
+			else {
+				for(int i = 0; i<4; i++) {
+					cliente.Reta(dimLado);
+					cliente.CurvarDireita(0,90);
+					cliente.parar(false);
+				}
+			}
+			cliente.parar(false);
 
-			cliente.Reta(dimLado);
-			cliente.CurvarEsquerda(0,90);
-
-			cliente.Reta(dimLado);
-			cliente.CurvarEsquerda(0,90);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		else {
-			cliente.Reta(dimLado);
-			cliente.CurvarDireita(0,90);
+	}
 
-			cliente.Reta(dimLado);
-			cliente.CurvarDireita(0,90);
+	public void setDimLado(int dimLado) {
+		this.dimLado = dimLado;
+	}
 
-			cliente.Reta(dimLado);
-			cliente.CurvarDireita(0,90);
-
-			cliente.Reta(dimLado);
-			cliente.CurvarDireita(0,90);
-		}
-		cliente.parar(false);
+	public void setDirecao(int direcao) {
+		this.direcao = direcao;
 	}
 }
