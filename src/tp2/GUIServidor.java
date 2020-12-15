@@ -20,8 +20,10 @@ public class GUIServidor extends JFrame {
      * Create the frame.
      */
     public GUIServidor() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 515, 368);
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Servidor");
+        setBounds(550, 70, 300, 300);
+
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -48,8 +50,7 @@ public class GUIServidor extends JFrame {
                 SwingUtilities.invokeAndWait( new Runnable() {
                     @Override
                     public void run() {
-                        // TODO devia fazer scroll e não faz, quero perceber porquê
-                        String texto = String.format( "[%s] %s", Thread.currentThread().getName(), m.getTexto() ) ;
+                        String texto = m.getTexto();
                         servidorTextArea.append(texto);
                     }
                 });
@@ -59,7 +60,7 @@ public class GUIServidor extends JFrame {
             }
         }
         else {
-            String texto = String.format( "[%s] %s", Thread.currentThread().getName(), m.getTexto() ) ;
+            String texto = m.getTexto();
             servidorTextArea.append(texto);
         }
     }

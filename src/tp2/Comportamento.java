@@ -19,8 +19,8 @@ public abstract class Comportamento extends Thread {
     protected Semaphore haTrabalho;
 //  protected boolean podeDesenhar;
 
-    public Comportamento(BufferCircular buffer, Semaphore sMutex) {
-        this.cliente = new ClienteRobot(buffer);
+    public Comportamento(BufferCircular buffer, Semaphore sMutex, String tipoCliente) {
+        this.cliente = new ClienteRobot(buffer, tipoCliente);
         this.sMutex = sMutex;
         haTrabalho = new Semaphore(0);
 //        this.podeDesenhar = false;
@@ -32,7 +32,6 @@ public abstract class Comportamento extends Thread {
 
                 switch(estado) {
                     case ESPERAR:
-                        System.out.println("(Comportamento) A Esperar");
                         try {
                             haTrabalho.acquire();
                         } catch (InterruptedException e) {
@@ -44,7 +43,6 @@ public abstract class Comportamento extends Thread {
                         try {
                             sMutex.acquire();
                             desenharForma();
-                            System.out.println("(Comportamento) A desenhar a forma");
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

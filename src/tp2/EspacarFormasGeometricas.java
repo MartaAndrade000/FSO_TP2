@@ -10,7 +10,7 @@ public class EspacarFormasGeometricas extends Comportamento {
 	private Comportamento nextShape;
 	
 	public EspacarFormasGeometricas(BufferCircular buffer, Semaphore sMutex, Semaphore sStartDrawing) {
-		super(buffer, sMutex);
+		super(buffer, sMutex, "Espaçar Formas Geométricas");
 		this.sStartDrawing = sStartDrawing;
 	}
 	

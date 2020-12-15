@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 public class GUICliente extends JFrame {
 
+    private static int xPos = 20;
     /**
      *
      */
@@ -17,10 +18,13 @@ public class GUICliente extends JFrame {
 
     /**
      * Create the frame.
+     * @param tipoCliente
      */
-    public GUICliente() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 515, 368);
+    public GUICliente(String tipoCliente) {
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle(tipoCliente);
+        setBounds(xPos, 440, 300, 300);
+        xPos+=310;
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -49,8 +53,7 @@ public class GUICliente extends JFrame {
                 SwingUtilities.invokeAndWait( new Runnable() {
                     @Override
                     public void run() {
-                        // TODO devia fazer scroll e não faz, quero perceber porquê
-                        String texto = String.format( "[%s] %s", Thread.currentThread().getName(), m.getTexto() ) ;
+                        String texto = m.getTexto();
                         ClienteTextArea.append(texto);
                     }
                 });
@@ -60,7 +63,7 @@ public class GUICliente extends JFrame {
             }
         }
         else {
-            String texto = String.format( "[%s] %s", Thread.currentThread().getName(), m.getTexto() ) ;
+            String texto = m.getTexto();
             ClienteTextArea.append(texto);
         }
     }

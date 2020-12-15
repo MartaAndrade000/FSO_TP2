@@ -11,7 +11,7 @@ public class DesenhaQuadrado extends Comportamento {
 	private Semaphore sStartDrawing;
 
 	public DesenhaQuadrado(BufferCircular buffer, Semaphore sReady, Semaphore sStartDrawing) {
-		super(buffer, sReady);
+		super(buffer, sReady, "Desenha Quadrado");
 		this.sStartDrawing = sStartDrawing;
 	}
 

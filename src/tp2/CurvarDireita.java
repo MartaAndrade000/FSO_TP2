@@ -6,7 +6,7 @@ public class CurvarDireita extends Mensagem {
 	float angulo;
 	
 	public CurvarDireita(int raio, float angulo) {
-		super(TIPO_MENSAGEM.CURVA_DIR, String.format("Curva à Direita (raio %d, ângulo %d) \n", raio, angulo));
+		super(TIPO_MENSAGEM.CURVA_DIR, String.format("Curva à Direita (raio %d, ângulo %d) \n", raio, (int)angulo));
 		this.raio = raio;
 		this.angulo = angulo;
 	}

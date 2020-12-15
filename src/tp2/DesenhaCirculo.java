@@ -9,7 +9,7 @@ public class DesenhaCirculo extends Comportamento {
 	private Semaphore sStartDrawing;
 
 	public DesenhaCirculo(BufferCircular buffer, Semaphore sReady, Semaphore sStartDrawing) {
-		super(buffer, sReady);
+		super(buffer, sReady, "Desenha Círculo");
 		this.sStartDrawing = sStartDrawing;
 	}
 

@@ -8,10 +8,7 @@ public class App {
 	private enum TIPO_ESTADO {
 		ESPERAR, ESPACAR_E_DESENHAR, TERMINAR
 	}
-
-	protected TIPO_ESTADO estado;
-
-	// TODO começar a desenhar apenas quando o robot estiver ligado
+	private TIPO_ESTADO estado;
 
 	// TODO desativar botoes de desenhar quando o robot ainda está a executar comandos
 
@@ -32,7 +29,7 @@ public class App {
 
 	GUIApp gui;
 
-	ClienteRobot cliente;
+//	ClienteRobot cliente;
 	ServidorRobot servidor;
 	RobotDesenhador robot;
 	//RobotLegoEV3 robot;
@@ -51,7 +48,7 @@ public class App {
 		this.buffer = new BufferCircular();
 
 		this.robot = new RobotDesenhador();
-		this.cliente = new ClienteRobot(buffer);
+//		this.cliente = new ClienteRobot(buffer);
 		this.servidor = new ServidorRobot(buffer, robot);
 
 		haTrabalho = new Semaphore(0);
@@ -82,7 +79,6 @@ public class App {
 		while (true) {
 			switch (estado) {
 				case ESPERAR:
-//				 	Thread.sleep(0);
 					haTrabalho.acquire();
 					break;
 
@@ -121,7 +117,7 @@ public class App {
 	}
 
 	public void desligarRobot() {
-		cliente.CloseEV3();
+		robot.CloseEV3();
 	}
 
 	public void desenharForma(int forma, int dim, int direcao) {
