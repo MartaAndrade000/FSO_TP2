@@ -1,5 +1,3 @@
-package tp2;
-
 public class Reta extends Mensagem{
 	
 	int dist;

@@ -1,5 +1,3 @@
-package tp2;
-
 public class ClienteRobot {
 	
 	GUICliente gui;
@@ -20,13 +18,13 @@ public class ClienteRobot {
 		setMensagem(m);
 	}
 
-	public void CurvarEsquerda(int raio, float angulo) {
+	public void CurvarEsquerda(int raio, int angulo) {
 		Mensagem m = new CurvarEsquerda(raio, angulo);
 		gui.printCommand(m);
 		setMensagem(m);
 	}
 	
-	public void CurvarDireita(int raio, float angulo) {
+	public void CurvarDireita(int raio, int angulo) {
 		Mensagem m = new CurvarDireita(raio, angulo);
 		gui.printCommand(m);
 		setMensagem(m);
@@ -38,16 +36,16 @@ public class ClienteRobot {
 		setMensagem(m);
 	}
 
-	public boolean OpenEV3(String nomeRobot) {
+/*	public boolean OpenEV3(String nomeRobot) {
 		Mensagem m = new OpenEV3(nomeRobot);
 		gui.printCommand(m);
 		setMensagem(m);
 		return true;
-	}
+	}*/
 
-	public void CloseEV3() {
+/*	public void CloseEV3() {
 		Mensagem m = new CloseEV3();
 		gui.printCommand(m);
 		setMensagem(m);
-	}
+	}*/
 }

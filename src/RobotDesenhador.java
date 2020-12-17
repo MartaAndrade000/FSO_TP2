@@ -1,5 +1,3 @@
-package tp2;
-
 public class RobotDesenhador {
 	
 	private final GUIRobot gui;
@@ -52,12 +50,12 @@ public class RobotDesenhador {
 		gui.printCommand(m);
 	}
 
-	public void CurvarEsquerda(int raio, float angulo){
+	public void CurvarEsquerda(int raio, int angulo){
 		Mensagem m = new CurvarEsquerda(raio, angulo);
 		gui.printCommand(m);
 	}
 
-	void CurvarDireita(int raio, float angulo){
+	void CurvarDireita(int raio, int angulo){
 		Mensagem m = new CurvarDireita(raio, angulo);
 		gui.printCommand(m);
 	}

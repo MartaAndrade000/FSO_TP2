@@ -1,16 +1,13 @@
-package tp2;
-
-
 import java.util.concurrent.Semaphore;
 
-public class DesenhaQuadrado extends Comportamento {
+public class DesenhaQuadradoAntigo extends Comportamento {
 
 	private App app;
 	private int dimLado;
 	private int direcao;
 	private final Semaphore sStartDrawing;
 
-	public DesenhaQuadrado(App app, BufferCircular buffer, Semaphore sReady, Semaphore sStartDrawing) {
+	public DesenhaQuadradoAntigo(App app, BufferCircular buffer, Semaphore sReady, Semaphore sStartDrawing) {
 		super(buffer, sReady, "Desenha Quadrado");
 		this.app = app;
 		this.sStartDrawing = sStartDrawing;
@@ -36,7 +33,6 @@ public class DesenhaQuadrado extends Comportamento {
 
 					cliente.CurvarEsquerda(0, 90);
 					Thread.sleep(getContasCurva(0, 90));
-
 					cliente.parar(false);
 				}
 			}
@@ -46,6 +42,7 @@ public class DesenhaQuadrado extends Comportamento {
 					Thread.sleep(contas(dimLado));
 					cliente.CurvarDireita(0,90);
 					Thread.sleep(getContasCurva(0, 90));
+
 					cliente.parar(false);
 				}
 			}

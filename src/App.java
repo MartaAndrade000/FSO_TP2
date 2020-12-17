@@ -1,5 +1,3 @@
-package tp2;
-
 import java.util.concurrent.Semaphore;
 
 public class App {
@@ -33,8 +31,8 @@ public class App {
 	GUIApp gui;
 
 	ServidorRobot servidor;
-	RobotDesenhador robot;
-	//RobotLegoEV3 robot;
+	//RobotDesenhador robot;
+	RobotLegoEV3 robot;
 
 	BufferCircular buffer;
 
@@ -49,7 +47,8 @@ public class App {
 
 		this.buffer = new BufferCircular();
 
-		this.robot = new RobotDesenhador();
+		this.robot = new RobotLegoEV3();
+//		this.robot = new RobotDesenhador();
 		this.servidor = new ServidorRobot(buffer, robot);
 
 		haTrabalho = new Semaphore(0);
@@ -115,8 +114,9 @@ public class App {
 					servidor.terminaServidor();
 					buffer.terminarBuffer();
 
-					if(robot != null) // Alterei aqui
-						robot.terminarRobot();
+
+//					if(robot != null) // Alterei aqui
+//						robot.terminarRobot();
 					this.gui.dispose();
 					return;
 			}
@@ -169,7 +169,8 @@ public class App {
 			circulo.setRaio(dim);
 			circulo.setDirecao(direcao);
 			nextShape = circulo;
-		} else {
+		}
+		else {
 			System.out.println("Forma desconhecida");
 			return;
 		}

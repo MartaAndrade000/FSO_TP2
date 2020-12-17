@@ -1,7 +1,3 @@
-package tp2;
-
-import java.util.concurrent.atomic.AtomicBoolean;
-
 public class ServidorRobot extends Thread {
 
     //ESTADOS
@@ -14,16 +10,24 @@ public class ServidorRobot extends Thread {
     GUIServidor gui;
 
     BufferCircular buffer;
-    RobotDesenhador robot;
+    RobotLegoEV3 robot;
+//    RobotDesenhador robot;
 
 
-    public ServidorRobot(BufferCircular buffer, RobotDesenhador robot) {
+    public ServidorRobot(BufferCircular buffer, RobotLegoEV3 robot) {
         this.gui = new GUIServidor();
         this.buffer = buffer;
         this.robot = robot;
         estado = TIPO_ESTADO.LER;
 
     }
+/*    public ServidorRobot(BufferCircular buffer, RobotDesenhador robot) {
+        this.gui = new GUIServidor();
+        this.buffer = buffer;
+        this.robot = robot;
+        estado = TIPO_ESTADO.LER;
+
+    }*/
 
     public void run() {
 
@@ -38,9 +42,7 @@ public class ServidorRobot extends Thread {
                     gui.dispose();
                     return;
             }
-
         }
-
     }
 
     private void stateRead() {
@@ -49,9 +51,6 @@ public class ServidorRobot extends Thread {
 
         switch (mensagem.getTipo()) {
 
-            case OPEN:
-                robot.OpenEV3(((OpenEV3) mensagem).getRobotName());
-                break;
             case CLOSE:
                 robot.CloseEV3();
                 break;

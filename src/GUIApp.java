@@ -1,25 +1,9 @@
-package tp2;
-
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.JRadioButton;
-import javax.swing.JSpinner;
-import javax.swing.JButton;
-import javax.swing.border.TitledBorder;
-
-import tp1.Mensagem;
-import tp1.MyChat;
-
 import javax.swing.border.EtchedBorder;
-import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 import java.awt.event.*;
-import javax.swing.ButtonGroup;
 
 public class GUIApp extends JFrame {
 
@@ -28,9 +12,9 @@ public class GUIApp extends JFrame {
 	private App app;
 	private int direcaoQuadrado = App.DIRECAO_ESQ;
 	private int direcaoCirculo  = App.DIRECAO_ESQ;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JTextField nomeRobotTextField;

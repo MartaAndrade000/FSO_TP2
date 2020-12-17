@@ -1,5 +1,3 @@
-package tp2;
-
 public abstract class Mensagem {
 	
 	protected TIPO_MENSAGEM tipo;
@@ -7,7 +5,6 @@ public abstract class Mensagem {
 	
 	//Tipos de Mensagem
 	enum TIPO_MENSAGEM {
-		OPEN,  // TODO Might be removed
 		CLOSE, // TODO Might be removed
 		RETA,
 		CURVA_ESQ,

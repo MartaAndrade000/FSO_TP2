@@ -1,9 +1,7 @@
-package tp2;
-
 import java.util.concurrent.Semaphore;
 
 public abstract class Comportamento extends Thread {
-    public static final int CONSTANTE_DO_CARRO_90 = 5; // Time(millis) that takes robot to turn 90 degrees
+    public static final int CONSTANTE_DO_CARRO_360 = 2500; // Time(millis) that takes robot to turn 90 degrees
 
     protected int estado;
 
@@ -80,14 +78,14 @@ public abstract class Comportamento extends Thread {
 
     public static int getContasCurva(float raio, float angulo) {
         if (raio == 0) {
-            return (int) Math.ceil(angulo * CONSTANTE_DO_CARRO_90);
+            return CONSTANTE_DO_CARRO_360 / 4;
         }
         float d = (angulo / 360f) * 2 * (float) Math.PI * raio; // math
         return contas(d);
     }
 
     public static int contas(float dist) {
-        return (int) Math.ceil(dist / 30 * 1000); // Wait up to 1 second over the calculated estimate
+        return (int) Math.ceil((dist / 30) * 1000); // Wait up to 1 second over the calculated estimate
     }
 
     public void terminarComportamento() {
