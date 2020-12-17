@@ -1,7 +1,3 @@
-package tp2;
-
-import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,9 +8,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
-
-import tp1.Mensagem;
-import tp1.MyChat;
 
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;

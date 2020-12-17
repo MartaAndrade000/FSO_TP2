@@ -1,5 +1,3 @@
-package tp2;
-
 public class Parar extends Mensagem {
 
 	boolean assincrono;

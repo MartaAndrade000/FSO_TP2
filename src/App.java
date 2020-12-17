@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream:src/tp2/App.java
 package tp2;
 
+=======
+>>>>>>> Stashed changes:src/App.java
 import java.util.concurrent.Semaphore;
+//import robot.RobotEV3;
+import RobotLegoEV3;
+
 
 public class App {
 
@@ -31,8 +37,9 @@ public class App {
 
 //	ClienteRobot cliente;
 	ServidorRobot servidor;
-	RobotDesenhador robot;
-	//RobotLegoEV3 robot;
+//	RobotDesenhador robot;
+	RobotLegoEV3 robot;
+//	RobotLegoEV3 robot;
 
 	BufferCircular buffer;
 
@@ -47,8 +54,13 @@ public class App {
 
 		this.buffer = new BufferCircular();
 
+<<<<<<< Updated upstream:src/tp2/App.java
 		this.robot = new RobotDesenhador();
 //		this.cliente = new ClienteRobot(buffer);
+=======
+//		this.robot = new RobotDesenhador();
+		this.robot = new RobotLegoEV3();
+>>>>>>> Stashed changes:src/App.java
 		this.servidor = new ServidorRobot(buffer, robot);
 
 		haTrabalho = new Semaphore(0);
@@ -93,7 +105,22 @@ public class App {
 					break;
 
 				case TERMINAR:
+<<<<<<< Updated upstream:src/tp2/App.java
 					break;
+=======
+					System.out.println("A Terminar App");
+					desligarRobot();
+					espacarFormas.terminarComportamento();
+					quadrado.terminarComportamento();
+					circulo.terminarComportamento();
+					servidor.terminaServidor();
+					buffer.terminarBuffer();
+
+//					if(robot instanceof RobotDesenhador)
+//						robot.terminarRobot();
+					this.gui.dispose();
+					return;
+>>>>>>> Stashed changes:src/App.java
 			}
 		}
 	}

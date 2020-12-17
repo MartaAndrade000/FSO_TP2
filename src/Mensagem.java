@@ -1,5 +1,3 @@
-package tp2;
-
 public abstract class Mensagem {
 	
 	protected TIPO_MENSAGEM tipo;

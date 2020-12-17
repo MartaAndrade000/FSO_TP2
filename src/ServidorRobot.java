@@ -1,16 +1,37 @@
+<<<<<<< Updated upstream:src/tp2/ServidorRobot.java
 package tp2;
+=======
+import robot.RobotEV3;
+>>>>>>> Stashed changes:src/ServidorRobot.java
 
 public class ServidorRobot extends Thread {
 
     GUIServidor gui;
 
     BufferCircular buffer;
-    RobotDesenhador robot;
+    RobotLegoEV3 robot;
+//    RobotDesenhador robot;
 
+
+<<<<<<< Updated upstream:src/tp2/ServidorRobot.java
     public ServidorRobot(BufferCircular buffer, RobotDesenhador robot) {
         this.gui = new GUIServidor();
         this.buffer = buffer;
         this.robot = robot;
+=======
+//    public ServidorRobot(BufferCircular buffer, RobotDesenhador robot) {
+//        this.gui = new GUIServidor();
+//        this.buffer = buffer;
+//        this.robot = robot;
+//        estado = TIPO_ESTADO.LER;
+//    }
+
+    public ServidorRobot(BufferCircular buffer, RobotLegoEV3 robot) {
+        this.gui = new GUIServidor();
+        this.buffer = buffer;
+        this.robot = robot;
+        estado = TIPO_ESTADO.LER;
+>>>>>>> Stashed changes:src/ServidorRobot.java
     }
 
     /**

@@ -1,6 +1,3 @@
-package tp2;
-
-
 import java.util.concurrent.Semaphore;
 
 public class DesenhaQuadrado extends Comportamento {

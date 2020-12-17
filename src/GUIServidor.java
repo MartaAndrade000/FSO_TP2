@@ -1,42 +1,41 @@
-package tp2;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 
-public class GUIRobot extends JFrame {
+public class GUIServidor extends JFrame {
 
     /**
      *
      */
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
-    private JTextArea robotTextArea;
+    private JTextArea servidorTextArea;
 
     /**
      * Create the frame.
      */
-    public GUIRobot() {
+    public GUIServidor() {
 //        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Robot");
-        setBounds(870, 70, 300, 300);
+        setTitle("Servidor");
+        setBounds(550, 70, 300, 300);
+
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout());
 
-        JLabel lblBuffer = new JLabel("Comandos recebidos pelo Robot");
+        JLabel lblBuffer = new JLabel("Comandos lidos do Buffer");
         lblBuffer.setBounds(19, 22, 123, 16);
         contentPane.add(lblBuffer, BorderLayout.NORTH);
 
-        JScrollPane robotScrollPane = new JScrollPane();
-        contentPane.add(robotScrollPane, BorderLayout.CENTER);
+        JScrollPane servidorScrollPane = new JScrollPane();
+        contentPane.add(servidorScrollPane, BorderLayout.CENTER);
 
-        robotTextArea = new JTextArea();
-        robotTextArea.setEditable(false);
+        servidorTextArea = new JTextArea();
+        servidorTextArea.setEditable(false);
 
-        robotScrollPane.setViewportView(robotTextArea);
+        servidorScrollPane.setViewportView(servidorTextArea);
         setVisible(true);
     }
 
@@ -48,7 +47,7 @@ public class GUIRobot extends JFrame {
                     @Override
                     public void run() {
                         String texto = m.getTexto();
-                        robotTextArea.append(texto);
+                        servidorTextArea.append(texto);
                     }
                 });
             }
@@ -58,7 +57,7 @@ public class GUIRobot extends JFrame {
         }
         else {
             String texto = m.getTexto();
-            robotTextArea.append(texto);
+            servidorTextArea.append(texto);
         }
     }
 }

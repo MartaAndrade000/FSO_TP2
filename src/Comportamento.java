@@ -1,5 +1,3 @@
-package tp2;
-
 import java.util.concurrent.Semaphore;
 
 public abstract class Comportamento extends Thread {

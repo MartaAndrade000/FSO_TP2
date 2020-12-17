@@ -1,45 +1,46 @@
-package tp2;
-
-import tp2.Mensagem;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 
-public class GUIServidor extends JFrame {
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
+public class GUICliente extends JFrame {
+
+    private static int xPos = 20;
     /**
      *
      */
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
-    private JTextArea servidorTextArea;
+    private JTextArea ClienteTextArea;
 
     /**
      * Create the frame.
+     * @param tipoCliente
      */
-    public GUIServidor() {
+    public GUICliente(String tipoCliente) {
 //        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Servidor");
-        setBounds(550, 70, 300, 300);
-
+        setTitle(tipoCliente);
+        setBounds(xPos, 440, 300, 300);
+        xPos+=310;
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout());
 
-        JLabel lblBuffer = new JLabel("Comandos lidos do Buffer");
+        JLabel lblBuffer = new JLabel("Comandos escritos no Buffer");
         lblBuffer.setBounds(19, 22, 123, 16);
         contentPane.add(lblBuffer, BorderLayout.NORTH);
 
-        JScrollPane servidorScrollPane = new JScrollPane();
-        contentPane.add(servidorScrollPane, BorderLayout.CENTER);
+        JScrollPane xpto = new JScrollPane();
+        contentPane.add(xpto, BorderLayout.CENTER);
 
-        servidorTextArea = new JTextArea();
-        servidorTextArea.setEditable(false);
+        ClienteTextArea = new JTextArea();
+        ClienteTextArea.setEditable(false);
+//		bufferTextArea.setBounds(19, 48, 476, 278);
+//		contentPane.add(bufferTextArea);
 
-        servidorScrollPane.setViewportView(servidorTextArea);
+        xpto.setViewportView(ClienteTextArea);
         setVisible(true);
     }
 
@@ -51,7 +52,7 @@ public class GUIServidor extends JFrame {
                     @Override
                     public void run() {
                         String texto = m.getTexto();
-                        servidorTextArea.append(texto);
+                        ClienteTextArea.append(texto);
                     }
                 });
             }
@@ -61,8 +62,7 @@ public class GUIServidor extends JFrame {
         }
         else {
             String texto = m.getTexto();
-            servidorTextArea.append(texto);
+            ClienteTextArea.append(texto);
         }
     }
 }
-

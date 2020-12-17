@@ -1,5 +1,3 @@
-package tp2;
-
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 
