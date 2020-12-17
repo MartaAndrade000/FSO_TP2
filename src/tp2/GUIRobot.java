@@ -11,8 +11,7 @@ public class GUIRobot extends JFrame {
      *
      */
     private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
-    private JTextArea robotTextArea;
+    private final JTextArea robotTextArea;
 
     /**
      * Create the frame.
@@ -21,7 +20,7 @@ public class GUIRobot extends JFrame {
 //        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Robot");
         setBounds(870, 70, 300, 300);
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout());

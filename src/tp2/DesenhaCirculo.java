@@ -6,7 +6,7 @@ public class DesenhaCirculo extends Comportamento {
 
 	int raio;
 	private int direcao;
-	private Semaphore sStartDrawing;
+	private final Semaphore sStartDrawing;
 
 	public DesenhaCirculo(BufferCircular buffer, Semaphore sReady, Semaphore sStartDrawing) {
 		super(buffer, sReady, "Desenha Círculo");

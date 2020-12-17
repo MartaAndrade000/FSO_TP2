@@ -2,8 +2,8 @@ package tp2;
 
 public class RobotDesenhador {
 	
-	private GUIRobot gui;
-	private String robot;
+	private final GUIRobot gui;
+	private final String robot;
 	
 	public RobotDesenhador() {
 		this.gui = new GUIRobot();

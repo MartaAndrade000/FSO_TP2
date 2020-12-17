@@ -33,11 +33,8 @@ public class GUIApp extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField nomeRobotTextField;
-	private JTextField consolaTextField;
-	private final ButtonGroup buttonGroupQuadrado = new ButtonGroup();
-	private final ButtonGroup buttonGroupCirculo = new ButtonGroup();
+	private final JTextField nomeRobotTextField;
+	private final JTextField consolaTextField;
 
 	JButton btnDesenharQuadrado;
 	JButton btnDesenharCirculo;
@@ -59,7 +56,7 @@ public class GUIApp extends JFrame {
 
 		setTitle("Desenhador de Formas");
 		setBounds(70, 70, 462, 300);
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -173,6 +170,7 @@ public class GUIApp extends JFrame {
 				}
 			}
 		});
+		ButtonGroup buttonGroupQuadrado = new ButtonGroup();
 		buttonGroupQuadrado.add(rdbtnQuadradoEsquerda);
 		rdbtnQuadradoEsquerda.setBounds(16, 64, 89, 23);
 		panelQuadrado.add(rdbtnQuadradoEsquerda);
@@ -242,6 +240,7 @@ public class GUIApp extends JFrame {
 				}
 			}
 		});
+		ButtonGroup buttonGroupCirculo = new ButtonGroup();
 		buttonGroupCirculo.add(rdbtnCirculoDireita);
 		rdbtnCirculoDireita.setBounds(106, 63, 74, 23);
 		panelCirculo.add(rdbtnCirculoDireita);
@@ -294,14 +293,4 @@ public class GUIApp extends JFrame {
 		if (app.DEBUG)
 			consolaTextField.setText(txt);
 	}
-
-//	public int[] getQuadrado() {
-//
-//		return (new int[] {lado, direcaoQuadrado});
-//
-//	}
-//
-//	public int[] getCirculo() {
-//		return (new int[] {raio, direcaoCirculo});
-//	}
 }

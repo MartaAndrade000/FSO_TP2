@@ -13,8 +13,7 @@ public class GUICliente extends JFrame {
      *
      */
     private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
-    private JTextArea ClienteTextArea;
+    private final JTextArea ClienteTextArea;
 
     /**
      * Create the frame.
@@ -25,7 +24,7 @@ public class GUICliente extends JFrame {
         setTitle(tipoCliente);
         setBounds(xPos, 440, 300, 300);
         xPos+=310;
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout());

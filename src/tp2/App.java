@@ -1,7 +1,5 @@
 package tp2;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import java.util.concurrent.Semaphore;
 
 public class App {
@@ -44,7 +42,7 @@ public class App {
 	DesenhaCirculo circulo;
 	EspacarFormasGeometricas espacarFormas;
 
-	private Semaphore haTrabalho;
+	private final Semaphore haTrabalho;
 
 	public App() {
 		this.gui = new GUIApp(this);
@@ -117,7 +115,7 @@ public class App {
 					servidor.terminaServidor();
 					buffer.terminarBuffer();
 
-					if(robot instanceof RobotDesenhador)
+					if(robot != null) // Alterei aqui
 						robot.terminarRobot();
 					this.gui.dispose();
 					return;
@@ -137,8 +135,6 @@ public class App {
 	private void esperarPeloDesenhoDaForma() {
 
 		if (nextShape == null) return;
-
-		if(nextShape == null) return;
 
 		gui.setEstadoBtnFormas(false);
 		try {

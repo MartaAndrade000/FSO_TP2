@@ -8,7 +8,7 @@ public class DesenhaQuadrado extends Comportamento {
 	private App app;
 	private int dimLado;
 	private int direcao;
-	private Semaphore sStartDrawing;
+	private final Semaphore sStartDrawing;
 
 	public DesenhaQuadrado(App app, BufferCircular buffer, Semaphore sReady, Semaphore sStartDrawing) {
 		super(buffer, sReady, "Desenha Quadrado");
