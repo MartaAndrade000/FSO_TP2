@@ -8,8 +8,6 @@ public class App {
 	}
 	private TIPO_ESTADO estado;
 
-	// TODO desativar botoes de desenhar quando o robot ainda está a executar comandos
-
 	// Ativa ou desativa o DEBUG
 	static final boolean DEBUG = true;
 
@@ -26,7 +24,6 @@ public class App {
 	private Comportamento nextShape;
 
 	private boolean jaDesenhou = false;
-
 
 	GUIApp gui;
 
@@ -94,7 +91,6 @@ public class App {
 					if(!jaDesenhou) {
 						espacarFormas.desenha(lastDim, nextDim, nextShape);
 						lastDim = nextDim;
-						//esperarPeloDesenhoDaForma();
 						jaDesenhou = true;
 					}
 
