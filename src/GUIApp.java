@@ -62,31 +62,25 @@ public class GUIApp extends JFrame {
 		rdbtnOnoff.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent event) {
+
+				//TODO ON/OFF guardar estado
 				
 				if(rdbtnOnoff.isSelected()) {
-					try {
-						String nomeRobot = nomeRobotTextField.getText();
-						if(!nomeRobot.equals("")) {
-							if (app.ligarRobot(nomeRobot)) {
-								logInfo("O robot foi ligado");
-							}
-							else {
-								logInfo("O robot não foi ligado");
-								// Não pinta se não conseguir abrir
-								rdbtnOnoff.setSelected(false);
-							}
-						} else{
-							logInfo("Nome inválido, o robot não foi ligado");
+					String nomeRobot = nomeRobotTextField.getText();
+					if(!nomeRobot.equals("")) {
+						if (app.ligarRobot(nomeRobot)) {
+							logInfo("O robot foi ligado");
+						}
+						else {
+							logInfo("O robot não foi ligado");
 							// Não pinta se não conseguir abrir
 							rdbtnOnoff.setSelected(false);
-
 						}
-						
-					}
-					// TODO testar isto
-					catch (NullPointerException e) {
-						System.out.println("Não foi colocado o nome do Robot");
-						logInfo("Não foi colocado o nome do Robot");
+					} else{
+						logInfo("Nome inválido, o robot não foi ligado");
+						// Não pinta se não conseguir abrir
+						rdbtnOnoff.setSelected(false);
+
 					}
 				} 
 				else {
