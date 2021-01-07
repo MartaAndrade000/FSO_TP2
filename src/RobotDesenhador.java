@@ -55,12 +55,12 @@ public class RobotDesenhador {
 		gui.printCommand(m);
 	}
 
-	void CurvarDireita(int raio, int angulo){
+	public void CurvarDireita(int raio, int angulo){
 		Mensagem m = new CurvarDireita(raio, angulo);
 		gui.printCommand(m);
 	}
 
-	void Parar(boolean assincrono){
+	public void Parar(boolean assincrono){
 		Mensagem m = new Parar(assincrono);
 		gui.printCommand(m);
 	}

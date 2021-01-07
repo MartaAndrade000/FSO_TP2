@@ -62,30 +62,27 @@ public class GUIApp extends JFrame {
 		rdbtnOnoff.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent event) {
-
-				//TODO ON/OFF guardar estado
-				
 				if(rdbtnOnoff.isSelected()) {
-					String nomeRobot = nomeRobotTextField.getText();
-					if(!nomeRobot.equals("")) {
-						if (app.ligarRobot(nomeRobot)) {
-							logInfo("O robot foi ligado");
-						}
-						else {
+
+					// Se robot estiver desligado
+					if(!app.robotOn){
+						// Tirar nome
+						String nomeRobot = nomeRobotTextField.getText();
+						// Tentar ligar
+						app.ligarRobot(nomeRobot);
+						// Se continuar desligado
+						if(!app.robotOn){
 							logInfo("O robot não foi ligado");
 							// Não pinta se não conseguir abrir
 							rdbtnOnoff.setSelected(false);
 						}
-					} else{
-						logInfo("Nome inválido, o robot não foi ligado");
-						// Não pinta se não conseguir abrir
-						rdbtnOnoff.setSelected(false);
-
+						else
+							logInfo("O robot foi ligado");
 					}
-				} 
+				}
 				else {
-					app.desligarRobot();
 					logInfo("O robot foi desligado");
+					app.desligarRobot();
 				}
 			}
 		});
@@ -105,7 +102,7 @@ public class GUIApp extends JFrame {
 		lblLado.setBounds(36, 31, 40, 16);
 		panelQuadrado.add(lblLado);
 		
-		JSpinner spinnerLado = new JSpinner(new SpinnerNumberModel(5, 5, null, 1));
+		JSpinner spinnerLado = new JSpinner(new SpinnerNumberModel(25, 20, null, 1));
 		spinnerLado.setBounds(77, 26, 61, 26);
 		panelQuadrado.add(spinnerLado);
 		
@@ -179,7 +176,7 @@ public class GUIApp extends JFrame {
 		lblRaioCm.setBounds(134, 32, 19, 16);
 		panelCirculo.add(lblRaioCm);
 		
-		JSpinner spinnerRaio = new JSpinner(new SpinnerNumberModel(5, 5, null, 1));
+		JSpinner spinnerRaio = new JSpinner(new SpinnerNumberModel(25, 20, null, 1));
 		spinnerRaio.setBounds(69, 27, 61, 26);
 		panelCirculo.add(spinnerRaio);
 		
@@ -213,7 +210,7 @@ public class GUIApp extends JFrame {
 		rdbtnCirculoDireita.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					direcaoQuadrado = App.DIRECAO_DIR;
+					direcaoCirculo = App.DIRECAO_DIR;
 					logInfo("O tipo de direção do circulo passou a ser para a direita");
 				}
 			}
@@ -228,7 +225,7 @@ public class GUIApp extends JFrame {
 		rdbtnCirculoEsquerda.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					direcaoQuadrado = App.DIRECAO_ESQ;
+					direcaoCirculo = App.DIRECAO_ESQ;
 					logInfo("O tipo de direção do circulo passou a ser para a esquerda");
 				}
 			}

@@ -8,10 +8,11 @@ public class App {
 	}
 	private TIPO_ESTADO estado;
 
-	// TODO desativar botoes de desenhar quando o robot ainda está a executar comandos
-
 	// Ativa ou desativa o DEBUG
 	static final boolean DEBUG = true;
+
+	//Robot ligado ou desligado
+	public boolean robotOn = false;
 
 	//Tipos de Direção
 	public static final int DIRECAO_ESQ = 0;
@@ -31,7 +32,7 @@ public class App {
 	GUIApp gui;
 
 	ServidorRobot servidor;
-	//RobotDesenhador robot;
+//	RobotDesenhador robot;
 	RobotLegoEV3 robot;
 
 	BufferCircular buffer;
@@ -147,13 +148,14 @@ public class App {
 	}
 
 	// Liga diretamente
-	public boolean ligarRobot(String nomeRobot) {
-		return robot.OpenEV3(nomeRobot);
+	public void ligarRobot(String nomeRobot) {
+		if(robot.OpenEV3(nomeRobot)) robotOn = true;
 	}
 
 	// Desliga diretamente
 	public void desligarRobot() {
 		robot.CloseEV3();
+		robotOn = false;
 	}
 
 	public void desenharForma(int forma, int dim, int direcao) {
