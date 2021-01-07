@@ -28,7 +28,6 @@ public class App {
 
 	private boolean jaDesenhou = false;
 
-
 	GUIApp gui;
 
 	ServidorRobot servidor;
@@ -95,7 +94,6 @@ public class App {
 					if(!jaDesenhou) {
 						espacarFormas.desenha(lastDim, nextDim, nextShape);
 						lastDim = nextDim;
-						//esperarPeloDesenhoDaForma();
 						jaDesenhou = true;
 					}
 
