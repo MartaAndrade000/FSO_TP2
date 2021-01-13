@@ -73,31 +73,26 @@ public class GUIApp2Quadrados extends JFrame {
 			public void mouseClicked(MouseEvent event) {
 
 				if(rdbtnOnoff.isSelected()) {
-					try {
-						String nomeRobot = nomeRobotTextField.getText();
-						if(!nomeRobot.equals("")) {
-							if (app.ligarRobot(nomeRobot)) {
-								logInfo("O robot foi ligado");
-							}
-							else {
-								logInfo("O robot nÃ£o foi ligado");
-								// NÃ£o pinta se nÃ£o conseguir abrir
-								rdbtnOnoff.setSelected(false);
-							}
-						} else{
-							logInfo("Nome invÃ¡lido, o robot nÃ£o foi ligado");
-							// NÃ£o pinta se nÃ£o conseguir abrir
-							rdbtnOnoff.setSelected(false);
 
-						}
+                    String nomeRobot = nomeRobotTextField.getText();
+                    if(nomeRobot != null && !nomeRobot.isEmpty()) {
+                        if (app.robotOn) {
+                            logInfo("O robot foi ligado");
+                        }
+                        else {
+                            logInfo("O robot nÃ£o foi ligado");
+                            // NÃ£o pinta se nÃ£o conseguir abrir
+                            rdbtnOnoff.setSelected(false);
+                        }
+                    } else{
+                        logInfo("Nome invÃ¡lido, o robot nÃ£o foi ligado");
+                        // NÃ£o pinta se nÃ£o conseguir abrir
+                        rdbtnOnoff.setSelected(false);
 
-					}
+                    }
+
+                }
 					// TODO testar isto
-					catch (NullPointerException e) {
-						System.out.println("NÃ£o foi colocado o nome do Robot");
-						logInfo("NÃ£o foi colocado o nome do Robot");
-					}
-				}
 				else {
 					app.desligarRobot();
 					logInfo("O robot foi desligado");
