@@ -36,16 +36,16 @@ public class ClienteRobot {
 		setMensagem(m);
 	}
 
-	public boolean OpenEV3(String nomeRobot) {
+/*	public boolean OpenEV3(String nomeRobot) {
 		Mensagem m = new OpenEV3(nomeRobot);
 		gui.printCommand(m);
 		setMensagem(m);
 		return true;
-	}
+	}*/
 
-	public void CloseEV3() {
+/*	public void CloseEV3() {
 		Mensagem m = new CloseEV3();
 		gui.printCommand(m);
 		setMensagem(m);
-	}
+	}*/
 }

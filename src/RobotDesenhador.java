@@ -1,7 +1,7 @@
 public class RobotDesenhador {
 	
-	private GUIRobot gui;
-	private String robot;
+	private final GUIRobot gui;
+	private final String robot;
 	
 	public RobotDesenhador() {
 		this.gui = new GUIRobot();
@@ -50,18 +50,23 @@ public class RobotDesenhador {
 		gui.printCommand(m);
 	}
 
-	public void CurvarEsquerda(int raio, float angulo){
+	public void CurvarEsquerda(int raio, int angulo){
 		Mensagem m = new CurvarEsquerda(raio, angulo);
 		gui.printCommand(m);
 	}
 
-	void CurvarDireita(int raio, float angulo){
+	public void CurvarDireita(int raio, int angulo){
 		Mensagem m = new CurvarDireita(raio, angulo);
 		gui.printCommand(m);
 	}
 
-	void Parar(boolean assincrono){
+	public void Parar(boolean assincrono){
 		Mensagem m = new Parar(assincrono);
 		gui.printCommand(m);
+	}
+
+	public void terminarRobot() {
+		System.out.println("Terminou Robot");
+		gui.dispose();
 	}
 }

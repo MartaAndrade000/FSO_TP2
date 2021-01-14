@@ -4,7 +4,7 @@ public class DesenhaCirculo extends Comportamento {
 
 	int raio;
 	private int direcao;
-	private Semaphore sStartDrawing;
+	private final Semaphore sStartDrawing;
 
 	public DesenhaCirculo(BufferCircular buffer, Semaphore sReady, Semaphore sStartDrawing) {
 		super(buffer, sReady, "Desenha Círculo");
@@ -12,20 +12,27 @@ public class DesenhaCirculo extends Comportamento {
 	}
 
 	public void desenha() {
-		this.raio = raio;
-		this.direcao = direcao;
 		haTrabalho.release();
 		estado = ESCREVER_FORMA;
 	}
+
+	@Override
+	protected int getTempoExecucao() {
+		return getContasCurva(raio, 360);
+	}
+
 	protected void desenharForma() {
 		try {
 			sStartDrawing.acquire();
 			if (direcao == App.DIRECAO_ESQ) {
 				cliente.CurvarEsquerda(raio, 360);
+				Thread.sleep(getContasCurva(raio, 90));
 			} else {
 				cliente.CurvarDireita(raio, 360);
+				Thread.sleep(getContasCurva(raio, 90));
 			}
 			cliente.parar(false);
+			acabouDesenho = true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

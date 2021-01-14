@@ -1,11 +1,20 @@
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
-import java.awt.*;
-import java.awt.event.*;
 
-public class GUIApp extends JFrame {
+import javax.swing.border.EtchedBorder;
+import java.awt.Color;
+import java.awt.event.*;
+import javax.swing.ButtonGroup;
+
+public class GUIApp2Quadrados extends JFrame {
 
 	private int lado;
 	private int raio;
@@ -26,7 +35,7 @@ public class GUIApp extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GUIApp(App app) {
+	public GUIApp2Quadrados(App app) {
 		this.app = app;
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -44,51 +53,55 @@ public class GUIApp extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		
+
+
 		/*
 		 * LIGAR E DESLIGAR ROBOT
 		 */
 		JLabel lblNomeDoRobot = new JLabel("Nome do Robot:");
 		lblNomeDoRobot.setBounds(70, 28, 114, 16);
 		contentPane.add(lblNomeDoRobot);
-		
+
 		nomeRobotTextField = new JTextField();
 		nomeRobotTextField.setBounds(177, 23, 130, 26);
 		contentPane.add(nomeRobotTextField);
 		nomeRobotTextField.setColumns(10);
-		
+
 		JRadioButton rdbtnOnoff = new JRadioButton("On/Off");
 		rdbtnOnoff.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent event) {
+
 				if(rdbtnOnoff.isSelected()) {
 
-					// Se robot estiver desligado
-					if(!app.robotOn){
-						// Tirar nome
-						String nomeRobot = nomeRobotTextField.getText();
-						// Tentar ligar
-						app.ligarRobot(nomeRobot);
-						// Se continuar desligado
-						if(!app.robotOn){
-							logInfo("O robot não foi ligado");
-							// Não pinta se não conseguir abrir
-							rdbtnOnoff.setSelected(false);
-						}
-						else
-							logInfo("O robot foi ligado");
-					}
-				}
+                    String nomeRobot = nomeRobotTextField.getText();
+                    if(nomeRobot != null && !nomeRobot.isEmpty()) {
+                        if (app.robotOn) {
+                            logInfo("O robot foi ligado");
+                        }
+                        else {
+                            logInfo("O robot nÃ£o foi ligado");
+                            // NÃ£o pinta se nÃ£o conseguir abrir
+                            rdbtnOnoff.setSelected(false);
+                        }
+                    } else{
+                        logInfo("Nome invÃ¡lido, o robot nÃ£o foi ligado");
+                        // NÃ£o pinta se nÃ£o conseguir abrir
+                        rdbtnOnoff.setSelected(false);
+
+                    }
+
+                }
+					// TODO testar isto
 				else {
-					logInfo("O robot foi desligado");
 					app.desligarRobot();
+					logInfo("O robot foi desligado");
 				}
 			}
 		});
 		rdbtnOnoff.setBounds(319, 24, 77, 23);
 		contentPane.add(rdbtnOnoff);
-		
+
 		/*
 		 * DESENHAR QUADRADO
 		 */
@@ -97,19 +110,19 @@ public class GUIApp extends JFrame {
 		panelQuadrado.setBounds(26, 64, 197, 147);
 		contentPane.add(panelQuadrado);
 		panelQuadrado.setLayout(null);
-		
+
 		JLabel lblLado = new JLabel("Lado:");
 		lblLado.setBounds(36, 31, 40, 16);
 		panelQuadrado.add(lblLado);
-		
-		JSpinner spinnerLado = new JSpinner(new SpinnerNumberModel(25, 20, null, 1));
+
+		JSpinner spinnerLado = new JSpinner(new SpinnerNumberModel(30, 20, null, 1));
 		spinnerLado.setBounds(77, 26, 61, 26);
 		panelQuadrado.add(spinnerLado);
-		
+
 		JLabel lblLadoCm = new JLabel("cm");
 		lblLadoCm.setBounds(142, 31, 19, 16);
 		panelQuadrado.add(lblLadoCm);
-		
+
 		btnDesenharQuadrado = new JButton("Desenhar!");
 		btnDesenharQuadrado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -117,7 +130,7 @@ public class GUIApp extends JFrame {
 				try {
 					// TODO verificar isto
 					// Ensure manually typed values with the editor are propagated to the model
-				    spinnerLado.commitEdit();
+					spinnerLado.commitEdit();
 				}
 				catch ( java.text.ParseException e ) {
 					System.out.println("Erro Spinner");
@@ -128,20 +141,20 @@ public class GUIApp extends JFrame {
 
 					handleDesenhar(App.DESENHA_QUADRADO, lado, direcaoQuadrado);
 				} else{
-					logInfo("Impossível desenhar, Robot desligado");
+					logInfo("ImpossÃ­vel desenhar, Robot desligado");
 				}
 			}
 		});
-		btnDesenharQuadrado.setBounds(40, 99, 117, 29);
+		btnDesenharQuadrado.setBounds(10, 107, 89, 29);
 		panelQuadrado.add(btnDesenharQuadrado);
-		
+
 		JRadioButton rdbtnQuadradoEsquerda = new JRadioButton("Esquerda");
 		rdbtnQuadradoEsquerda.setSelected(true);
 		rdbtnQuadradoEsquerda.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					direcaoQuadrado = App.DIRECAO_ESQ;
-					logInfo("O tipo de direção do quadrado passou a ser para a esquerda");
+					logInfo("O tipo de direÃ§Ã£o do quadrado passou a ser para a esquerda");
 				}
 			}
 		});
@@ -149,69 +162,94 @@ public class GUIApp extends JFrame {
 		buttonGroupQuadrado.add(rdbtnQuadradoEsquerda);
 		rdbtnQuadradoEsquerda.setBounds(16, 64, 89, 23);
 		panelQuadrado.add(rdbtnQuadradoEsquerda);
-		
+
 		JRadioButton rdbtnQuadradoDireita = new JRadioButton("Direita");
 		rdbtnQuadradoDireita.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					direcaoQuadrado = App.DIRECAO_DIR;
-					logInfo("O tipo de direção do quadrado passou a ser para a direita");
+					logInfo("O tipo de direÃ§Ã£o do quadrado passou a ser para a direita");
 				}
 			}
 		});
 		buttonGroupQuadrado.add(rdbtnQuadradoDireita);
 		rdbtnQuadradoDireita.setBounds(106, 64, 74, 23);
 		panelQuadrado.add(rdbtnQuadradoDireita);
-		
+
+		JButton btnDesenharQuadradoNovo = new JButton("DesenharNovo!");
+		btnDesenharQuadradoNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+
+				try {
+					// TODO verificar isto
+					// Ensure manually typed values with the editor are propagated to the model
+					spinnerLado.commitEdit();
+				}
+				catch ( java.text.ParseException e ) {
+					System.out.println("Erro Spinner");
+				}
+
+				if(rdbtnOnoff.isSelected()) {
+					lado = (Integer) spinnerLado.getValue();
+
+					handleDesenhar(App.DESENHA_QUADRADO, lado, direcaoQuadrado);
+				} else{
+					logInfo("ImpossÃ­vel desenhar, Robot desligado");
+				}
+			}
+		});
+		btnDesenharQuadradoNovo.setBounds(98, 107, 89, 29);
+		panelQuadrado.add(btnDesenharQuadradoNovo);
+
 		/*
-		 * DESENHAR CÍRCULO
+		 * DESENHAR CÃ�RCULO
 		 */
 		JPanel panelCirculo = new JPanel();
 		panelCirculo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Desenhar um C\u00EDrculo", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panelCirculo.setBounds(235, 64, 197, 147);
 		contentPane.add(panelCirculo);
 		panelCirculo.setLayout(null);
-		
+
 		JLabel lblRaioCm = new JLabel("cm");
 		lblRaioCm.setBounds(134, 32, 19, 16);
 		panelCirculo.add(lblRaioCm);
-		
-		JSpinner spinnerRaio = new JSpinner(new SpinnerNumberModel(25, 20, null, 1));
+
+		JSpinner spinnerRaio = new JSpinner(new SpinnerNumberModel(30, 20, null, 1));
 		spinnerRaio.setBounds(69, 27, 61, 26);
 		panelCirculo.add(spinnerRaio);
-		
+
 		JLabel lblRaio = new JLabel("Raio:");
 		lblRaio.setBounds(28, 32, 40, 16);
 		panelCirculo.add(lblRaio);
-		
+
 		btnDesenharCirculo = new JButton("Desenhar!");
 		btnDesenharCirculo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				try {
 					// TODO verificar isto
 					// Ensure manually typed values with the editor are propagated to the model
-				    spinnerRaio.commitEdit();
-				} 
-				catch ( java.text.ParseException e ) { 
+					spinnerRaio.commitEdit();
+				}
+				catch ( java.text.ParseException e ) {
 					System.out.println("Erro Spinner");
 				}
 				if(rdbtnOnoff.isSelected()) {
 					raio = (Integer) spinnerRaio.getValue();
 					handleDesenhar(App.DESENHA_CIRCULO, raio, direcaoCirculo);
 				} else {
-					logInfo("Impossível desenhar, Robot desligado");
+					logInfo("ImpossÃ­vel desenhar, Robot desligado");
 				}
 			}
 		});
 		btnDesenharCirculo.setBounds(40, 98, 117, 29);
 		panelCirculo.add(btnDesenharCirculo);
-		
+
 		JRadioButton rdbtnCirculoDireita = new JRadioButton("Direita");
 		rdbtnCirculoDireita.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					direcaoCirculo = App.DIRECAO_DIR;
-					logInfo("O tipo de direção do circulo passou a ser para a direita");
+					direcaoQuadrado = App.DIRECAO_DIR;
+					logInfo("O tipo de direÃ§Ã£o do circulo passou a ser para a direita");
 				}
 			}
 		});
@@ -219,37 +257,37 @@ public class GUIApp extends JFrame {
 		buttonGroupCirculo.add(rdbtnCirculoDireita);
 		rdbtnCirculoDireita.setBounds(106, 63, 74, 23);
 		panelCirculo.add(rdbtnCirculoDireita);
-		
+
 		JRadioButton rdbtnCirculoEsquerda = new JRadioButton("Esquerda");
 		rdbtnCirculoEsquerda.setSelected(true);
 		rdbtnCirculoEsquerda.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					direcaoCirculo = App.DIRECAO_ESQ;
-					logInfo("O tipo de direção do circulo passou a ser para a esquerda");
+					direcaoQuadrado = App.DIRECAO_ESQ;
+					logInfo("O tipo de direÃ§Ã£o do circulo passou a ser para a esquerda");
 				}
 			}
 		});
 		buttonGroupCirculo.add(rdbtnCirculoEsquerda);
 		rdbtnCirculoEsquerda.setBounds(16, 63, 89, 23);
 		panelCirculo.add(rdbtnCirculoEsquerda);
-		
+
 		/*
 		 * CONSOLA
-		 */	
+		 */
 		consolaTextField = new JTextField();
 		consolaTextField.setEditable(false);
 		consolaTextField.setBounds(6, 246, 449, 26);
 		contentPane.add(consolaTextField);
 		consolaTextField.setColumns(10);
-		
+
 		JLabel lblConsola = new JLabel("Consola");
 		lblConsola.setBounds(16, 228, 61, 16);
 		contentPane.add(lblConsola);
-		
+
 		setVisible(true);
 	}
-	
+
 	protected void handleDesenhar(int tipoDeDesenho, int dim, int direcao) {
 		app.desenharForma(tipoDeDesenho, dim, direcao);
 	}
@@ -261,7 +299,7 @@ public class GUIApp extends JFrame {
 
 	/**
 	 * Escreve na consola para debug
-	 * 
+	 *
 	 * @param txt Texto a escrever
 	 */
 	public void logInfo(String txt) {

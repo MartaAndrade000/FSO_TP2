@@ -9,8 +9,7 @@ public class GUIServidor extends JFrame {
      *
      */
     private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
-    private JTextArea servidorTextArea;
+    private final JTextArea servidorTextArea;
 
     /**
      * Create the frame.
@@ -20,7 +19,7 @@ public class GUIServidor extends JFrame {
         setTitle("Servidor");
         setBounds(550, 70, 300, 300);
 
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout());

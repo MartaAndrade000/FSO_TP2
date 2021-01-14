@@ -5,8 +5,7 @@ public abstract class Mensagem {
 	
 	//Tipos de Mensagem
 	enum TIPO_MENSAGEM {
-		OPEN,
-		CLOSE,
+		CLOSE, // TODO Might be removed
 		RETA,
 		CURVA_ESQ,
 		CURVA_DIR,
