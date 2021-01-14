@@ -10,12 +10,12 @@ public class ServidorRobot extends Thread {
     GUIServidor gui;
 
     BufferCircular buffer;
-    RobotLegoEV3 robot;
+//    RobotLegoEV3 robot;
     GravarFormas gravador;
-//    RobotDesenhador robot;
+    RobotDesenhador robot;
 
 
-    public ServidorRobot(BufferCircular buffer, RobotLegoEV3 robot, GravarFormas gravador) {
+    public ServidorRobot(BufferCircular buffer, RobotDesenhador robot, GravarFormas gravador) {
         this.gui = new GUIServidor();
         this.buffer = buffer;
         this.robot = robot;

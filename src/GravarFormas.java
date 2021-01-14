@@ -1,8 +1,10 @@
 import java.io.*;
+import java.nio.charset.Charset;
 
 public class GravarFormas extends Thread {
 
-    private final RobotLegoEV3 robot;
+    private final RobotDesenhador robot;
+//  private final RobotLegoEV3 robot;
     private final ServidorRobot rbServer;
     private boolean recording;
     private String filename;
@@ -10,7 +12,13 @@ public class GravarFormas extends Thread {
     private BufferedReader inputStream;
     private OutputStream outputStream;
 
-    public GravarFormas(RobotLegoEV3 robot, ServidorRobot rbServer) {
+    private GUIGravarFormas gui;
+
+    public GravarFormas(RobotDesenhador robot, ServidorRobot rbServer) {
+        filename = "ola.txt";
+        openFile();
+
+        this.gui = new GUIGravarFormas();
         this.robot = robot;
         this.rbServer = rbServer;
     }
@@ -40,9 +48,22 @@ public class GravarFormas extends Thread {
 
         if (!this.recording) return;
 
-        String serialize = CommandSerializer.serialize(mensagem);
+        String serializedMsg = CommandSerializer.serialize(mensagem);
+
+        gui.printCommand(mensagem);
 
 
+        // Escrever no output usando uma printer
+//        PrintWriter p = new PrintWriter(outputStream);
+//        p.println("Hello");
+
+
+        // Escrever no output por bytes ???
+//        try {
+//            outputStream.write(serializedMsg.getBytes(Charset.forName("UTF-8")));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     // function: playBack()
