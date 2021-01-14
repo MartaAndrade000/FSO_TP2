@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream:src/tp2/ServidorRobot.java
-package tp2;
-=======
 import robot.RobotEV3;
->>>>>>> Stashed changes:src/ServidorRobot.java
 
 public class ServidorRobot extends Thread {
 
@@ -13,12 +9,12 @@ public class ServidorRobot extends Thread {
 //    RobotDesenhador robot;
 
 
-<<<<<<< Updated upstream:src/tp2/ServidorRobot.java
-    public ServidorRobot(BufferCircular buffer, RobotDesenhador robot) {
-        this.gui = new GUIServidor();
-        this.buffer = buffer;
-        this.robot = robot;
-=======
+//<<<<<<< Updated upstream:src/tp2/ServidorRobot.java
+//    public ServidorRobot(BufferCircular buffer, RobotDesenhador robot) {
+//        this.gui = new GUIServidor();
+//        this.buffer = buffer;
+//        this.robot = robot;
+//=======
 //    public ServidorRobot(BufferCircular buffer, RobotDesenhador robot) {
 //        this.gui = new GUIServidor();
 //        this.buffer = buffer;
@@ -31,24 +27,21 @@ public class ServidorRobot extends Thread {
         this.buffer = buffer;
         this.robot = robot;
         estado = TIPO_ESTADO.LER;
->>>>>>> Stashed changes:src/ServidorRobot.java
     }
 
-    /**
-     *
-     */
+
     public void run() {
 		while (true) {
             Mensagem mensagem = buffer.getMensagem();
 
             switch (mensagem.getTipo()) {
 
-                case OPEN:
-                    robot.OpenEV3(((OpenEV3) mensagem).getRobotName());
-                    break;
-                case CLOSE:
-                    robot.CloseEV3();
-                    break;
+//                case OPEN:
+//                    robot.OpenEV3(((OpenEV3) mensagem).getRobotName());
+//                    break;
+//                case CLOSE:
+//                    robot.CloseEV3();
+//                    break;
                 case RETA:
                     robot.Reta(((Reta) mensagem).getDist());
                     break;
