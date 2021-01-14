@@ -31,6 +31,7 @@ public class App {
 	GUIApp gui;
 
 	ServidorRobot servidor;
+	GravarFormas gravador;
 //	RobotDesenhador robot;
 	RobotLegoEV3 robot;
 
@@ -49,7 +50,8 @@ public class App {
 
 		this.robot = new RobotLegoEV3();
 //		this.robot = new RobotDesenhador();
-		this.servidor = new ServidorRobot(buffer, robot);
+		this.servidor = new ServidorRobot(buffer, robot, gravador);
+		this.gravador = new GravarFormas(robot, servidor);
 
 		haTrabalho = new Semaphore(0);
 

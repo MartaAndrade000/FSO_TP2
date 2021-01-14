@@ -1,8 +1,8 @@
 public class ServidorRobot extends Thread {
 
     //ESTADOS
-    private enum TIPO_ESTADO {
-        LER, TERMINAR
+    public enum TIPO_ESTADO {
+        LER, TERMINAR, REPLAY
     }
     private TIPO_ESTADO estado;
 
@@ -11,13 +11,15 @@ public class ServidorRobot extends Thread {
 
     BufferCircular buffer;
     RobotLegoEV3 robot;
+    GravarFormas gravador;
 //    RobotDesenhador robot;
 
 
-    public ServidorRobot(BufferCircular buffer, RobotLegoEV3 robot) {
+    public ServidorRobot(BufferCircular buffer, RobotLegoEV3 robot, GravarFormas gravador) {
         this.gui = new GUIServidor();
         this.buffer = buffer;
         this.robot = robot;
+        this.gravador = gravador;
         estado = TIPO_ESTADO.LER;
 
     }
@@ -37,6 +39,9 @@ public class ServidorRobot extends Thread {
                     stateRead();
                     break;
 
+                case REPLAY:
+                    break;
+
                 case TERMINAR:
                     // Cleanup gui
                     gui.dispose();
@@ -48,6 +53,8 @@ public class ServidorRobot extends Thread {
     private void stateRead() {
         Mensagem mensagem = buffer.getMensagem();
         if (mensagem == null) return;
+
+        if (this.gravador != null) this.gravador.recordCommand(mensagem);
 
         switch (mensagem.getTipo()) {
 
@@ -83,5 +90,9 @@ public class ServidorRobot extends Thread {
     public void terminaServidor() {
         System.out.println("Terminou Servidor");
         estado = TIPO_ESTADO.TERMINAR;
+    }
+
+    public void setEstado(TIPO_ESTADO state) {
+        this.estado = state;
     }
 }
