@@ -12,9 +12,12 @@ public class GravarFormas extends Thread {
     private PrintWriter output;
     private long lastMessageTS = -1;
 
+    private GUIGravarFormas gui;
+
     public GravarFormas(RobotLegoEV3 robot, ServidorRobot rbServer) {
         this.robot = robot;
         this.rbServer = rbServer;
+        this.gui = new GUIGravarFormas();
     }
 
     public void setRecording(boolean state) {

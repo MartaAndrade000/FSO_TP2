@@ -32,8 +32,8 @@ public class App {
 
 	ServidorRobot servidor;
 	GravarFormas gravador;
-//	RobotDesenhador robot;
-	RobotLegoEV3 robot;
+	RobotDesenhador robot;
+//	RobotLegoEV3 robot;
 
 	BufferCircular buffer;
 
@@ -48,10 +48,13 @@ public class App {
 
 		this.buffer = new BufferCircular();
 
-		this.robot = new RobotLegoEV3();
-//		this.robot = new RobotDesenhador();
+//		this.robot = new RobotLegoEV3();
+		this.robot = new RobotDesenhador();
 		this.servidor = new ServidorRobot(buffer, robot, gravador);
 		this.gravador = new GravarFormas(robot, servidor);
+
+		// Para testar TODO
+//		gravador.setRecording(true);
 
 		haTrabalho = new Semaphore(0);
 
@@ -115,36 +118,12 @@ public class App {
 					servidor.terminaServidor();
 					buffer.terminarBuffer();
 
-
 //					if(robot != null) // Alterei aqui
-//						robot.terminarRobot();
+						robot.terminarRobot();
 					this.gui.dispose();
 					return;
 			}
 		}
-	}
-
-	/**
-	 * Logica para bloquear os botoes das formas enquanto se espera pelo
-	 * tempo teorico que demora a desenha-las.
-	 *
-	 * NOTA!!!!
-	 * Isto vai bloquear a thread em que é chamado, por isso ter consciencia onde e quando no
-	 * processo meter isto, as mensgens já têm de estar enviadas.
-	 * Conselho: nao por nenhuma GUI a chamar isto ( obvio mas... :D )
-	 */
-	private void esperarPeloDesenhoDaForma() {
-
-		if (nextShape == null) return;
-
-		gui.setEstadoBtnFormas(false);
-		try {
-			Thread.sleep(nextShape.getTempoExecucao());
-		} catch (InterruptedException e) {
-			System.out.println("Nao foi possivel bloquear os botoes pelo tempo esperado");
-		}
-
-		gui.setEstadoBtnFormas(true);
 	}
 
 	// Liga diretamente
