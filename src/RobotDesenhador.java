@@ -1,4 +1,4 @@
-public class RobotDesenhador {
+public class RobotDesenhador extends RobotLegoEV3 {
 	
 	private final GUIRobot gui;
 	private final String robot;

@@ -9,6 +9,8 @@ public class GravarFormas extends Thread {
     private File file;
     private BufferedReader inputStream;
     private OutputStream outputStream;
+    private PrintWriter output;
+    private long lastMessageTS = -1;
 
     public GravarFormas(RobotLegoEV3 robot, ServidorRobot rbServer) {
         this.robot = robot;
@@ -17,9 +19,10 @@ public class GravarFormas extends Thread {
 
     public void setRecording(boolean state) {
         this.recording = state;
+        this.lastMessageTS = System.currentTimeMillis();
         if (this.recording) {
             try {
-                this.outputStream = new BufferedOutputStream(new FileOutputStream(this.file));
+                this.output = new PrintWriter(new OutputStreamWriter(new FileOutputStream(this.file)));
             } catch (FileNotFoundException e) {
                 System.out.println("Failed to open file stream");
             }
@@ -39,10 +42,15 @@ public class GravarFormas extends Thread {
     public void recordCommand(Mensagem mensagem) {
 
         if (!this.recording) return;
+        if (this.output == null) return;
 
-        String serialize = CommandSerializer.serialize(mensagem);
 
+        long millis = System.currentTimeMillis();
+        long elapsed = millis - this.lastMessageTS;
+        this.lastMessageTS = millis;
 
+        String serialize = CommandSerializer.serialize(mensagem, elapsed);
+        output.println(serialize);
     }
 
     // function: playBack()
@@ -50,6 +58,7 @@ public class GravarFormas extends Thread {
     // ReadCommands -> give them to robot
     public void playBack() {
         this.rbServer.setEstado(ServidorRobot.TIPO_ESTADO.REPLAY);
+        this.recording = false;
 
         try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(this.file)))) {
 
@@ -77,21 +86,8 @@ public class GravarFormas extends Thread {
         this.file = new File(this.filename);
     }
 
+    public void bloquear() {
 
-    // Create gui CLASSE á parte
-    // this.fileName = fileName
-    // this.file = file; ??
-
-    // this.robot = robot;
-
-    // this.isRecording = false;
-
-
-
-
-
-
-    // function: openFile()
-    // function: closeFile()
+    }
 
 }

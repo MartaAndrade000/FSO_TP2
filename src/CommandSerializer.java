@@ -1,14 +1,14 @@
 public class CommandSerializer {
 
-    public static String serialize(Mensagem m) {
+
+    // todo feeling lazy, might optimize later
+    public static String serialize(Mensagem m, long elapsed) {
         String msg = "";
 
         msg += m.getTipo().ordinal();
 
         switch (m.getTipo()) {
 
-            case CLOSE:
-                break;
             case RETA:
                 msg += "," + ((Reta) m).getDist();
                 break;
@@ -20,7 +20,11 @@ public class CommandSerializer {
                 break;
             case PARAR:
                 msg += "," + ((Parar) m).getAssincrono();
+            default:
+                break;
         }
+
+        msg += "," + elapsed;
         return msg;
     }
 
