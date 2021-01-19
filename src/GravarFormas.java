@@ -2,22 +2,18 @@ import java.io.*;
 
 public class GravarFormas extends Thread {
 
-    private final RobotLegoEV3 robot;
-    private final ServidorRobot rbServer;
     private boolean recording;
-    private String filename;
     private File file;
-    private BufferedReader inputStream;
-    private OutputStream outputStream;
     private PrintWriter output;
     private long lastMessageTS = -1;
+    private BufferCircular buffer;
 
     private GUIGravarFormas gui;
 
-    public GravarFormas(RobotLegoEV3 robot, ServidorRobot rbServer) {
-        this.robot = robot;
-        this.rbServer = rbServer;
-        this.gui = new GUIGravarFormas();
+
+    public GravarFormas(BufferCircular buffer) {
+        this.gui = new GUIGravarFormas(this);
+        this.buffer = buffer;
     }
 
     public void setRecording(boolean state) {
@@ -30,11 +26,7 @@ public class GravarFormas extends Thread {
                 System.out.println("Failed to open file stream");
             }
         } else {
-            try {
-                this.outputStream.close();
-            } catch (IOException e) {
-                System.out.println("Failed to close output stream");
-            }
+            this.output.close();
         }
     }
 
@@ -60,7 +52,6 @@ public class GravarFormas extends Thread {
     // lock/stop inputs
     // ReadCommands -> give them to robot
     public void playBack() {
-        this.rbServer.setEstado(ServidorRobot.TIPO_ESTADO.REPLAY);
         this.recording = false;
 
         try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(this.file)))) {
@@ -72,21 +63,20 @@ public class GravarFormas extends Thread {
                 // line -> message
                 Mensagem msg = CommandSerializer.deserialize(line);
 
+                buffer.putMensagem(msg);
+
             }
 
 
         } catch (IOException e) {
             System.out.println("Miau");
         }
-
-
-        this.rbServer.setEstado(ServidorRobot.TIPO_ESTADO.LER);
     }
 
 
 
-    public void openFile() {
-        this.file = new File(this.filename);
+    public void openFile(String filename) {
+        this.file = new File(filename);
     }
 
     public void bloquear() {
