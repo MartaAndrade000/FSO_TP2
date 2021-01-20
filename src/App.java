@@ -48,9 +48,12 @@ public class App {
 
 		this.buffer = new BufferCircular();
 
+		Semaphore sMutex = new Semaphore(1);
+		Semaphore sStartDrawing = new Semaphore(0);
+
 //		this.robot = new RobotLegoEV3();
 		this.robot = new RobotDesenhador();
-		this.gravador = new GravarFormas(buffer);
+		this.gravador = new GravarFormas(buffer, sMutex);
 		this.servidor = new ServidorRobot(buffer, robot, gravador);
 
 		// Para testar TODO
@@ -58,17 +61,16 @@ public class App {
 
 		haTrabalho = new Semaphore(0);
 
-		Semaphore sMutex = new Semaphore(1);
-		Semaphore sStartDrawing = new Semaphore(0);
-
 		this.quadrado = new DesenhaQuadrado(this, buffer, sMutex, sStartDrawing);
 		this.circulo = new DesenhaCirculo(buffer, sMutex, sStartDrawing);
 		this.espacarFormas = new EspacarFormasGeometricas(buffer, sMutex, sStartDrawing);
+
 
 		quadrado.start();
 		circulo.start();
 		espacarFormas.start();
 		servidor.start();
+		gravador.start();
 
 		estado = TIPO_ESTADO.ESPERAR;
 
@@ -103,7 +105,7 @@ public class App {
 					}
 
 					if (estado == TIPO_ESTADO.ESPACAR_E_DESENHAR && nextShape.isAcabouDesenho()) {
-						gui.setEstadoBtnFormas(true);
+//						gui.setEstadoBtnFormas(true);
 						estado = TIPO_ESTADO.ESPERAR;
 						nextShape.setAcabouDesenho(false);
 					}
@@ -138,7 +140,7 @@ public class App {
 	}
 
 	public void desenharForma(int forma, int dim, int direcao) {
-		gui.setEstadoBtnFormas(false);
+//		gui.setEstadoBtnFormas(false);
 		haTrabalho.release();
 		nextDim = dim;
 

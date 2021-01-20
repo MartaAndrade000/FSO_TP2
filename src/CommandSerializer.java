@@ -37,9 +37,6 @@ public class CommandSerializer {
 
         switch (type) {
 
-            case CLOSE:
-                m = new CloseEV3();
-                break;
             case RETA:
                 m = new Reta(Integer.parseInt(splitMessage[1]));
                 break;

@@ -2,7 +2,7 @@ public class ServidorRobot extends Thread {
 
     //ESTADOS
     public enum TIPO_ESTADO {
-        LER, TERMINAR, REPLAY
+        LER, TERMINAR
     }
     private TIPO_ESTADO estado;
 
@@ -39,9 +39,6 @@ public class ServidorRobot extends Thread {
                     stateRead();
                     break;
 
-                case REPLAY:
-                    break;
-
                 case TERMINAR:
                     // Cleanup gui
                     gui.dispose();
@@ -58,9 +55,6 @@ public class ServidorRobot extends Thread {
 
         switch (mensagem.getTipo()) {
 
-            case CLOSE:
-                robot.CloseEV3();
-                break;
             case RETA: {
                 Reta msg = (Reta) mensagem;
                 robot.Reta(msg.getDist());

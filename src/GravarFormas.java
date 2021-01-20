@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.concurrent.Semaphore;
 
 public class GravarFormas extends Thread {
 
@@ -8,12 +9,64 @@ public class GravarFormas extends Thread {
     private long lastMessageTS = -1;
     private BufferCircular buffer;
 
+    private Semaphore sMutex;
+
     private GUIGravarFormas gui;
 
+    protected int estado;
 
-    public GravarFormas(BufferCircular buffer) {
+    //ESTADOS
+    protected static final int ESPERAR = 0;
+    protected static final int REPLAY = 1;
+    protected static final int TERMINAR = 2;
+
+    protected Semaphore haTrabalho;
+
+
+
+
+    public GravarFormas(BufferCircular buffer, Semaphore sMutex) {
         this.gui = new GUIGravarFormas(this);
         this.buffer = buffer;
+        this.sMutex = sMutex;
+        haTrabalho = new Semaphore(0);
+        estado = ESPERAR;
+    }
+
+
+    public void run() {
+        while(true) {
+
+            switch(estado) {
+                case TERMINAR:
+                    return;
+                case ESPERAR:
+                    try {
+
+                        haTrabalho.acquire();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case REPLAY:
+                    try {
+                        sMutex.acquire();
+                        readCommands();
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    finally {
+                        sMutex.release();
+                    }
+
+                    if(estado == REPLAY) {
+                        estado = ESPERAR;
+                        break;
+                    }
+            }
+        }
     }
 
     public void toggleRecording() {
@@ -45,6 +98,8 @@ public class GravarFormas extends Thread {
         if (this.output == null) return;
 
 
+
+
         long millis = System.currentTimeMillis();
         long elapsed = millis - this.lastMessageTS;
         this.lastMessageTS = millis;
@@ -59,13 +114,17 @@ public class GravarFormas extends Thread {
     // ReadCommands -> give them to robot
     public void playBack() {
         this.recording = false;
+        estado = REPLAY;
+        haTrabalho.release();
 
+    }
+
+    public void readCommands () {
         try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(this.file)))) {
-
 
             String line;
             while((line = inputStream.readLine()) != null) {
-//                System.out.println(line);
+//                          System.out.println(line);
                 // line -> message
                 Mensagem msg = CommandSerializer.deserialize(line);
                 String[] split = line.split(",");
