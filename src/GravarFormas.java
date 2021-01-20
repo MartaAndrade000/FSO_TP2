@@ -16,9 +16,14 @@ public class GravarFormas extends Thread {
         this.buffer = buffer;
     }
 
+    public void toggleRecording() {
+        this.setRecording(!this.recording);
+    }
+
     public void setRecording(boolean state) {
         this.recording = state;
         this.lastMessageTS = System.currentTimeMillis();
+        gui.log((this.recording ? "Started" : "Stopped") + " recording");
         if (this.recording) {
             try {
                 this.output = new PrintWriter(new OutputStreamWriter(new FileOutputStream(this.file)));
@@ -46,6 +51,7 @@ public class GravarFormas extends Thread {
 
         String serialize = CommandSerializer.serialize(mensagem, elapsed);
         output.println(serialize);
+        gui.log(serialize);
     }
 
     // function: playBack()
@@ -59,9 +65,15 @@ public class GravarFormas extends Thread {
 
             String line;
             while((line = inputStream.readLine()) != null) {
-                System.out.println(line);
+//                System.out.println(line);
                 // line -> message
                 Mensagem msg = CommandSerializer.deserialize(line);
+                String[] split = line.split(",");
+                Long millis = Long.parseLong(split[split.length -1]);
+
+                try {
+                    Thread.sleep(millis);
+                } catch (InterruptedException ignored) {}
 
                 buffer.putMensagem(msg);
 

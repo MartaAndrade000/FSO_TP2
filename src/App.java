@@ -50,8 +50,8 @@ public class App {
 
 //		this.robot = new RobotLegoEV3();
 		this.robot = new RobotDesenhador();
-		this.servidor = new ServidorRobot(buffer, robot, gravador);
 		this.gravador = new GravarFormas(buffer);
+		this.servidor = new ServidorRobot(buffer, robot, gravador);
 
 		// Para testar TODO
 //		gravador.setRecording(true);

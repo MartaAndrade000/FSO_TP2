@@ -11,6 +11,7 @@ public class GUIGravarFormas extends JFrame {
 
     private JPanel contentPane;
     private JTextField textField;
+    private JTextArea textAreaComandos;
 
 
     /**
@@ -38,7 +39,7 @@ public class GUIGravarFormas extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 //O file directory fica definido para a mesma localização do projeto e para a pasta chat
-                fc.setCurrentDirectory(new java.io.File("./chat"));
+                fc.setCurrentDirectory(new java.io.File("./"));
 
                 //O file chooser só vai mostrar ficheiros e directories
                 fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -57,11 +58,23 @@ public class GUIGravarFormas extends JFrame {
         // TODO Paths relativos?
         JButton btnPlayPause = new JButton("");
         btnPlayPause.setIcon(new ImageIcon("C:\\Users\\Marta Andrade\\Desktop\\ISEL\\3Semestre\\FSO\\SuporteTP2\\playpause.png"));
+        btnPlayPause.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gravarFormas.toggleRecording();
+            }
+        });
         btnPlayPause.setBounds(112, 54, 40, 40);
         contentPane.add(btnPlayPause);
 
         JButton btnReplay = new JButton("");
         btnReplay.setIcon(new ImageIcon("C:\\Users\\Marta Andrade\\Desktop\\ISEL\\3Semestre\\FSO\\SuporteTP2\\replay.png"));
+        btnReplay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gravarFormas.playBack();
+            }
+        });
         btnReplay.setBounds(233, 54, 40, 40);
         contentPane.add(btnReplay);
 
@@ -69,10 +82,16 @@ public class GUIGravarFormas extends JFrame {
         scrollPane.setBounds(10, 134, 414, 116);
         contentPane.add(scrollPane);
 
-        JTextArea textAreaComandos = new JTextArea();
+        textAreaComandos = new JTextArea();
         scrollPane.setViewportView(textAreaComandos);
 
         setVisible(true);
+    }
+
+
+
+    public void log(String text) {
+        textAreaComandos.setText(text);
     }
 
 }
