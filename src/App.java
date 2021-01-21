@@ -92,13 +92,11 @@ public class App {
 		while (true) {
 			switch (estado) {
 				case ESPERAR:
-					System.out.println("Em espera");
 					jaDesenhou = false;
 					haTrabalho.acquire();
 					break;
 
 				case ESPACAR_E_DESENHAR:
-					System.out.println("A desenhar");
 					if(!jaDesenhou) {
 						espacarFormas.desenha(lastDim, nextDim, nextShape);
 						lastDim = nextDim;

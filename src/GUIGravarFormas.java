@@ -13,6 +13,8 @@ public class GUIGravarFormas extends JFrame {
     private JPanel contentPane;
     private JTextField textField;
     private JTextArea gravadorTextArea;
+    private JButton btnRec = new JButton("");
+
 
 
     /**

@@ -71,17 +71,22 @@ public class GravarFormas extends Thread {
     }
 
     public void setRecording(boolean state) {
-        this.recording = state;
-        this.lastMessageTS = System.currentTimeMillis();
-        gui.logString((this.recording ? "Começou" : "Parou") + " a gravação");
-        if (this.recording) {
-            try {
-                this.output = new PrintWriter(new OutputStreamWriter(new FileOutputStream(this.file)));
-            } catch (FileNotFoundException e) {
-                System.out.println("Failed to open file stream");
+        if (file != null) {
+            this.recording = state;
+            this.lastMessageTS = System.currentTimeMillis();
+            gui.logString((this.recording ? "Começou" : "Parou") + " a gravação");
+            if (this.recording) {
+                try {
+                    this.output = new PrintWriter(new OutputStreamWriter(new FileOutputStream(this.file)));
+                } catch (FileNotFoundException e) {
+                    System.out.println("Failed to open file stream");
+                }
+            } else {
+                this.output.close();
             }
-        } else {
-            this.output.close();
+        }
+        else{
+            gui.logString("Insira um ficheiro");
         }
     }
 
@@ -104,8 +109,14 @@ public class GravarFormas extends Thread {
     // ReadCommands -> give them to robot
     public void playBack() {
         this.recording = false;
-        estado = REPLAY;
-        haTrabalho.release();
+        if (file != null) {
+            estado = REPLAY;
+            haTrabalho.release();
+        }
+        else{
+            gui.logString("Insira um ficheiro");
+        }
+
 
     }
 
