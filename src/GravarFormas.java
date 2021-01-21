@@ -116,8 +116,6 @@ public class GravarFormas extends Thread {
         else{
             gui.logString("Insira um ficheiro");
         }
-
-
     }
 
     public void readCommands () {
