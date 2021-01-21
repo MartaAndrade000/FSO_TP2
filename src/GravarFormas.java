@@ -22,9 +22,6 @@ public class GravarFormas extends Thread {
 
     protected Semaphore haTrabalho;
 
-
-
-
     public GravarFormas(BufferCircular buffer, Semaphore sMutex) {
         this.gui = new GUIGravarFormas(this);
         this.buffer = buffer;
@@ -39,10 +36,10 @@ public class GravarFormas extends Thread {
 
             switch(estado) {
                 case TERMINAR:
+                    gui.dispose();
                     return;
                 case ESPERAR:
                     try {
-
                         haTrabalho.acquire();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -76,7 +73,7 @@ public class GravarFormas extends Thread {
     public void setRecording(boolean state) {
         this.recording = state;
         this.lastMessageTS = System.currentTimeMillis();
-        gui.log((this.recording ? "Started" : "Stopped") + " recording");
+        gui.logString((this.recording ? "Começou" : "Parou") + " a gravação");
         if (this.recording) {
             try {
                 this.output = new PrintWriter(new OutputStreamWriter(new FileOutputStream(this.file)));
@@ -88,25 +85,18 @@ public class GravarFormas extends Thread {
         }
     }
 
-    // function: recordCommand(Command c)
-    // if (this.isRecording) ...magia ( Serializer ) ...
-
-    // TODO Semaphore to regulate concurrent writes
     public void recordCommand(Mensagem mensagem) {
 
         if (!this.recording) return;
         if (this.output == null) return;
 
-
-
-
         long millis = System.currentTimeMillis();
         long elapsed = millis - this.lastMessageTS;
         this.lastMessageTS = millis;
 
-        String serialize = CommandSerializer.serialize(mensagem, elapsed);
-        output.println(serialize);
-        gui.log(serialize);
+        String serializesMsg = CommandSerializer.serialize(mensagem, elapsed);
+        output.println(serializesMsg);
+        gui.printCommand(mensagem);
     }
 
     // function: playBack()
@@ -137,8 +127,6 @@ public class GravarFormas extends Thread {
                 buffer.putMensagem(msg);
 
             }
-
-
         } catch (IOException e) {
             System.out.println("Miau");
         }
@@ -150,8 +138,17 @@ public class GravarFormas extends Thread {
         this.file = new File(filename);
     }
 
-    public void bloquear() {
-
+    public boolean isRecording() {
+        return recording;
     }
 
+    public boolean isReplaying() {
+        return (estado==REPLAY);
+    }
+
+    public void terminaGravador() {
+        System.out.println("Terminou Gravador");
+        estado = TERMINAR;
+        haTrabalho.release();
+    }
 }

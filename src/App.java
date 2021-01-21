@@ -92,12 +92,13 @@ public class App {
 		while (true) {
 			switch (estado) {
 				case ESPERAR:
+					System.out.println("Em espera");
 					jaDesenhou = false;
 					haTrabalho.acquire();
-
 					break;
 
 				case ESPACAR_E_DESENHAR:
+					System.out.println("A desenhar");
 					if(!jaDesenhou) {
 						espacarFormas.desenha(lastDim, nextDim, nextShape);
 						lastDim = nextDim;
@@ -119,7 +120,7 @@ public class App {
 					circulo.terminarComportamento();
 					servidor.terminaServidor();
 					buffer.terminarBuffer();
-
+					gravador.terminaGravador();
 //					if(robot != null) // Alterei aqui
 						robot.terminarRobot();
 					this.gui.dispose();

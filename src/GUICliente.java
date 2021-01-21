@@ -31,15 +31,15 @@ public class GUICliente extends JFrame {
         lblBuffer.setBounds(19, 22, 123, 16);
         contentPane.add(lblBuffer, BorderLayout.NORTH);
 
-        JScrollPane xpto = new JScrollPane();
-        contentPane.add(xpto, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane();
+        contentPane.add(scrollPane, BorderLayout.CENTER);
 
         ClienteTextArea = new JTextArea();
         ClienteTextArea.setEditable(false);
 //		bufferTextArea.setBounds(19, 48, 476, 278);
 //		contentPane.add(bufferTextArea);
 
-        xpto.setViewportView(ClienteTextArea);
+        scrollPane.setViewportView(ClienteTextArea);
         setVisible(true);
     }
 

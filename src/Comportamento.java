@@ -28,6 +28,8 @@ public abstract class Comportamento extends Thread {
 
                 switch(estado) {
                     case TERMINAR:
+                        cliente.parar(true);
+                        cliente.gui.dispose();
                         return;
                     case ESPERAR:
                         try {
@@ -92,8 +94,6 @@ public abstract class Comportamento extends Thread {
         System.out.println("Terminou Comportamento");
         estado = TERMINAR;
         haTrabalho.release();
-        cliente.parar(true);
-        cliente.gui.dispose();
     }
 }
 
