@@ -48,7 +48,7 @@ public class GUIGravarFormas extends JFrame {
                 fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
                 if (fc.showSaveDialog(btnOpen) == JFileChooser.APPROVE_OPTION) {
-                    gravarFormas.openFile(fc.getSelectedFile().getName());
+                    gravarFormas.setFile(fc.getSelectedFile().getName());
                     btnOpen.setEnabled(true);
                     textField.setText(fc.getSelectedFile().getAbsolutePath());
                 }

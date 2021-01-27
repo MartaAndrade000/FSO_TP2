@@ -1,14 +1,14 @@
 import java.util.concurrent.Semaphore;
 
-public class DesenhaQuadradoAntigo extends Comportamento {
+public class DesenharQuadrado extends Comportamento {
 
 	private App app;
 	private int dimLado;
 	private int direcao;
 	private final Semaphore sStartDrawing;
 
-	public DesenhaQuadradoAntigo(App app, BufferCircular buffer, Semaphore sReady, Semaphore sStartDrawing) {
-		super(buffer, sReady, "Desenha Quadrado");
+	public DesenharQuadrado(App app, BufferCircular buffer, Semaphore sReady, Semaphore sStartDrawing) {
+		super(buffer, sReady, sStartDrawing, "Desenha Quadrado");
 		this.app = app;
 		this.sStartDrawing = sStartDrawing;
 	}
@@ -18,37 +18,33 @@ public class DesenhaQuadradoAntigo extends Comportamento {
 		estado = ESCREVER_FORMA;
 	}
 
-	@Override
-	protected int getTempoExecucao() {
-		return (4 * contas(dimLado)) + (4 * getContasCurva(0, 90));
-	}
-
 	protected void desenharForma() {
 		try {
 			sStartDrawing.acquire();
 			if(direcao == App.DIRECAO_ESQ) {
 				for(int i = 0; i<4; i++) {
 					cliente.Reta(dimLado);
-					Thread.sleep(contas(dimLado));
+					cliente.Parar(false);
+					Thread.sleep(getSleepTime(dimLado));
 
 					cliente.CurvarEsquerda(0, 90);
-					Thread.sleep(getContasCurva(0, 90));
-					cliente.parar(false);
+					cliente.Parar(false);
+					Thread.sleep(getCurveSleepTime(0, 90));
 				}
 			}
 			else {
 				for(int i = 0; i<4; i++) {
 					cliente.Reta(dimLado);
-					Thread.sleep(contas(dimLado));
-					cliente.CurvarDireita(0,90);
-					Thread.sleep(getContasCurva(0, 90));
+					cliente.Parar(false);
+					Thread.sleep(getSleepTime(dimLado));
 
-					cliente.parar(false);
+					cliente.CurvarDireita(0,90);
+					cliente.Parar(false);
+					Thread.sleep(getCurveSleepTime(0, 90));
 				}
 			}
-			cliente.parar(false);
+			cliente.Parar(false);
 			acabouDesenho = true;
-//			app.gui.setEstadoBtnFormas(true);
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();

@@ -1,7 +1,8 @@
 import java.util.concurrent.Semaphore;
 
 public abstract class Comportamento extends Thread {
-    public static final int CONSTANTE_DO_CARRO_360 = 2500; // Time(millis) that takes robot to turn 90 degrees
+    // Time(millis) that takes robot to turn 90 degrees
+    public static final int CONSTANTE_DO_CARRO_360 = 2500;
 
     protected int estado;
 
@@ -12,13 +13,15 @@ public abstract class Comportamento extends Thread {
 
     protected ClienteRobot cliente;
     protected Semaphore sMutex;
+    protected Semaphore sStartDrawing ;
     protected Semaphore haTrabalho;
     protected boolean acabouDesenho = false;
 
 
-    public Comportamento(BufferCircular buffer, Semaphore sMutex, String tipoCliente) {
+    public Comportamento(BufferCircular buffer, Semaphore sMutex, Semaphore sStartDrawing, String tipoCliente) {
         this.cliente = new ClienteRobot(buffer, tipoCliente);
         this.sMutex = sMutex;
+        this.sStartDrawing = sStartDrawing;
         haTrabalho = new Semaphore(0);
         estado = ESPERAR;
     }
@@ -28,7 +31,7 @@ public abstract class Comportamento extends Thread {
 
                 switch(estado) {
                     case TERMINAR:
-                        cliente.parar(true);
+                        cliente.Parar(true);
                         cliente.gui.dispose();
                         return;
                     case ESPERAR:
@@ -63,13 +66,6 @@ public abstract class Comportamento extends Thread {
 
     protected abstract void desenha();
 
-    /**
-     * Implementa o método de calculo para o tempo de
-     * execucao do comportamento.
-     * @return Tempo em millis de duracao da tarefa.
-     */
-    protected abstract int getTempoExecucao();
-
     public boolean isAcabouDesenho() {
         return acabouDesenho;
     }
@@ -78,15 +74,15 @@ public abstract class Comportamento extends Thread {
         this.acabouDesenho = acabouDesenho;
     }
 
-    public static int getContasCurva(float raio, float angulo) {
+    public static int getCurveSleepTime(float raio, float angulo) {
         if (raio == 0) {
             return CONSTANTE_DO_CARRO_360 / 4;
         }
         float d = (angulo / 360f) * 2 * (float) Math.PI * raio; // math
-        return contas(d);
+        return getSleepTime(d);
     }
 
-    public static int contas(float dist) {
+    public static int getSleepTime(float dist) {
         return (int) Math.ceil((dist / 30) * 1000); // Wait up to 1 second over the calculated estimate
     }
 

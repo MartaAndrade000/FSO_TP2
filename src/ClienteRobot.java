@@ -13,39 +13,26 @@ public class ClienteRobot {
 	}
 
 	public void Reta(int dimLado) {
-		Mensagem m = new Reta(dimLado);
+		Mensagem m = new MsgReta(dimLado);
 		gui.printCommand(m);
 		setMensagem(m);
 	}
 
 	public void CurvarEsquerda(int raio, int angulo) {
-		Mensagem m = new CurvarEsquerda(raio, angulo);
+		Mensagem m = new MsgCurvarEsquerda(raio, angulo);
 		gui.printCommand(m);
 		setMensagem(m);
 	}
 	
 	public void CurvarDireita(int raio, int angulo) {
-		Mensagem m = new CurvarDireita(raio, angulo);
+		Mensagem m = new MsgCurvarDireita(raio, angulo);
 		gui.printCommand(m);
 		setMensagem(m);
 	}
 
-	public void parar(boolean assincrono) {
-		Mensagem m = new Parar(assincrono);
+	public void Parar(boolean assincrono) {
+		Mensagem m = new MsgParar(assincrono);
 		gui.printCommand(m);
 		setMensagem(m);
 	}
-
-/*	public boolean OpenEV3(String nomeRobot) {
-		Mensagem m = new OpenEV3(nomeRobot);
-		gui.printCommand(m);
-		setMensagem(m);
-		return true;
-	}*/
-
-/*	public void CloseEV3() {
-		Mensagem m = new CloseEV3();
-		gui.printCommand(m);
-		setMensagem(m);
-	}*/
 }

@@ -9,8 +9,8 @@ public class BufferCircular {
 	
 	int putIndex, getIndex;
 	
-	private final Semaphore sComandos; // Número de mensagens para o robot no buffer
-    private final Semaphore sMutex; 	 // Garante exclusão mútua
+	private final Semaphore sComandos;   // Número de mensagens para o robot no buffer
+    private final Semaphore sMutex;      // Garante exclusão mútua
     
     public BufferCircular() {
 //    	this.gui = new GUIBuffer();

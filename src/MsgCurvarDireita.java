@@ -1,9 +1,9 @@
-public class CurvarDireita extends Mensagem {
+public class MsgCurvarDireita extends Mensagem {
 
 	int raio;
 	int angulo;
 	
-	public CurvarDireita(int raio, int angulo) {
+	public MsgCurvarDireita(int raio, int angulo) {
 		super(TIPO_MENSAGEM.CURVA_DIR, String.format("Curva à Direita (raio %d, ângulo %d) \n", raio, (int)angulo));
 		this.raio = raio;
 		this.angulo = angulo;

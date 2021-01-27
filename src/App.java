@@ -37,8 +37,8 @@ public class App {
 
 	BufferCircular buffer;
 
-	DesenhaQuadrado quadrado;
-	DesenhaCirculo circulo;
+	DesenharQuadrado quadrado;
+	DesenharCirculo circulo;
 	EspacarFormasGeometricas espacarFormas;
 
 	private final Semaphore haTrabalho;
@@ -56,13 +56,11 @@ public class App {
 		this.gravador = new GravarFormas(buffer, sMutex);
 		this.servidor = new ServidorRobot(buffer, robot, gravador);
 
-		// Para testar TODO
-//		gravador.setRecording(true);
 
 		haTrabalho = new Semaphore(0);
 
-		this.quadrado = new DesenhaQuadrado(this, buffer, sMutex, sStartDrawing);
-		this.circulo = new DesenhaCirculo(buffer, sMutex, sStartDrawing);
+		this.quadrado = new DesenharQuadrado(this, buffer, sMutex, sStartDrawing);
+		this.circulo = new DesenharCirculo(buffer, sMutex, sStartDrawing);
 		this.espacarFormas = new EspacarFormasGeometricas(buffer, sMutex, sStartDrawing);
 
 
@@ -104,7 +102,6 @@ public class App {
 					}
 
 					if (estado == TIPO_ESTADO.ESPACAR_E_DESENHAR && nextShape.isAcabouDesenho()) {
-//						gui.setEstadoBtnFormas(true);
 						estado = TIPO_ESTADO.ESPERAR;
 						nextShape.setAcabouDesenho(false);
 					}
@@ -119,8 +116,7 @@ public class App {
 					servidor.terminaServidor();
 					buffer.terminarBuffer();
 					gravador.terminaGravador();
-//					if(robot != null) // Alterei aqui
-						robot.terminarRobot();
+					robot.terminarRobot();
 					this.gui.dispose();
 					return;
 			}
@@ -139,7 +135,7 @@ public class App {
 	}
 
 	public void desenharForma(int forma, int dim, int direcao) {
-//		gui.setEstadoBtnFormas(false);
+
 		haTrabalho.release();
 		nextDim = dim;
 

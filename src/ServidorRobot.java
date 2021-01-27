@@ -23,16 +23,14 @@ public class ServidorRobot extends Thread {
         estado = TIPO_ESTADO.LER;
 
     }
-/*    public ServidorRobot(BufferCircular buffer, RobotDesenhador robot) {
-        this.gui = new GUIServidor();
-        this.buffer = buffer;
-        this.robot = robot;
-        estado = TIPO_ESTADO.LER;
 
-    }*/
-
+    /**
+     * Máquina de estados:
+     *
+     * LER: Lê as mensagens do buffer
+     * TERMINAR: Fecha a gui
+     */
     public void run() {
-
         while (true) {
             switch (estado) {
                 case LER:
@@ -47,31 +45,41 @@ public class ServidorRobot extends Thread {
         }
     }
 
+    /**
+     * Lê a mensagem no buffer
+     * Manda a mensagem para o robot
+     */
     private void stateRead() {
+
+        // Lê a mensagem no buffer
         Mensagem mensagem = buffer.getMensagem();
+
         if (mensagem == null) return;
 
+        // Grava a mensagem caso o gravador exista
         if (this.gravador != null) this.gravador.recordCommand(mensagem);
 
+        // Consoante o tipo da mensagem
+        // manda para o robot o comando correspondente ao tipo
         switch (mensagem.getTipo()) {
 
             case RETA: {
-                Reta msg = (Reta) mensagem;
+                MsgReta msg = (MsgReta) mensagem;
                 robot.Reta(msg.getDist());
                 break;
             }
             case CURVA_ESQ: {
-                CurvarEsquerda msg = (CurvarEsquerda) mensagem;
+                MsgCurvarEsquerda msg = (MsgCurvarEsquerda) mensagem;
                 robot.CurvarEsquerda(msg.getRaio(), msg.getAngulo());
                 break;
             }
             case CURVA_DIR: {
-                CurvarDireita msg = (CurvarDireita) mensagem;
+                MsgCurvarDireita msg = (MsgCurvarDireita) mensagem;
                 robot.CurvarDireita(msg.getRaio(), msg.getAngulo());
                 break;
             }
             case PARAR:
-                robot.Parar(((Parar) mensagem).getAssincrono());
+                robot.Parar(((MsgParar) mensagem).getAssincrono());
                 break;
             default:
                 System.out.println("Unknown message type");
@@ -80,13 +88,11 @@ public class ServidorRobot extends Thread {
         gui.printCommand(mensagem);
     }
 
-
+    /**
+     * Muda o estado para terminar
+     */
     public void terminaServidor() {
         System.out.println("Terminou Servidor");
         estado = TIPO_ESTADO.TERMINAR;
-    }
-
-    public void setEstado(TIPO_ESTADO state) {
-        this.estado = state;
     }
 }

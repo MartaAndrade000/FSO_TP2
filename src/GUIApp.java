@@ -115,7 +115,6 @@ public class GUIApp extends JFrame {
 			public void actionPerformed(ActionEvent event) {
 
 				try {
-					// TODO verificar isto
 					// Ensure manually typed values with the editor are propagated to the model
 				    spinnerLado.commitEdit();
 				}
@@ -188,7 +187,6 @@ public class GUIApp extends JFrame {
 		btnDesenharCirculo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				try {
-					// TODO verificar isto
 					// Ensure manually typed values with the editor are propagated to the model
 				    spinnerRaio.commitEdit();
 				} 

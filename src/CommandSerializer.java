@@ -1,7 +1,15 @@
 public class CommandSerializer {
 
-
-    // todo feeling lazy, might optimize later
+    /**
+     * Encripta uma mensagem
+     *
+     * Mensagens:
+     *
+     * Reta           : 0    dist               tempo
+     * Curva Esquerda : 1    raio    angulo     tempo
+     * Curva Direita  : 2    raio    angulo     tempo
+     * Parar          : 3    0/1                tempo
+     */
     public static String serialize(Mensagem m, long elapsed) {
         String msg = "";
 
@@ -10,16 +18,16 @@ public class CommandSerializer {
         switch (m.getTipo()) {
 
             case RETA:
-                msg += "," + ((Reta) m).getDist();
+                msg += "," + ((MsgReta) m).getDist();
                 break;
             case CURVA_ESQ:
-                msg += "," + ((CurvarEsquerda) m).raio + "," + ((CurvarEsquerda) m).angulo;
+                msg += "," + ((MsgCurvarEsquerda) m).raio + "," + ((MsgCurvarEsquerda) m).angulo;
                 break;
             case CURVA_DIR:
-                msg += "," + ((CurvarDireita) m).raio + "," + ((CurvarDireita) m).angulo;
+                msg += "," + ((MsgCurvarDireita) m).raio + "," + ((MsgCurvarDireita) m).angulo;
                 break;
             case PARAR:
-                msg += "," + ((Parar) m).getAssincrono();
+                msg += "," + ((MsgParar) m).getAssincrono();
             default:
                 break;
         }
@@ -28,6 +36,9 @@ public class CommandSerializer {
         return msg;
     }
 
+    /**
+     * Desencripta uma mensagem
+     */
     public static Mensagem deserialize(String in) {
         String[] splitMessage = in.split(",");
 
@@ -38,16 +49,16 @@ public class CommandSerializer {
         switch (type) {
 
             case RETA:
-                m = new Reta(Integer.parseInt(splitMessage[1]));
+                m = new MsgReta(Integer.parseInt(splitMessage[1]));
                 break;
             case CURVA_ESQ:
-                m = new CurvarEsquerda(Integer.parseInt(splitMessage[1]),Integer.parseInt(splitMessage[2]));
+                m = new MsgCurvarEsquerda(Integer.parseInt(splitMessage[1]),Integer.parseInt(splitMessage[2]));
                 break;
             case CURVA_DIR:
-                m = new CurvarDireita(Integer.parseInt(splitMessage[1]),Integer.parseInt(splitMessage[2]));
+                m = new MsgCurvarDireita(Integer.parseInt(splitMessage[1]),Integer.parseInt(splitMessage[2]));
                 break;
             case PARAR:
-                m = new Parar(Boolean.parseBoolean(splitMessage[1]));
+                m = new MsgParar(Boolean.parseBoolean(splitMessage[1]));
 
         }
         return m;

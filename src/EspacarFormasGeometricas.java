@@ -3,11 +3,10 @@ import java.util.concurrent.Semaphore;
 public class EspacarFormasGeometricas extends Comportamento {
 
 	private int dist;
-	private final Semaphore sStartDrawing;
 	private Comportamento nextShape;
 	
 	public EspacarFormasGeometricas(BufferCircular buffer, Semaphore sMutex, Semaphore sStartDrawing) {
-		super(buffer, sMutex, "Espaçar Formas Geométricas");
+		super(buffer, sMutex, sStartDrawing, "Espaçar Formas Geométricas");
 		this.sStartDrawing = sStartDrawing;
 	}
 	
@@ -17,14 +16,13 @@ public class EspacarFormasGeometricas extends Comportamento {
 			// distância de espaçamento
 			int distEspacamento = 10;
 			dist = distEspacamento + lastDim;
-			if(nextShape instanceof DesenhaCirculo)
+			if(nextShape instanceof DesenharCirculo)
 				dist += nextDim;
 			haTrabalho.release();
 			estado = ESCREVER_FORMA;
 		}
 		// Se não houver nenhuma distância anterior, passa logo para o desenho da forma
 		else {
-//			haTrabalho.release();
 			sStartDrawing.release();
 			nextShape.desenha();
 		}
@@ -32,17 +30,14 @@ public class EspacarFormasGeometricas extends Comportamento {
 
 	protected void desenharForma() throws InterruptedException {
 		cliente.Reta(dist);
-		Thread.sleep(contas(dist));
-		cliente.parar(false);
+		Thread.sleep(getSleepTime(dist));
+		cliente.Parar(false);
 		sStartDrawing.release();
 		nextShape.desenha();
 	}
 
-	protected void desenha() { }
-
 	@Override
-	protected int getTempoExecucao() {
-		return contas(dist);
+	protected void desenha() {
 	}
 }
 

@@ -66,10 +66,18 @@ public class GravarFormas extends Thread {
         }
     }
 
+
+    /**
+	 * Altera o estado da variável recording para o valor oposto
+	 */
     public void toggleRecording() {
         this.setRecording(!this.recording);
     }
 
+
+    /**
+     * Abre o ficheiro
+     */
     public void setRecording(boolean state) {
         if (file != null) {
             this.recording = state;
@@ -90,6 +98,10 @@ public class GravarFormas extends Thread {
         }
     }
 
+    /**
+     * Determina o tempo de execução de cada comando
+     * Guarda os comandos encriptados e os seus tempos
+     */
     public void recordCommand(Mensagem mensagem) {
 
         if (!this.recording) return;
@@ -104,9 +116,9 @@ public class GravarFormas extends Thread {
         gui.printCommand(mensagem);
     }
 
-    // function: playBack()
-    // lock/stop inputs
-    // ReadCommands -> give them to robot
+    /**
+     * Muda o estado para REPLAY
+     */
     public void playBack() {
         this.recording = false;
         if (file != null) {
@@ -118,13 +130,16 @@ public class GravarFormas extends Thread {
         }
     }
 
+    /**
+     * Lê os comandos encriptados que estão no ficheiro
+     * Converte-os em comados conhecidos pelo robot
+     * Põe no buffer os comandos para serem lidos
+     */
     public void readCommands () {
         try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(this.file)))) {
 
             String line;
             while((line = inputStream.readLine()) != null) {
-//                          System.out.println(line);
-                // line -> message
                 Mensagem msg = CommandSerializer.deserialize(line);
                 String[] split = line.split(",");
                 Long millis = Long.parseLong(split[split.length -1]);
@@ -134,27 +149,30 @@ public class GravarFormas extends Thread {
                 } catch (InterruptedException ignored) {}
 
                 buffer.putMensagem(msg);
-
             }
         } catch (IOException e) {
-            System.out.println("Miau");
+            System.out.println("Falha a ler o ficheiro");
         }
     }
 
 
-
-    public void openFile(String filename) {
+    /**
+     * Instância o ficheiro
+     */
+    public void setFile(String filename) {
         this.file = new File(filename);
     }
 
+    /**
+     * @Return recording
+     */
     public boolean isRecording() {
         return recording;
     }
 
-    public boolean isReplaying() {
-        return (estado==REPLAY);
-    }
-
+    /**
+     * Muda o estado para terminar
+     */
     public void terminaGravador() {
         System.out.println("Terminou Gravador");
         estado = TERMINAR;
