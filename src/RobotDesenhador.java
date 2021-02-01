@@ -1,11 +1,9 @@
 public class RobotDesenhador extends RobotLegoEV3 {
 
 	private final GUIRobot gui;
-	private final String robot;
 
 	public RobotDesenhador() {
 		this.gui = new GUIRobot();
-		this.robot = null;
 	}
 
 	public boolean OpenEV3(String name) {
