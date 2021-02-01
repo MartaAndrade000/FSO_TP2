@@ -33,7 +33,6 @@ public class App {
 	ServidorRobot servidor;
 	GravarFormas gravador;
 	RobotDesenhador robot;
-//	RobotLegoEV3 robot;
 
 	BufferCircular buffer;
 
@@ -51,18 +50,15 @@ public class App {
 		Semaphore sMutex = new Semaphore(1);
 		Semaphore sStartDrawing = new Semaphore(0);
 
-//		this.robot = new RobotLegoEV3();
 		this.robot = new RobotDesenhador();
 		this.gravador = new GravarFormas(buffer, sMutex);
 		this.servidor = new ServidorRobot(buffer, robot, gravador);
-
 
 		haTrabalho = new Semaphore(0);
 
 		this.quadrado = new DesenharQuadrado(this, buffer, sMutex, sStartDrawing);
 		this.circulo = new DesenharCirculo(buffer, sMutex, sStartDrawing);
 		this.espacarFormas = new EspacarFormasGeometricas(buffer, sMutex, sStartDrawing);
-
 
 		quadrado.start();
 		circulo.start();
