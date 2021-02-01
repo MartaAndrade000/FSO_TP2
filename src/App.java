@@ -54,8 +54,6 @@ public class App {
 		this.gravador = new GravarFormas(buffer, sMutex);
 		this.servidor = new ServidorRobot(buffer, robot, gravador);
 
-		haTrabalho = new Semaphore(0);
-
 		this.quadrado = new DesenharQuadrado(this, buffer, sMutex, sStartDrawing);
 		this.circulo = new DesenharCirculo(buffer, sMutex, sStartDrawing);
 		this.espacarFormas = new EspacarFormasGeometricas(buffer, sMutex, sStartDrawing);
@@ -66,6 +64,7 @@ public class App {
 		servidor.start();
 		gravador.start();
 
+		haTrabalho = new Semaphore(0);
 		estado = TIPO_ESTADO.ESPERAR;
 
 		lastDim = 0;
