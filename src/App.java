@@ -91,7 +91,7 @@ public class App {
 
 				case ESPACAR_E_DESENHAR:
 					if(!jaDesenhou) {
-						espacarFormas.desenha(lastDim, nextDim, nextShape);
+						espacarFormas.iniciaDesenho(lastDim, nextDim, nextShape);
 						lastDim = nextDim;
 						jaDesenhou = true;
 					}

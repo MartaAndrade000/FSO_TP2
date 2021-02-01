@@ -10,7 +10,7 @@ public class EspacarFormasGeometricas extends Comportamento {
 		this.sStartDrawing = sStartDrawing;
 	}
 	
-	public void desenha(int lastDim, int nextDim, Comportamento nextShape) {
+	public void iniciaDesenho(int lastDim, int nextDim, Comportamento nextShape) {
 		this.nextShape = nextShape;
 		if(lastDim != 0) {
 			// distância de espaçamento
