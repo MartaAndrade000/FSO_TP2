@@ -83,7 +83,7 @@ public abstract class Comportamento extends Thread {
     }
 
     public static int getSleepTime(float dist) {
-        return (int) Math.ceil((dist / 30) * 1000); // Wait up to 1 second over the calculated estimate
+        return (int) Math.ceil((dist / 30) * 1000);
     }
 
     public void terminarComportamento() {
