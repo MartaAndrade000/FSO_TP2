@@ -86,7 +86,9 @@ public class GUIGravarFormas extends JFrame {
         btnReplay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                gravadorTextArea.append("Está a reproduzir");
                 gravarFormas.playBack();
+
                // if(gravarFormas.isReplaying())
                //     btnReplay.setIcon(new ImageIcon("stop.png"));
                // else
@@ -103,8 +105,6 @@ public class GUIGravarFormas extends JFrame {
 
         gravadorTextArea = new JTextArea();
         gravadorTextArea.setEditable(false);
-       // gravadorTextArea.setBounds(12, 133, 301, 116);
-        //contentPane.add(gravadorTextArea);
 
         scrollPane.setViewportView(gravadorTextArea);
         JLabel lblFileChooser = new JLabel("Escolha o Ficheiro para Grava\u00E7\u00E3o:");
@@ -113,8 +113,6 @@ public class GUIGravarFormas extends JFrame {
 
         setVisible(true);
     }
-
-
 
     public void logString(String text) {
         if (!EventQueue.isDispatchThread()) {
@@ -142,7 +140,7 @@ public class GUIGravarFormas extends JFrame {
                 SwingUtilities.invokeAndWait( new Runnable() {
                     @Override
                     public void run() {
-                        String texto = m.getTexto();
+                        String texto = m.toString();
                         gravadorTextArea.append("Gravou: " + texto);
                     }
                 });
@@ -152,7 +150,7 @@ public class GUIGravarFormas extends JFrame {
             }
         }
         else {
-            String texto = m.getTexto();
+            String texto = m.toString();
             gravadorTextArea.append("Gravou: " + texto);
         }
     }

@@ -16,12 +16,12 @@ public abstract class Mensagem {
 		this.texto = texto;
 	}
 
-	public String getTexto() {
-		return texto;
-	}
-
 	public TIPO_MENSAGEM getTipo() {
 		return tipo;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Msg: " + texto;
+	}
 }

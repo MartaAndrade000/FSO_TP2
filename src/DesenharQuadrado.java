@@ -13,7 +13,7 @@ public class DesenharQuadrado extends Comportamento {
 		this.sStartDrawing = sStartDrawing;
 	}
 
-	public void desenha() {
+	public void iniciaDesenho() {
 		haTrabalho.release();
 		estado = ESCREVER_FORMA;
 	}

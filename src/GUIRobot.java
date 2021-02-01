@@ -44,7 +44,7 @@ public class GUIRobot extends JFrame {
                 SwingUtilities.invokeAndWait( new Runnable() {
                     @Override
                     public void run() {
-                        String texto = m.getTexto();
+                        String texto = m.toString();
                         robotTextArea.append(texto);
                     }
                 });
@@ -54,7 +54,7 @@ public class GUIRobot extends JFrame {
             }
         }
         else {
-            String texto = m.getTexto();
+            String texto = m.toString();
             robotTextArea.append(texto);
         }
     }

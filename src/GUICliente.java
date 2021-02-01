@@ -50,7 +50,7 @@ public class GUICliente extends JFrame {
                 SwingUtilities.invokeAndWait( new Runnable() {
                     @Override
                     public void run() {
-                        String texto = m.getTexto();
+                        String texto = m.toString();
                         ClienteTextArea.append(texto);
                     }
                 });
@@ -60,7 +60,7 @@ public class GUICliente extends JFrame {
             }
         }
         else {
-            String texto = m.getTexto();
+            String texto = m.toString();
             ClienteTextArea.append(texto);
         }
     }

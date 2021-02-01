@@ -64,7 +64,7 @@ public abstract class Comportamento extends Thread {
 
     protected abstract void desenharForma() throws InterruptedException;
 
-    protected abstract void desenha();
+    protected abstract void iniciaDesenho();
 
     public boolean isAcabouDesenho() {
         return acabouDesenho;

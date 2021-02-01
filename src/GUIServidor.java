@@ -45,7 +45,7 @@ public class GUIServidor extends JFrame {
                 SwingUtilities.invokeAndWait( new Runnable() {
                     @Override
                     public void run() {
-                        String texto = m.getTexto();
+                        String texto = m.toString();
                         servidorTextArea.append(texto);
                     }
                 });
@@ -55,7 +55,7 @@ public class GUIServidor extends JFrame {
             }
         }
         else {
-            String texto = m.getTexto();
+            String texto = m.toString();
             servidorTextArea.append(texto);
         }
     }

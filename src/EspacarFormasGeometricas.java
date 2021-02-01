@@ -24,7 +24,7 @@ public class EspacarFormasGeometricas extends Comportamento {
 		// Se não houver nenhuma distância anterior, passa logo para o desenho da forma
 		else {
 			sStartDrawing.release();
-			nextShape.desenha();
+			nextShape.iniciaDesenho();
 		}
 	}
 
@@ -33,11 +33,11 @@ public class EspacarFormasGeometricas extends Comportamento {
 		Thread.sleep(getSleepTime(dist));
 		cliente.Parar(false);
 		sStartDrawing.release();
-		nextShape.desenha();
+		nextShape.iniciaDesenho();
 	}
 
 	@Override
-	protected void desenha() {
+	protected void iniciaDesenho() {
 	}
 }
 
