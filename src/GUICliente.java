@@ -18,10 +18,11 @@ public class GUICliente extends JFrame {
      * @param tipoCliente
      */
     public GUICliente(String tipoCliente) {
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setTitle(tipoCliente);
         setBounds(xPos, 440, 300, 300);
         xPos+=310;
+
         JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);

@@ -1,5 +1,4 @@
 public class CommandSerializer {
-
     /**
      * Encripta uma mensagem
      *
@@ -62,6 +61,5 @@ public class CommandSerializer {
 
         }
         return m;
-
     }
 }

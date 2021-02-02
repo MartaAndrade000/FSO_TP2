@@ -9,5 +9,4 @@ public class MsgParar extends Mensagem {
 	public boolean getAssincrono() {
 		return this.assincrono;
 	}
-
 }

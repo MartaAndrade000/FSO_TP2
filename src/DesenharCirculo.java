@@ -7,7 +7,6 @@ public class DesenharCirculo extends Comportamento {
 
 	public DesenharCirculo(BufferCircular buffer, Semaphore sReady, Semaphore sStartDrawing) {
 		super(buffer, sReady, sStartDrawing,"Desenha Círculo");
-		this.sStartDrawing = sStartDrawing;
 	}
 
 	public void iniciaDesenho() {
@@ -20,11 +19,10 @@ public class DesenharCirculo extends Comportamento {
 			sStartDrawing.acquire();
 			if (direcao == App.DIRECAO_ESQ) {
 				cliente.CurvarEsquerda(raio, 360);
-				Thread.sleep(getCurveSleepTime(raio, 90));
 			} else {
 				cliente.CurvarDireita(raio, 360);
-				Thread.sleep(getCurveSleepTime(raio, 90));
 			}
+			Thread.sleep(getCurveSleepTime(raio, 90));
 			cliente.Parar(false);
 			acabouDesenho = true;
 		} catch (InterruptedException e) {

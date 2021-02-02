@@ -10,7 +10,6 @@ public class ServidorRobot extends Thread {
     GUIServidor gui;
 
     BufferCircular buffer;
-//    RobotLegoEV3 robot;
     GravarFormas gravador;
     RobotDesenhador robot;
 
@@ -21,7 +20,6 @@ public class ServidorRobot extends Thread {
         this.robot = robot;
         this.gravador = gravador;
         estado = TIPO_ESTADO.LER;
-
     }
 
     /**

@@ -9,7 +9,7 @@ public abstract class Mensagem {
 		CURVA_ESQ,
 		CURVA_DIR,
 		PARAR
-		}
+	}
 
 	public Mensagem(TIPO_MENSAGEM tipo, String texto) {
 		this.tipo  = tipo;

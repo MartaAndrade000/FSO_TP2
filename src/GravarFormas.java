@@ -30,10 +30,8 @@ public class GravarFormas extends Thread {
         estado = ESPERAR;
     }
 
-
     public void run() {
         while(true) {
-
             switch(estado) {
                 case TERMINAR:
                     gui.dispose();
@@ -103,7 +101,6 @@ public class GravarFormas extends Thread {
      * Guarda os comandos encriptados e os seus tempos
      */
     public void recordCommand(Mensagem mensagem) {
-
         if (!this.recording) return;
         if (this.output == null) return;
 
@@ -124,6 +121,7 @@ public class GravarFormas extends Thread {
         if (file != null) {
             estado = REPLAY;
             haTrabalho.release();
+            gui.logString("Está a reproduzir");
         }
         else{
             gui.logString("Insira um ficheiro");
@@ -154,7 +152,6 @@ public class GravarFormas extends Thread {
             System.out.println("Falha a ler o ficheiro");
         }
     }
-
 
     /**
      * Instância o ficheiro

@@ -252,11 +252,6 @@ public class GUIApp extends JFrame {
 		app.desenharForma(tipoDeDesenho, dim, direcao);
 	}
 
-	public void setEstadoBtnFormas(boolean state) {
-		btnDesenharQuadrado.setEnabled(state);
-		btnDesenharCirculo.setEnabled(state);
-	}
-
 	/**
 	 * Escreve na consola para debug
 	 * 

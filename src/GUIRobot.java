@@ -5,9 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 
 public class GUIRobot extends JFrame {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     private final JTextArea robotTextArea;
 
@@ -15,7 +12,7 @@ public class GUIRobot extends JFrame {
      * Create the frame.
      */
     public GUIRobot() {
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setTitle("Robot");
         setBounds(870, 70, 300, 300);
         JPanel contentPane = new JPanel();

@@ -2,15 +2,11 @@ import java.util.concurrent.Semaphore;
 
 public class DesenharQuadrado extends Comportamento {
 
-	private App app;
 	private int dimLado;
 	private int direcao;
-	private final Semaphore sStartDrawing;
 
-	public DesenharQuadrado(App app, BufferCircular buffer, Semaphore sReady, Semaphore sStartDrawing) {
+	public DesenharQuadrado(BufferCircular buffer, Semaphore sReady, Semaphore sStartDrawing) {
 		super(buffer, sReady, sStartDrawing, "Desenha Quadrado");
-		this.app = app;
-		this.sStartDrawing = sStartDrawing;
 	}
 
 	public void iniciaDesenho() {

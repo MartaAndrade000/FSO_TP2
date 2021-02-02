@@ -15,14 +15,12 @@ public class GUIGravarFormas extends JFrame {
     private JTextArea gravadorTextArea;
     private JButton btnRec = new JButton("");
 
-
-
     /**
      * Create the frame.
      */
     public GUIGravarFormas(GravarFormas gravarFormas) {
     	setTitle("Gravador de Formas");
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setBounds(950, 440, 450, 300);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -34,7 +32,9 @@ public class GUIGravarFormas extends JFrame {
         contentPane.add(textField);
         textField.setColumns(10);
 
-
+        /*
+        FILE CHOOSER
+         */
         JFileChooser fc = new JFileChooser();
         JButton btnOpen = new JButton("Open");
 
@@ -58,6 +58,13 @@ public class GUIGravarFormas extends JFrame {
         btnOpen.setBounds(358, 29, 68, 23);
         contentPane.add(btnOpen);
 
+        JLabel lblFileChooser = new JLabel("Escolha o Ficheiro para Grava\u00E7\u00E3o:");
+        lblFileChooser.setBounds(94, 11, 246, 14);
+        contentPane.add(lblFileChooser);
+
+        /*
+        REC BUTTON
+         */
         JButton btnRec = new JButton("");
         btnRec.setBorderPainted(false);
         btnRec.setContentAreaFilled(false);
@@ -77,6 +84,9 @@ public class GUIGravarFormas extends JFrame {
         btnRec.setBounds(10, 11, 40, 40);
         contentPane.add(btnRec);
 
+        /*
+        REPLAY BUTTON
+         */
         JButton btnReplay = new JButton("");
         btnReplay.setBorderPainted(false);
         btnReplay.setContentAreaFilled(false);
@@ -86,30 +96,23 @@ public class GUIGravarFormas extends JFrame {
         btnReplay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gravadorTextArea.append("Está a reproduzir");
                 gravarFormas.playBack();
-
-               // if(gravarFormas.isReplaying())
-               //     btnReplay.setIcon(new ImageIcon("stop.png"));
-               // else
-               //     btnReplay.setIcon(new ImageIcon("play.png"));
             }
         });
         btnReplay.setBounds(50, 11, 40, 40);
         contentPane.add(btnReplay);
 
+        /*
+        TEXT AREA
+         */
         JScrollPane scrollPane = new JScrollPane();
         contentPane.add(scrollPane);
         scrollPane.setBounds(10, 62, 416, 191);
-
 
         gravadorTextArea = new JTextArea();
         gravadorTextArea.setEditable(false);
 
         scrollPane.setViewportView(gravadorTextArea);
-        JLabel lblFileChooser = new JLabel("Escolha o Ficheiro para Grava\u00E7\u00E3o:");
-        lblFileChooser.setBounds(94, 11, 246, 14);
-        contentPane.add(lblFileChooser);
 
         setVisible(true);
     }
@@ -131,7 +134,6 @@ public class GUIGravarFormas extends JFrame {
         else {
             gravadorTextArea.append(text + "\n");
         }
-
     }
     public void printCommand(Mensagem m) {
         // Porque dá erro quando já é a tarefa gráfica a fazer append

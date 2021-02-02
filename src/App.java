@@ -54,7 +54,7 @@ public class App {
 		this.gravador = new GravarFormas(buffer, sMutex);
 		this.servidor = new ServidorRobot(buffer, robot, gravador);
 
-		this.quadrado = new DesenharQuadrado(this, buffer, sMutex, sStartDrawing);
+		this.quadrado = new DesenharQuadrado(buffer, sMutex, sStartDrawing);
 		this.circulo = new DesenharCirculo(buffer, sMutex, sStartDrawing);
 		this.espacarFormas = new EspacarFormasGeometricas(buffer, sMutex, sStartDrawing);
 
@@ -109,7 +109,6 @@ public class App {
 					quadrado.terminarComportamento();
 					circulo.terminarComportamento();
 					servidor.terminaServidor();
-					buffer.terminarBuffer();
 					gravador.terminaGravador();
 					robot.terminarRobot();
 					this.gui.dispose();
@@ -130,7 +129,6 @@ public class App {
 	}
 
 	public void desenharForma(int forma, int dim, int direcao) {
-
 		haTrabalho.release();
 		nextDim = dim;
 

@@ -1,9 +1,7 @@
 import java.util.concurrent.Semaphore;
 
 public class BufferCircular {
-	
-//	GUIBuffer gui;
-	
+
 	final int dimBuffer = 16;
 	Mensagem[] buffer;
 	
@@ -13,8 +11,6 @@ public class BufferCircular {
     private final Semaphore sMutex;      // Garante exclusão mútua
     
     public BufferCircular() {
-//    	this.gui = new GUIBuffer();
-    	
     	this.buffer = new Mensagem[dimBuffer];
     	this.putIndex = 0;
     	this.getIndex = 0;
@@ -29,8 +25,6 @@ public class BufferCircular {
             
             buffer[putIndex] = m;
             putIndex = ++putIndex % dimBuffer; // Dar a volta ao array
-            
-//            gui.printCommand(m);
         }
         catch(Exception ex){
             ex.printStackTrace();
@@ -60,11 +54,6 @@ public class BufferCircular {
     	    this.sMutex.release();
     	}
 		return m;
-	}
-
-	public void terminarBuffer() {
-		System.out.println("Terminou Buffer");
-//		gui.dispose();
 	}
 }
 

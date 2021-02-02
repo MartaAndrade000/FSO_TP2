@@ -13,7 +13,7 @@ public abstract class Comportamento extends Thread {
 
     protected ClienteRobot cliente;
     protected Semaphore sMutex;
-    protected Semaphore sStartDrawing ;
+    protected Semaphore sStartDrawing;
     protected Semaphore haTrabalho;
     protected boolean acabouDesenho = false;
 
@@ -28,37 +28,36 @@ public abstract class Comportamento extends Thread {
 
     public void run() {
         while(true) {
+            switch(estado) {
+                case TERMINAR:
+                    cliente.Parar(true);
+                    cliente.gui.dispose();
+                    return;
+                case ESPERAR:
+                    try {
 
-                switch(estado) {
-                    case TERMINAR:
-                        cliente.Parar(true);
-                        cliente.gui.dispose();
-                        return;
-                    case ESPERAR:
-                        try {
+                        haTrabalho.acquire();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    break;
 
-                            haTrabalho.acquire();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                case ESCREVER_FORMA:
+                    try {
+                        sMutex.acquire();
+                        desenharForma();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    finally {
+                        sMutex.release();
+                    }
+
+                    if(estado == ESCREVER_FORMA) {
+                        estado = ESPERAR;
                         break;
-
-                    case ESCREVER_FORMA:
-                        try {
-                            sMutex.acquire();
-                            desenharForma();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        finally {
-                            sMutex.release();
-                        }
-
-                        if(estado == ESCREVER_FORMA) {
-                            estado = ESPERAR;
-                            break;
-                        }
-                }
+                    }
+            }
         }
     }
 

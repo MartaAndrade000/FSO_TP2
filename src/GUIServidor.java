@@ -5,9 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 
 public class GUIServidor extends JFrame {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     private final JTextArea servidorTextArea;
 
@@ -15,7 +12,7 @@ public class GUIServidor extends JFrame {
      * Create the frame.
      */
     public GUIServidor() {
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setTitle("Servidor");
         setBounds(550, 70, 300, 300);
 
